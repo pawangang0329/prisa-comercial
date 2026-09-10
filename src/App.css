@@ -3908,3 +3908,319 @@ img {
     border: 0 !important; background: rgba(0,0,0,.62) !important; z-index: 90 !important;
   }
 }
+
+/* =========================================================
+   MOBILE V2 — AJUSTE DE RESUMEN Y PRESENTACIÓN
+   Solo adapta layout; no cambia lógica ni datos.
+   ========================================================= */
+@media screen and (max-width: 760px) {
+  /* ---------- RESUMEN: progreso compacto ---------- */
+  .app-reference .summary-progress-card {
+    padding: 16px 12px !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .summary-progress-track {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 2px !important;
+    width: 100% !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
+  .app-reference .summary-step {
+    min-width: 0 !important;
+    width: auto !important;
+    flex: none !important;
+    padding: 0 2px !important;
+  }
+
+  .app-reference .summary-step-number {
+    width: 27px !important;
+    height: 27px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .app-reference .summary-step strong {
+    font-size: 7px !important;
+    line-height: 1.25 !important;
+    white-space: normal !important;
+  }
+
+  .app-reference .summary-step small {
+    font-size: 6px !important;
+    margin-top: 3px !important;
+  }
+
+  .app-reference .summary-step-line {
+    display: none !important;
+  }
+
+  /* ---------- RESUMEN: mapa realmente usable en teléfono ---------- */
+  .app-reference .summary-map-card {
+    padding: 7px !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .summary-map {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    overflow: visible !important;
+    background: #101520 !important;
+  }
+
+  /* Las dos columnas de escritorio pasan a un solo flujo vertical. */
+  .app-reference .summary-map-side {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    display: contents !important;
+  }
+
+  .app-reference .summary-map-side-left,
+  .app-reference .summary-map-side-right {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+  }
+
+  .app-reference .summary-map-node {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 66px !important;
+    box-sizing: border-box !important;
+    padding: 10px !important;
+    margin: 0 !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
+
+  .app-reference .summary-map-node-right {
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+
+  .app-reference .summary-map-node-copy {
+    min-width: 0 !important;
+  }
+
+  .app-reference .summary-map-node-copy strong {
+    font-size: 9px !important;
+    white-space: normal !important;
+  }
+
+  .app-reference .summary-map-node-copy span {
+    font-size: 8px !important;
+  }
+
+  .app-reference .summary-map-node-copy small {
+    font-size: 7px !important;
+    white-space: normal !important;
+  }
+
+  .app-reference .summary-map-center {
+    position: static !important;
+    transform: none !important;
+    width: 74px !important;
+    height: 74px !important;
+    flex: 0 0 74px !important;
+    align-self: center !important;
+    margin: 8px auto !important;
+  }
+
+  .app-reference .summary-map-connectors {
+    display: none !important;
+  }
+
+  /* ---------- PRESENTACIÓN: menos altura y mejor lectura ---------- */
+  .app-reference .reference-presentation-warning {
+    font-size: 8px !important;
+    line-height: 1.45 !important;
+    padding: 9px 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .app-reference .reference-slide {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 20px 12px !important;
+    overflow: visible !important;
+  }
+
+  .app-reference .presentation-centered-content {
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 12px 4px !important;
+    margin: 0 !important;
+    top: auto !important;
+    left: auto !important;
+    box-sizing: border-box !important;
+    justify-content: flex-start !important;
+  }
+
+  .app-reference .presentation-centered-content h1 {
+    font-size: 28px !important;
+    line-height: 1.1 !important;
+    margin: 9px 0 6px !important;
+  }
+
+  .app-reference .presentation-centered-content h2 {
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+    margin: 7px 0 !important;
+  }
+
+  .app-reference .presentation-centered-content p {
+    font-size: 9px !important;
+    line-height: 1.5 !important;
+  }
+
+  .app-reference .presentation-centered-content .story-list,
+  .app-reference .presentation-centered-content .insight-slide-body,
+  .app-reference .presentation-centered-content .audience-slide-grid,
+  .app-reference .presentation-centered-content .audience-slide-centered-grid,
+  .app-reference .presentation-centered-content .solution-flow,
+  .app-reference .presentation-centered-content .journey-area,
+  .app-reference .presentation-centered-content .final-slide-content {
+    margin-top: 13px !important;
+  }
+
+  .app-reference .story-list {
+    gap: 10px !important;
+    max-width: 100% !important;
+  }
+
+  .app-reference .story-item {
+    gap: 6px !important;
+  }
+
+  .app-reference .story-item strong {
+    font-size: 9px !important;
+  }
+
+  .app-reference .story-item p {
+    font-size: 8px !important;
+  }
+
+  .app-reference .audience-slide-centered-grid {
+    gap: 8px !important;
+    margin-top: 12px !important;
+  }
+
+  .app-reference .audience-center-card {
+    min-height: 0 !important;
+    padding: 12px !important;
+  }
+
+  .app-reference .audience-center-card p {
+    margin: 6px 0 10px !important;
+  }
+
+  .app-reference .solution-flow {
+    gap: 5px !important;
+    margin-top: 12px !important;
+  }
+
+  .app-reference .flow-card {
+    min-height: 0 !important;
+    padding: 10px !important;
+  }
+
+  .app-reference .flow-card strong {
+    font-size: 9px !important;
+  }
+
+  .app-reference .flow-card p {
+    font-size: 7px !important;
+    margin-top: 6px !important;
+  }
+
+  .app-reference .flow-arrow {
+    transform: rotate(90deg) !important;
+    margin: -1px 0 !important;
+  }
+
+  .app-reference .journey-area {
+    margin-top: 15px !important;
+  }
+
+  .app-reference .journey {
+    gap: 5px !important;
+    margin: 8px auto 14px !important;
+  }
+
+  .app-reference .journey span {
+    padding: 6px 8px !important;
+    font-size: 8px !important;
+  }
+
+  .app-reference .final-slide-content {
+    gap: 10px !important;
+    padding-top: 8px !important;
+  }
+
+  .app-reference .final-message {
+    margin-top: 18px !important;
+    font-size: 18px !important;
+  }
+
+  .app-reference .reference-thumbnails {
+    margin-top: 9px !important;
+    gap: 5px !important;
+  }
+
+  .app-reference .reference-thumb {
+    min-height: 48px !important;
+    padding: 7px !important;
+    font-size: 7px !important;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .app-reference .summary-progress-card {
+    padding-left: 7px !important;
+    padding-right: 7px !important;
+  }
+
+  .app-reference .summary-step-number {
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 8px !important;
+  }
+
+  .app-reference .summary-step strong {
+    font-size: 6.5px !important;
+  }
+
+  .app-reference .summary-step small {
+    font-size: 5.5px !important;
+  }
+
+  .app-reference .summary-map {
+    padding: 9px !important;
+  }
+
+  .app-reference .summary-map-node {
+    min-height: 62px !important;
+  }
+
+  .app-reference .summary-map-center {
+    width: 68px !important;
+    height: 68px !important;
+    flex-basis: 68px !important;
+  }
+
+  .app-reference .reference-slide {
+    padding: 16px 9px !important;
+  }
+}
