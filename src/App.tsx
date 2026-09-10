@@ -4053,11 +4053,6 @@ function ProposalScreen({
       source: "Brief + Discovery",
     },
     {
-      title: "Problema",
-      content: challengeText,
-      source: "Discovery",
-    },
-    {
       title: "Insight",
       content:
         discovery.challengeMore ||
@@ -4071,28 +4066,6 @@ function ProposalScreen({
         brief.product ||
         "Concepto pendiente de desarrollar.",
       source: "Brief",
-    },
-    {
-      title: "Objetivo",
-      content: resultText,
-      source: "Brief + Discovery",
-    },
-    {
-      title: "Audiencia",
-      content: audienceText,
-      source:
-        brief.clientType === "B2B"
-          ? "B2B + Discovery"
-          : brief.clientType === "B2C"
-          ? "B2C + Discovery"
-          : "Brief + Discovery",
-    },
-    {
-      title: "Oportunidad",
-      content:
-        reactionText ||
-        "Oportunidad pendiente de definir.",
-      source: "Discovery",
     },
     {
       title: "Emisora / ecosistema",
@@ -4145,102 +4118,11 @@ function ProposalScreen({
       ].join("\n"),
       source: "Selección + catálogo PRISA",
     },
-    {
-      title: "Franquicia",
-      content:
-        selectedFranchise?.name ||
-        "Sin franquicia",
-      source: selectedFranchise
-        ? "Selección en Formatos"
-        : "Selección opcional",
-    },
-    {
-      title: "Formatos recomendados",
-      content: formatText,
-      source: "Scoring + selección",
-    },
-    {
-      title: "Solución propuesta",
-      content:
-        selectedBroadcaster || chosenFormats.length
-          ? `Solución basada en ${
-              selectedBroadcaster?.name || "el ecosistema PRISA"
-            }${selectedFranchise ? ` + ${selectedFranchise.name}` : ""}${
-              chosenFormats.length
-                ? ` + ${chosenFormats.map((format) => format.name).join(", ")}`
-                : ""
-            }.`
-          : "Pendiente de seleccionar la combinación final.",
-      source: "Configuración de campaña",
-    },
-    {
-      title: "Mecánica",
-      content:
-        chosenFormats.length
-          ? chosenFormats
-              .map((format) => format.description)
-              .filter(Boolean)
-              .join(" ")
-          : "Pendiente de definir a partir de los formatos seleccionados.",
-      source: "Catálogo PRISA",
-    },
-    {
-      title: "User journey",
-      content:
-        "Descubre → Interactúa → Explora → Decide → Convierte → Comparte",
-      source: "Estructura de campaña",
-    },
-    {
-      title: "Contenido",
-      content:
-        selectedFranchise?.description ||
-        chosenFormats[0]?.description ||
-        "Pendiente de desarrollar.",
-      source: selectedFranchise
-        ? "Franquicia + catálogo"
-        : "Catálogo PRISA",
-    },
-    {
-      title: "Tecnología",
-      content:
-        chosenFormats.length
-          ? chosenFormats
-              .map((format) => format.category)
-              .filter(Boolean)
-              .join(" · ")
-          : "Pendiente de definir.",
-      source: "Catálogo PRISA",
-    },
-    {
-      title: "KPI",
-      content:
-        discovery.result.length > 0
-          ? `Medición alineada a: ${discovery.result.join(", ")}${
-              discovery.reaction.length
-                ? ` · reacción esperada: ${discovery.reaction.join(", ")}`
-                : ""
-            }.`
-          : "Pendiente de definir a partir del resultado esperado.",
-      source: "Discovery",
-    },
   ];
 
-  // La propuesta visible se limita EXACTAMENTE a los cinco rubros
-  // indicados: los demás elementos quedan integrados dentro de
-  // "Emisora / ecosistema" y no se muestran como tarjetas separadas.
-  const visibleProposalTitles = [
-    "Marca",
-    "Contexto",
-    "Insight",
-    "Concepto de campaña",
-    "Emisora / ecosistema",
-  ];
-
-  const visibleProposalSections = proposalSections.filter((section) =>
-    visibleProposalTitles.includes(section.title)
-  );
-
-  const completedSections = visibleProposalSections.filter((section) => {
+  // La propuesta contiene únicamente los cinco rubros definidos.
+  // Todos los demás elementos están integrados dentro de "Emisora / ecosistema".
+  const completedSections = proposalSections.filter((section) => {
     const value = section.content.trim();
     return (
       value &&
@@ -4358,7 +4240,7 @@ function ProposalScreen({
       </div>
 
       <div className="reference-proposal-list">
-        {visibleProposalSections.map((section) => (
+        {proposalSections.map((section) => (
           <div
             className="reference-proposal-section"
             key={section.title}
