@@ -1113,6 +1113,63 @@ function ReferenceStyles() {
         .final-slide-content{grid-template-columns:1fr}
         .final-message{grid-column:auto;margin-top:40px;font-size:21px}
       }
+
+      /* ===== CORRECCIONES DE REUNIÓN ===== */
+      .reference-insight-card h3,
+      .reference-insight-card p,
+      .reference-op-grid h3,
+      .reference-op-grid small,
+      .reference-accordion-button span,
+      .reference-accordion-body{
+        color:#eef2f7!important;
+      }
+      .reference-insight-card p,
+      .reference-accordion-body{
+        font-size:12px!important;
+        line-height:1.65!important;
+      }
+      .reference-insight-card .row span{
+        font-size:9px!important;
+      }
+      .reference-chip-wrap{
+        justify-content:center!important;
+      }
+      .reference-chip{
+        color:#eef2f7!important;
+        font-size:10px!important;
+      }
+      .reference-why{
+        color:#ff2b9d!important;
+        font-size:11px!important;
+      }
+      .reference-proposal-section h3{
+        color:#fff!important;
+        font-size:12px!important;
+      }
+      .reference-proposal-section p{
+        color:#c4ccda!important;
+        font-size:11px!important;
+        line-height:1.65!important;
+        white-space:pre-line;
+      }
+      .simulation-context-text{
+        margin:8px auto 14px!important;
+        max-width:820px;
+        color:#c4ccda!important;
+        font-size:12px!important;
+        line-height:1.65!important;
+        text-align:center;
+      }
+      .reference-format-row strong,
+      .reference-format-row small{
+        color:#eef2f7!important;
+      }
+      .reference-format-row small{
+        font-size:10px!important;
+      }
+      .reference-format-row .reference-why{
+        color:#ff2b9d!important;
+      }
     `}</style>
   );
 }
@@ -4030,18 +4087,23 @@ function ProposalScreen({
     },
     {
       title: "Insight",
-      content:
-        discovery.challengeMore ||
-        discovery.moreInformation ||
-        "Se construirá a partir de las señales capturadas.",
-      source: "Discovery",
+      content: buildAnalyticalInsight(
+        brief,
+        discovery,
+        selectedBroadcaster,
+        chosenFormats
+      ),
+      source: "Análisis de Brief + Discovery",
     },
     {
       title: "Concepto de campaña",
-      content:
-        brief.product ||
-        "Concepto pendiente de desarrollar.",
-      source: "Brief",
+      content: buildCampaignConcept(
+        brief,
+        discovery,
+        selectedBroadcaster,
+        chosenFormats
+      ),
+      source: "Análisis de campaña",
     },
     {
       title: "Emisora / ecosistema",
@@ -4052,8 +4114,6 @@ function ProposalScreen({
     },
   ];
 
-  // La propuesta contiene únicamente los cinco rubros definidos.
-  // Todos los demás elementos están integrados dentro de "Emisora / ecosistema".
   const completedSections = proposalSections.filter((section) => {
     const value = section.content.trim();
     return (
@@ -4336,6 +4396,9 @@ function SimulationScreen({
             Visualiza la selección realizada y el inventario disponible en las
             regiones objetivo. Los valores provienen de las fuentes conectadas.
           </p>
+          <p className="simulation-context-text">
+            Esta sección estima el alcance potencial de la combinación seleccionada: emisora, formatos y regiones. Usa el inventario del catálogo para contextualizar la oportunidad; no representa resultados garantizados de campaña.
+          </p>
         </div>
       </div>
 
@@ -4501,6 +4564,96 @@ function SimulationScreen({
   );
 }
 
+
+function buildAnalyticalInsight(
+  brief: BriefData,
+  discovery: DiscoveryData,
+  broadcaster: Broadcaster | null,
+  chosenFormats: RecommendedFormat[]
+): string {
+  const challenge = [
+    ...discovery.challenge,
+    discovery.challengeMore.trim(),
+  ].filter(Boolean).join(", ");
+
+  const result = [
+    ...discovery.result,
+    discovery.resultMore.trim(),
+  ].filter(Boolean).join(", ");
+
+  const audience = [
+    ...discovery.audience,
+    discovery.audienceMore.trim(),
+    brief.audience,
+    brief.gender,
+    ...brief.ageRanges,
+  ].filter(Boolean).join(", ");
+
+  const reaction = [
+    ...discovery.reaction,
+    discovery.reactionMore.trim(),
+  ].filter(Boolean).join(", ");
+
+  const category = brief.category || "la categoría de la marca";
+  const channel = broadcaster?.name || "el ecosistema PRISA";
+  const formatNames = chosenFormats.map((format) => format.name).filter(Boolean);
+
+  if (!challenge && !result && !audience && !reaction && !brief.context) {
+    return "Aún no hay suficientes señales para construir un insight analítico. Completa Brief y Descubrimiento.";
+  }
+
+  const tension = challenge
+    ? `La principal tensión está en ${challenge.toLowerCase()}`
+    : `la necesidad de la marca en ${category}`;
+
+  const desiredChange = result
+    ? `y la campaña necesita moverla hacia ${result.toLowerCase()}`
+    : "y convertir esa necesidad en una respuesta relevante para la audiencia";
+
+  const audienceClause = audience
+    ? ` en una audiencia definida por ${audience.toLowerCase()}`
+    : "";
+
+  const reactionClause = reaction
+    ? `, buscando provocar ${reaction.toLowerCase()}`
+    : "";
+
+  const formatClause = formatNames.length
+    ? ` La activación puede apoyarse en ${formatNames.join(", ")}`
+    : "";
+
+  return `${tension} ${desiredChange}${audienceClause}${reactionClause}. El rol de ${channel} es conectar esa necesidad con un contexto de comunicación relevante.${formatClause}.`;
+}
+
+function buildCampaignConcept(
+  brief: BriefData,
+  discovery: DiscoveryData,
+  broadcaster: Broadcaster | null,
+  chosenFormats: RecommendedFormat[]
+): string {
+  const insight = buildAnalyticalInsight(
+    brief,
+    discovery,
+    broadcaster,
+    chosenFormats
+  );
+
+  if (insight.startsWith("Aún no hay suficientes")) {
+    return insight;
+  }
+
+  const reaction = [
+    ...discovery.reaction,
+    discovery.reactionMore.trim(),
+  ].filter(Boolean);
+
+  const category = brief.category || "la categoría";
+  const brand = brief.brand || "la marca";
+  const action = reaction[0] || discovery.result[0] || "generar consideración";
+
+  return `Convertir el reto de ${brand} en una experiencia relevante dentro de ${category}, usando el ecosistema PRISA para que la audiencia pueda ${action.toLowerCase()}.`;
+}
+
 function PresentationScreen({
   brief,
   discovery,
@@ -4532,11 +4685,21 @@ function PresentationScreen({
     brief.clientType === "B2C" ? brief.socioeconomic.join(", ") : "",
   ].filter(Boolean).join(" · ") || "Audiencia por definir";
 
-  const challengeText = [
-    ...discovery.challenge,
-    discovery.challengeMore,
-  ].filter(Boolean).join(" · ") || brief.context || "Reto pendiente de capturar con el cliente.";
+  const analyticalInsight = buildAnalyticalInsight(
+    brief,
+    discovery,
+    selectedBroadcaster,
+    chosen
+  );
 
+  const campaignConcept = buildCampaignConcept(
+    brief,
+    discovery,
+    selectedBroadcaster,
+    chosen
+  );
+
+  const challengeText = analyticalInsight;
   const resultText = [
     ...discovery.result,
     discovery.resultMore,
@@ -4595,7 +4758,7 @@ function PresentationScreen({
       </div>
 
       <div className="reference-presentation-warning">
-        ⚠ El borrador de propuesta puede estar incompleto; completa las etapas anteriores para construir la presentación con información real.
+        La presentación analiza las señales del Brief y Descubrimiento para construir un insight y un concepto; no es un copia y pega del brief.
       </div>
 
       <div className={`reference-slide slide-${slide + 1}`}>
@@ -4638,7 +4801,7 @@ function PresentationScreen({
               <h2>{challengeText}</h2>
               <div className="concept-box concept-box-centered">
                 <span>EL CONCEPTO</span>
-                <strong>{brief.product || reactionText}</strong>
+                <strong>{campaignConcept}</strong>
               </div>
               <p className="slide-centered-extra">Resultado buscado: {resultText}</p>
             </div>
