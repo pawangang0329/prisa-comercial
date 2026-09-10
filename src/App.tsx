@@ -4012,34 +4012,10 @@ function ProposalScreen({
       (franchise) => franchise.id === selectedFranchiseId
     ) ?? null;
 
-  const challengeText =
-    discovery.challenge.length > 0
-      ? discovery.challenge.join(" · ")
-      : brief.context || "Reto pendiente de definir.";
-
-  const resultText =
-    discovery.result.length > 0
-      ? discovery.result.join(" · ")
-      : brief.objective || "Resultado esperado pendiente de definir.";
-
-  const audienceText =
-    discovery.audience.length > 0
-      ? discovery.audience.join(" · ")
-      : brief.audience || "Audiencia pendiente de definir.";
-
-  const reactionText =
-    discovery.reaction.length > 0
-      ? discovery.reaction.join(" · ")
-      : "Reacción esperada pendiente de definir.";
-
   const contextText =
     discovery.moreInformation.trim() ||
     brief.context ||
     "Sin contexto adicional capturado.";
-
-  const formatText = chosenFormats.length
-    ? chosenFormats.map((format) => format.name).join(" · ")
-    : "Sin formatos seleccionados todavía.";
 
   const proposalSections = [
     {
