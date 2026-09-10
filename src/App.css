@@ -1334,6 +1334,7 @@ img {
 }
 
 .modal-icon {
+  align-self: center;
   width: 46px;
   height: 46px;
   display: grid;
