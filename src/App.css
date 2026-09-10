@@ -4303,7 +4303,7 @@ img {
   }
   .app-reference .summary-map-side-left .summary-map-node:nth-child(4) {
     left: 4% !important;
-    top: 86% !important;
+    top: 92% !important;
     transform: translateY(-100%) !important;
   }
 
@@ -4321,7 +4321,7 @@ img {
   }
   .app-reference .summary-map-side-right .summary-map-node:nth-child(4) {
     right: 4% !important;
-    top: 86% !important;
+    top: 92% !important;
     transform: translateY(-100%) !important;
   }
 
