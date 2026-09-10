@@ -689,6 +689,23 @@ function ReferenceStyles() {
       .final-slide-content>div{text-align:center!important;}
       .final-message{text-align:center!important;}
       /* ===== PRESENTACIÓN: centrado vertical real de las 6 láminas ===== */
+      /* ===== MOBILE: OVERRIDE DE REFERENCIA (se declara después de los estilos anteriores) ===== */
+      @media screen and (max-width:760px){
+        html,body,#root{width:100%!important;min-width:0!important;max-width:100%!important;overflow-x:hidden!important;}
+        .app-reference{width:100%!important;min-width:0!important;overflow-x:hidden!important;}
+        .app-reference .reference-main{margin-left:0!important;width:100%!important;max-width:100%!important;}
+        .app-reference .reference-sidebar{position:fixed!important;left:0!important;top:0!important;bottom:0!important;width:280px!important;min-width:280px!important;max-width:86vw!important;height:100dvh!important;margin:0!important;z-index:100!important;transform:translate3d(-110%,0,0)!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;box-sizing:border-box!important;transition:transform .22s ease,visibility 0s linear .22s,opacity .18s ease!important;}
+        .app-reference .reference-sidebar.mobile-open{transform:translate3d(0,0,0)!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+        .app-reference .mobile-sidebar-overlay{display:block!important;position:fixed!important;inset:0!important;width:100%!important;height:100%!important;padding:0!important;margin:0!important;border:0!important;background:rgba(0,0,0,.62)!important;z-index:90!important;}
+        .app-reference .mobile-menu-button{display:grid!important;width:42px!important;height:42px!important;flex:0 0 42px!important;place-items:center!important;}
+        .app-reference .reference-header{width:100%!important;box-sizing:border-box!important;padding:0 10px!important;}
+        .app-reference .reference-head-left{width:100%!important;min-width:0!important;gap:8px!important;}
+        .app-reference .reference-head-search{flex:1!important;min-width:0!important;width:auto!important;}
+        .app-reference .reference-head-actions .reference-icon{display:none!important;}
+        .app-reference .reference-head-actions{flex:0 0 auto!important;}
+        .app-reference .reference-content{width:100%!important;max-width:none!important;box-sizing:border-box!important;padding:18px 10px 34px!important;margin:0!important;}
+      }
+
       .reference-slide{
         position:relative!important;
         overflow:hidden!important;
