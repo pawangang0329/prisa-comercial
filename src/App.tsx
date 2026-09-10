@@ -4072,48 +4072,9 @@ function ProposalScreen({
       content: [
         `Emisora: ${selectedBroadcaster?.name || "Sin emisora seleccionada."}`,
         `Franquicia: ${selectedFranchise?.name || "Sin franquicia"}`,
-        `Formatos recomendados: ${formatText}`,
-        `Solución propuesta: ${
-          selectedBroadcaster || chosenFormats.length
-            ? `Solución basada en ${
-                selectedBroadcaster?.name || "el ecosistema PRISA"
-              }${selectedFranchise ? ` + ${selectedFranchise.name}` : ""}${
-                chosenFormats.length
-                  ? ` + ${chosenFormats.map((format) => format.name).join(", ")}`
-                  : ""
-              }.`
-            : "Pendiente de seleccionar la combinación final."
-        }`,
-        `Mecánica: ${
-          chosenFormats.length
-            ? chosenFormats
-                .map((format) => format.description)
-                .filter(Boolean)
-                .join(" ")
-            : "Pendiente de definir a partir de los formatos seleccionados."
-        }`,
-        "User journey: Descubre → Interactúa → Explora → Decide → Convierte → Comparte",
-        `Contenido: ${
-          selectedFranchise?.description ||
-          chosenFormats[0]?.description ||
-          "Pendiente de desarrollar."
-        }`,
-        `Tecnología: ${
-          chosenFormats.length
-            ? chosenFormats
-                .map((format) => format.category)
-                .filter(Boolean)
-                .join(" · ")
-            : "Pendiente de definir."
-        }`,
-        `KPI: ${
-          discovery.result.length > 0
-            ? `Medición alineada a: ${discovery.result.join(", ")}${
-                discovery.reaction.length
-                  ? ` · reacción esperada: ${discovery.reaction.join(", ")}`
-                  : ""
-              }.`
-            : "Pendiente de definir a partir del resultado esperado."
+        `Formatos: ${formatText}`,
+        `Solución: ${selectedBroadcaster?.name || "Pendiente de selección"}${
+          selectedFranchise ? ` + ${selectedFranchise.name}` : ""
         }`,
       ].join("\n"),
       source: "Selección + catálogo PRISA",
