@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import PRISALogo from "./assets/PRISA.png";
 import {
   ArrowLeft,
   ArrowRight,
@@ -1084,7 +1085,7 @@ function Logo() {
   return (
     <div className="brand-logo" style={{ width: 145, height: 43 }}>
       <img
-        src="/src/assets/PRISA.png"
+        src={PRISALogo}
         alt="PRISA Media"
         className="prisa-logo"
         style={{ width: 110, height: 39, objectFit: "contain", objectPosition: "left center" }}
