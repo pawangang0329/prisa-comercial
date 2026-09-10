@@ -229,6 +229,75 @@ img {
   stroke-width: 2.2;
 }
 
+/* ============================================================
+   NUEVA CAMPAÑA — BOTÓN DE SIDEBAR
+   ============================================================ */
+
+.sidebar-new-campaign {
+  width: calc(100% - 4px);
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 2px 2px 8px;
+  padding: 0 12px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ec0f82 0%, #c90b70 100%);
+  border: 1px solid rgba(255, 91, 184, .55);
+  border-radius: 9px;
+  box-shadow: 0 7px 18px rgba(236, 15, 130, .16);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .01em;
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+
+.sidebar-new-campaign:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 9px 24px rgba(236, 15, 130, .25);
+  transform: translateY(-1px);
+}
+
+.sidebar-new-campaign:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(236, 15, 130, .16);
+}
+
+.sidebar-new-campaign:focus-visible {
+  outline: 2px solid #ff70c1;
+  outline-offset: 2px;
+}
+
+.sidebar-new-icon {
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 22px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 6px;
+}
+
+.sidebar.collapsed .sidebar-new-campaign {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sidebar.collapsed .sidebar-new-campaign > span:last-child {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-new-icon {
+  width: 23px;
+  height: 23px;
+}
+
 .sidebar.collapsed .nav-item {
   justify-content: center;
   padding: 0;

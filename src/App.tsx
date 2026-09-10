@@ -213,6 +213,15 @@ const EMPTY_BRIEF: BriefData = {
   campaignName: "",
 };
 
+function createEmptyBrief(): BriefData {
+  return {
+    ...EMPTY_BRIEF,
+    ageRanges: [],
+    socioeconomic: [],
+    regions: [],
+  };
+}
+
 type DiscoveryData = {
   challenge: string[];
   challengeMore: string;
@@ -236,6 +245,16 @@ const EMPTY_DISCOVERY: DiscoveryData = {
   reactionMore: "",
   moreInformation: "",
 };
+
+function createEmptyDiscovery(): DiscoveryData {
+  return {
+    ...EMPTY_DISCOVERY,
+    challenge: [],
+    result: [],
+    audience: [],
+    reaction: [],
+  };
+}
 
 const PROJECTS_STORAGE_KEY = "prisa_projects";
 const SELECTED_BROADCASTER_STORAGE_KEY = "prisa_selected_broadcaster";
@@ -1135,12 +1154,14 @@ function NameModal({
 function Sidebar({
   currentPage,
   setCurrentPage,
+  onNewCampaign,
   userName,
   collapsed,
   setCollapsed,
 }: {
   currentPage: PageKey;
   setCurrentPage: (page: PageKey) => void;
+  onNewCampaign: () => void;
   userName: string;
   collapsed: boolean;
   setCollapsed: (value: boolean) => void;
@@ -1153,8 +1174,14 @@ function Sidebar({
           {collapsed ? <Menu size={17} /> : <X size={17} />}
         </button>
       </div>
-      <button className="new" onClick={() => setCurrentPage("brief")}>
-        <Plus size={14} /> Nueva campaña
+      <button
+        className="sidebar-new-campaign"
+        type="button"
+        onClick={onNewCampaign}
+        title="Iniciar una campaña nueva desde cero"
+      >
+        <span className="sidebar-new-icon"><Plus size={15} strokeWidth={2.4} /></span>
+        <span>Nueva campaña</span>
       </button>
       <div className="sidebar-section-label">WORKSPACE</div>
       <nav className="sidebar-nav">
@@ -4818,8 +4845,8 @@ export default function App() {
   const [showNameModal, setShowNameModal] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [brief, setBrief] = useState<BriefData>(EMPTY_BRIEF);
-  const [discovery, setDiscovery] = useState<DiscoveryData>(EMPTY_DISCOVERY);
+  const [brief, setBrief] = useState<BriefData>(createEmptyBrief);
+  const [discovery, setDiscovery] = useState<DiscoveryData>(createEmptyDiscovery);
   const [catalogRows, setCatalogRows] = useState<ExcelRow[]>([]);
   const [tariffRows, setTariffRows] = useState<ExcelRow[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -5392,14 +5419,18 @@ export default function App() {
   ], [brief]);
 
   const resetCampaign = () => {
+    // Una campaña nueva debe empezar completamente limpia, pero sin tocar
+    // las campañas que ya están guardadas en localStorage.
     setCurrentProjectId(null);
-    setBrief(EMPTY_BRIEF);
-    setDiscovery(EMPTY_DISCOVERY);
+    setBrief(createEmptyBrief());
+    setDiscovery(createEmptyDiscovery());
     setSelectedFormats([]);
     setSelectedOpportunity(null);
     updateSelectedBroadcaster(null);
     updateSelectedFranchise(null);
+    setSearchTerm("");
     setCurrentPage("brief");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const saveCampaign = () => {
@@ -5443,7 +5474,7 @@ export default function App() {
   const openProject = (project: Project) => {
     setCurrentProjectId(project.id);
     setBrief(project.brief);
-    setDiscovery(project.discovery ?? EMPTY_DISCOVERY);
+    setDiscovery(project.discovery ?? createEmptyDiscovery());
     setSelectedOpportunity(project.selectedOpportunity ?? null);
     updateSelectedBroadcaster(project.selectedBroadcasterId ?? null);
     updateSelectedFranchise(project.selectedFranchiseId ?? null);
@@ -5607,7 +5638,7 @@ export default function App() {
       <ReferenceStyles />
       {showNameModal && <NameModal value={userName} onConfirm={(name) => { if (name) { setUserName(name); localStorage.setItem("prisa_user_name", name); } setShowNameModal(false); }} />}
       <div className="app-shell app-reference">
-        <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} userName={userName} collapsed={collapsed} setCollapsed={setCollapsed} />
+        <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} onNewCampaign={resetCampaign} userName={userName} collapsed={collapsed} setCollapsed={setCollapsed} />
         <div className="app-main reference-main">
           <Header currentPage={currentPage} userName={userName} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
           <main className="main-container" style={{ maxWidth: "none", padding: 0 }}>
