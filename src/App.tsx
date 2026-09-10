@@ -1158,6 +1158,8 @@ function Sidebar({
   userName,
   collapsed,
   setCollapsed,
+  mobileMenuOpen,
+  setMobileMenuOpen,
 }: {
   currentPage: PageKey;
   setCurrentPage: (page: PageKey) => void;
@@ -1165,9 +1167,19 @@ function Sidebar({
   userName: string;
   collapsed: boolean;
   setCollapsed: (value: boolean) => void;
+  mobileMenuOpen: boolean;
+  setMobileMenuOpen: (value: boolean) => void;
 }) {
   return (
-    <aside className={`sidebar reference-sidebar ${collapsed ? "collapsed" : ""}`}>
+    <>
+      {mobileMenuOpen && (
+        <button
+          className="mobile-sidebar-overlay"
+          aria-label="Cerrar menú"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+      <aside className={`sidebar reference-sidebar ${collapsed ? "collapsed" : ""} ${mobileMenuOpen ? "mobile-open" : ""}`}>
       <div className="sidebar-top">
         <Logo />
         <button className="sidebar-toggle" style={{ display: "grid" }} onClick={() => setCollapsed(!collapsed)}>
@@ -1177,7 +1189,7 @@ function Sidebar({
       <button
         className="sidebar-new-campaign"
         type="button"
-        onClick={onNewCampaign}
+        onClick={() => { onNewCampaign(); setMobileMenuOpen(false); }}
         title="Iniciar una campaña nueva desde cero"
       >
         <span className="sidebar-new-icon"><Plus size={15} strokeWidth={2.4} /></span>
@@ -1191,7 +1203,7 @@ function Sidebar({
             <button
               key={item.key}
               className={currentPage === item.key ? "nav-item active" : "nav-item"}
-              onClick={() => setCurrentPage(item.key)}
+              onClick={() => { setCurrentPage(item.key); setMobileMenuOpen(false); }}
               title={collapsed ? item.label : undefined}
             >
               <Icon size={16} />
@@ -1202,7 +1214,7 @@ function Sidebar({
       </nav>
       {!collapsed && <div className="meeting">● Modo reunión</div>}
       <div className="sidebar-bottom">
-        <button className="nav-item" onClick={() => setCurrentPage("configuration")}>
+        <button className="nav-item" onClick={() => { setCurrentPage("configuration"); setMobileMenuOpen(false); }}>
           <Settings size={16} />
           {!collapsed && <span>Configuración</span>}
         </button>
@@ -1213,7 +1225,8 @@ function Sidebar({
           </div>
         )}
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 
@@ -1222,16 +1235,21 @@ function Header({
   userName,
   searchTerm,
   setSearchTerm,
+  onOpenMobileMenu,
 }: {
   currentPage: PageKey;
   userName: string;
   searchTerm: string;
   setSearchTerm: (value: string) => void;
+  onOpenMobileMenu: () => void;
 }) {
   const label = NAV_ITEMS.find((item) => item.key === currentPage)?.label ?? "Campañas";
   return (
     <header className="reference-header">
       <div className="reference-head-left">
+        <button className="mobile-menu-button" type="button" aria-label="Abrir menú" onClick={onOpenMobileMenu}>
+          <Menu size={20} />
+        </button>
         <div className="reference-head-search">
           <Search size={15} />
           <input value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Buscar proyectos, marcas..." />
@@ -4844,6 +4862,7 @@ export default function App() {
   const [userName, setUserName] = useState("");
   const [showNameModal, setShowNameModal] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [brief, setBrief] = useState<BriefData>(createEmptyBrief);
   const [discovery, setDiscovery] = useState<DiscoveryData>(createEmptyDiscovery);
@@ -5638,9 +5657,9 @@ export default function App() {
       <ReferenceStyles />
       {showNameModal && <NameModal value={userName} onConfirm={(name) => { if (name) { setUserName(name); localStorage.setItem("prisa_user_name", name); } setShowNameModal(false); }} />}
       <div className="app-shell app-reference">
-        <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} onNewCampaign={resetCampaign} userName={userName} collapsed={collapsed} setCollapsed={setCollapsed} />
+        <Sidebar currentPage={currentPage} setCurrentPage={setCurrentPage} onNewCampaign={resetCampaign} userName={userName} collapsed={collapsed} setCollapsed={setCollapsed} mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
         <div className="app-main reference-main">
-          <Header currentPage={currentPage} userName={userName} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <Header currentPage={currentPage} userName={userName} searchTerm={searchTerm} setSearchTerm={setSearchTerm} onOpenMobileMenu={() => setMobileMenuOpen(true)} />
           <main className="main-container" style={{ maxWidth: "none", padding: 0 }}>
             {completionPage()}
           </main>

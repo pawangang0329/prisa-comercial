@@ -3134,3 +3134,361 @@ img {
   margin-left: auto !important;
   margin-right: auto !important;
 }
+
+/* ============================================================
+   RESPONSIVE MOBILE — AJUSTES FINALES PRISA
+   ============================================================ */
+
+.mobile-menu-button {
+  display: none;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  color: #eef2f7;
+  background: #151a27;
+  border: 1px solid #293248;
+  border-radius: 9px;
+}
+
+.mobile-sidebar-overlay { display: none; }
+
+@media (max-width: 760px) {
+  .mobile-menu-button { display: grid; }
+
+  .reference-sidebar {
+    width: 272px !important;
+    max-width: 86vw;
+    transform: translateX(-105%) !important;
+    box-shadow: 16px 0 40px rgba(0,0,0,.38);
+    transition: transform .22s ease !important;
+  }
+
+  .reference-sidebar.mobile-open {
+    transform: translateX(0) !important;
+  }
+
+  .reference-sidebar.collapsed {
+    width: 272px !important;
+  }
+
+  .reference-sidebar.mobile-open .sidebar-section-label,
+  .reference-sidebar.mobile-open .nav-item span,
+  .reference-sidebar.mobile-open .sidebar-user,
+  .reference-sidebar.mobile-open .meeting,
+  .reference-sidebar.mobile-open .sidebar-new-campaign > span:last-child {
+    display: initial;
+  }
+
+  .reference-sidebar.mobile-open .sidebar-top {
+    justify-content: space-between;
+    padding: 0 7px;
+  }
+
+  .reference-sidebar.mobile-open .brand-logo {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .reference-sidebar.mobile-open .prisa-logo {
+    width: 105px;
+    height: 38px;
+    object-position: left center;
+  }
+
+  .reference-sidebar.mobile-open .nav-item {
+    justify-content: flex-start;
+    padding: 0 10px;
+  }
+
+  .reference-sidebar.mobile-open .sidebar-user {
+    flex-direction: row !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
+
+  .reference-sidebar.mobile-open .sidebar-user > div:last-child {
+    display: flex;
+  }
+
+  .reference-sidebar.mobile-open .sidebar-new-campaign {
+    width: calc(100% - 4px);
+    height: 40px;
+    padding: 0 12px;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
+  .reference-main {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  .mobile-sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: rgba(0,0,0,.52);
+    border: 0;
+  }
+
+  .reference-header {
+    min-height: 58px;
+    gap: 9px;
+    padding: 0 12px;
+  }
+
+  .reference-head-left {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .reference-head-actions {
+    flex: 0 0 auto;
+  }
+
+  .reference-head-actions .reference-icon:nth-child(2),
+  .reference-head-actions .reference-icon:nth-child(3) {
+    display: none;
+  }
+
+  .reference-head-actions .avatar {
+    display: grid !important;
+  }
+
+  .reference-project {
+    display: none;
+  }
+
+  .reference-content {
+    width: 100%;
+    padding: 20px 12px 38px;
+  }
+
+  .reference-title-row {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .reference-title-row > div:first-child {
+    text-align: center;
+  }
+
+  .reference-title-row .reference-complete {
+    position: static;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .reference-title-row h1 {
+    font-size: 23px;
+  }
+
+  .reference-kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .reference-grid2,
+  .reference-op-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-panel,
+  .reference-card,
+  .reference-brief-card {
+    max-width: none;
+  }
+
+  .reference-brief-card {
+    padding: 14px;
+  }
+
+  .reference-brief-head {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .reference-brief-head .reference-complete {
+    position: static;
+    align-items: center;
+  }
+
+  .reference-brief-footer {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .reference-tabs,
+  .reference-format-tabs {
+    width: 100%;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .reference-tab {
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  .reference-format-row {
+    grid-template-columns: 30px minmax(0,1fr) auto;
+    gap: 9px;
+    justify-items: start;
+    text-align: left;
+    padding: 11px 10px;
+  }
+
+  .reference-format-row > :nth-child(2) {
+    display: none;
+  }
+
+  .reference-format-row .reference-why {
+    grid-column: 2 / -1;
+    justify-self: start;
+    white-space: normal;
+    min-width: 0;
+  }
+
+  .reference-format-row .reference-progress-bar {
+    grid-column: 2 / -1;
+    width: 100%;
+  }
+
+  .reference-format-row .ref-score {
+    justify-self: end;
+  }
+
+  .reference-sim-chart {
+    overflow-x: auto;
+  }
+
+  .reference-chart {
+    min-width: 430px;
+  }
+
+  .reference-bar-row {
+    grid-template-columns: 92px minmax(220px,1fr);
+  }
+
+  .reference-sim-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-presentation-shell {
+    padding: 17px 12px 30px;
+  }
+
+  .reference-presentation-top {
+    gap: 8px;
+  }
+
+  .reference-presentation-top h2 {
+    font-size: 14px;
+  }
+
+  .reference-slide {
+    width: 100%;
+    aspect-ratio: auto;
+    min-height: 430px;
+    padding: 28px 20px;
+  }
+
+  .reference-slide h1 {
+    font-size: 28px;
+  }
+
+  .reference-thumbnails {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .presentation-top-centered .reference-presentation-meta {
+    position: static;
+  }
+
+  .presentation-centered-content {
+    padding-top: 28px;
+  }
+
+  .audience-slide-centered-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .story-list-centered {
+    max-width: 100%;
+  }
+
+  .reference-proposal-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .reference-proposal-section {
+    padding: 14px;
+  }
+
+  .reference-edit {
+    position: static;
+    margin-top: 10px;
+    padding: 5px 0;
+  }
+}
+
+@media (max-width: 430px) {
+  .reference-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-kpi {
+    min-height: 86px;
+  }
+
+  .reference-map {
+    height: 225px;
+  }
+
+  .reference-node {
+    width: 60px;
+    height: 60px;
+  }
+
+  .reference-node.center {
+    width: 70px;
+    height: 70px;
+  }
+
+  .reference-node.n1 { left: 6%; }
+  .reference-node.n2 { right: 6%; }
+  .reference-node.n3 { left: 7%; }
+  .reference-node.n4 { right: 7%; }
+
+  .reference-presentation-shell {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .reference-slide {
+    min-height: 470px;
+    padding: 24px 16px;
+  }
+
+  .reference-slide h1 {
+    font-size: 25px;
+  }
+
+  .reference-thumbnails {
+    gap: 6px;
+  }
+
+  .reference-thumb {
+    min-height: 62px;
+    font-size: 7px;
+  }
+}
