@@ -1334,12 +1334,13 @@ img {
 }
 
 .modal-icon {
-  align-self: center;
   width: 46px;
   height: 46px;
+  flex: 0 0 46px;
   display: grid;
   place-items: center;
-  margin-bottom: 13px;
+  align-self: center;
+  margin: 0 auto 13px auto;
   color: var(--pink-2);
   background: #32162f;
   border-radius: 11px;
@@ -3052,3 +3053,15 @@ img {
 /* ============================================================
    FIN DE CORRECCIONES DE REFERENCIA
    ============================================================ */
+
+
+/* ============================================================
+   FIX FINAL — ICONO CENTRADO DEL MODAL DE NOMBRE
+   ============================================================ */
+.name-modal > .modal-icon {
+  display: grid;
+  place-items: center;
+  align-self: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
