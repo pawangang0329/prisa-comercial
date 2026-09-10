@@ -4485,3 +4485,128 @@ img {
     height: 70px !important;
   }
 }
+/* ============================================================
+   AJUSTE FINAL — MAPA DE OPORTUNIDADES EN ESCRITORIO
+   Se añade sobre el CSS completo existente.
+   No reemplaza ni elimina ninguna regla anterior.
+   ============================================================ */
+
+@media screen and (min-width: 761px) {
+  .app-reference .summary-map-card {
+    overflow: hidden !important;
+  }
+
+  .app-reference .summary-map {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 520px !important;
+    height: 520px !important;
+    margin-top: 16px !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .summary-map-side {
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 35% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding: 42px 0 !important;
+    z-index: 5 !important;
+  }
+
+  .app-reference .summary-map-side-left {
+    left: 18px !important;
+  }
+
+  .app-reference .summary-map-side-right {
+    right: 18px !important;
+  }
+
+  .app-reference .summary-map-node {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 92px !important;
+    padding: 14px 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 13px !important;
+    border-radius: 13px !important;
+    z-index: 6 !important;
+  }
+
+  .app-reference .summary-map-node-icon {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    flex-basis: 48px !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .app-reference .summary-map-node-copy {
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+
+  .app-reference .summary-map-node-copy strong {
+    display: block !important;
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+  }
+
+  .app-reference .summary-map-node-copy span {
+    display: block !important;
+    margin-top: 4px !important;
+    font-size: 10px !important;
+    line-height: 1.35 !important;
+  }
+
+  .app-reference .summary-map-node-copy small {
+    display: block !important;
+    margin-top: 4px !important;
+    font-size: 8px !important;
+    line-height: 1.35 !important;
+  }
+
+  .app-reference .summary-map-center {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 132px !important;
+    height: 132px !important;
+    margin: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    z-index: 12 !important;
+  }
+
+  .app-reference .summary-map-center div {
+    font-size: 15px !important;
+  }
+
+  .app-reference .summary-map-center span {
+    font-size: 8px !important;
+  }
+
+  .app-reference .summary-map-connectors {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+  }
+
+  .app-reference .summary-map-connectors span {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    width: 28% !important;
+    height: 2px !important;
+    transform-origin: left center !important;
+    opacity: .85 !important;
+  }
+}
