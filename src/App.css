@@ -4610,3 +4610,53 @@ img {
     opacity: .85 !important;
   }
 }
+
+
+/* ============================================================
+   CORRECCIONES DEL COMPAÑERO — PROPUESTA + ANÁLISIS
+   ============================================================ */
+
+.reference-proposal-list {
+  gap: 12px;
+}
+
+.reference-proposal-section {
+  min-height: 92px;
+}
+
+.reference-proposal-section p {
+  white-space: pre-line;
+  line-height: 1.65;
+  font-size: 10px;
+}
+
+/* El mapa de oportunidades se construye 100% en React/CSS/SVG.
+   ANÁLISIS no depende de ninguna imagen externa. */
+.summary-map-center {
+  width: 104px !important;
+  height: 104px !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  border-radius: 50% !important;
+  background: #ec0f82 !important;
+  border: 1px solid #ff53b1 !important;
+  box-shadow: 0 0 38px rgba(236, 15, 130, .20) !important;
+  z-index: 5 !important;
+}
+
+.summary-map-center > div {
+  display: none !important;
+}
+
+.summary-map-center > span {
+  margin: 0 !important;
+  color: #fff !important;
+  font-size: 12px !important;
+  font-weight: 900 !important;
+  letter-spacing: .12em !important;
+}

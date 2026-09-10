@@ -919,29 +919,26 @@ function ReferenceStyles() {
         left:50%;
         top:50%;
         transform:translate(-50%,-50%);
-        width:72px;
-        height:72px;
+        width:104px;
+        height:104px;
         border-radius:50%;
         display:flex;
-        flex-direction:column;
         align-items:center;
         justify-content:center;
         background:#ec0f82;
         border:1px solid #ff53b1;
         color:#fff;
         z-index:4;
-        box-shadow:0 0 34px rgba(236,15,130,.16);
+        box-shadow:0 0 38px rgba(236,15,130,.20);
+        text-align:center;
       }
-      .summary-map-center div{
-        font-size:11px;
-        line-height:1;
-        letter-spacing:.08em;
-      }
+      .summary-map-center div{display:none}
       .summary-map-center span{
-        margin-top:4px;
-        color:#ffe5f3;
-        font-size:6px;
-        letter-spacing:.08em;
+        margin:0;
+        color:#fff;
+        font-size:12px;
+        font-weight:900;
+        letter-spacing:.12em;
       }
       .summary-map-connectors{
         position:absolute;
@@ -2479,8 +2476,7 @@ function SummaryScreen({
             ))}
           </div>
 
-          <div className="summary-map-center">
-            <div>•••</div>
+          <div className="summary-map-center" aria-label="Análisis de oportunidades">
             <span>ANÁLISIS</span>
           </div>
 
@@ -4041,6 +4037,55 @@ function ProposalScreen({
     ? chosenFormats.map((format) => format.name).join(" · ")
     : "Sin formatos seleccionados todavía.";
 
+  const conceptText =
+    brief.product ||
+    (brief.brand && discovery.reaction.length
+      ? `${brief.brand}: ${discovery.reaction.join(" · ")}`
+      : discovery.reaction.length
+      ? discovery.reaction.join(" · ")
+      : "Concepto pendiente de desarrollar.");
+
+  const ecosystemDetails = [
+    selectedFranchise
+      ? `Franquicia: ${selectedFranchise.name}`
+      : "Franquicia: Sin franquicia",
+    chosenFormats.length
+      ? `Formatos: ${chosenFormats.map((format) => format.name).join(" · ")}`
+      : "Formatos: Sin formatos seleccionados",
+    selectedBroadcaster || chosenFormats.length
+      ? `Solución: ${selectedBroadcaster?.name || "Ecosistema PRISA"}${
+          selectedFranchise ? ` + ${selectedFranchise.name}` : ""
+        }${
+          chosenFormats.length
+            ? ` + ${chosenFormats.map((format) => format.name).join(", ")}`
+            : ""
+        }`
+      : "Solución: Pendiente de seleccionar la combinación final",
+    chosenFormats.length
+      ? `Mecánica: ${chosenFormats
+          .map((format) => format.description)
+          .filter(Boolean)
+          .join(" ")}`
+      : "Mecánica: Pendiente de definir a partir de los formatos seleccionados",
+    "User journey: Descubre → Interactúa → Explora → Decide → Convierte → Comparte",
+    selectedFranchise?.description ||
+      chosenFormats[0]?.description ||
+      "Contenido: Pendiente de desarrollar",
+    chosenFormats.length
+      ? `Tecnología: ${chosenFormats
+          .map((format) => format.category)
+          .filter(Boolean)
+          .join(" · ")}`
+      : "Tecnología: Pendiente de definir",
+    discovery.result.length > 0
+      ? `KPI: Medición alineada a ${discovery.result.join(", ")}${
+          discovery.reaction.length
+            ? ` · reacción esperada: ${discovery.reaction.join(", ")}`
+            : ""
+        }.`
+      : "KPI: Pendiente de definir a partir del resultado esperado",
+  ];
+
   const proposalSections = [
     {
       title: "Marca",
@@ -4053,133 +4098,29 @@ function ProposalScreen({
       source: "Brief + Discovery",
     },
     {
-      title: "Problema",
-      content: challengeText,
-      source: "Discovery",
-    },
-    {
       title: "Insight",
       content:
         discovery.challengeMore ||
         discovery.moreInformation ||
+        challengeText ||
         "Se construirá a partir de las señales capturadas.",
       source: "Discovery",
     },
     {
       title: "Concepto de campaña",
-      content:
-        brief.product ||
-        "Concepto pendiente de desarrollar.",
-      source: "Brief",
-    },
-    {
-      title: "Objetivo",
-      content: resultText,
+      content: conceptText,
       source: "Brief + Discovery",
-    },
-    {
-      title: "Audiencia",
-      content: audienceText,
-      source:
-        brief.clientType === "B2B"
-          ? "B2B + Discovery"
-          : brief.clientType === "B2C"
-          ? "B2C + Discovery"
-          : "Brief + Discovery",
-    },
-    {
-      title: "Oportunidad",
-      content:
-        reactionText ||
-        "Oportunidad pendiente de definir.",
-      source: "Discovery",
     },
     {
       title: "Emisora / ecosistema",
       content:
-        selectedBroadcaster?.name ||
-        "Sin emisora seleccionada.",
-      source: selectedBroadcaster
-        ? "Selección en Formatos"
-        : "Pendiente",
-    },
-    {
-      title: "Franquicia",
-      content:
-        selectedFranchise?.name ||
-        "Sin franquicia",
-      source: selectedFranchise
-        ? "Selección en Formatos"
-        : "Selección opcional",
-    },
-    {
-      title: "Formatos recomendados",
-      content: formatText,
-      source: "Scoring + selección",
-    },
-    {
-      title: "Solución propuesta",
-      content:
-        selectedBroadcaster || chosenFormats.length
-          ? `Solución basada en ${
-              selectedBroadcaster?.name || "el ecosistema PRISA"
-            }${selectedFranchise ? ` + ${selectedFranchise.name}` : ""}${
-              chosenFormats.length
-                ? ` + ${chosenFormats.map((format) => format.name).join(", ")}`
-                : ""
-            }.`
-          : "Pendiente de seleccionar la combinación final.",
-      source: "Configuración de campaña",
-    },
-    {
-      title: "Mecánica",
-      content:
-        chosenFormats.length
-          ? chosenFormats
-              .map((format) => format.description)
-              .filter(Boolean)
-              .join(" ")
-          : "Pendiente de definir a partir de los formatos seleccionados.",
-      source: "Catálogo PRISA",
-    },
-    {
-      title: "User journey",
-      content:
-        "Descubre → Interactúa → Explora → Decide → Convierte → Comparte",
-      source: "Estructura de campaña",
-    },
-    {
-      title: "Contenido",
-      content:
-        selectedFranchise?.description ||
-        chosenFormats[0]?.description ||
-        "Pendiente de desarrollar.",
-      source: selectedFranchise
-        ? "Franquicia + catálogo"
-        : "Catálogo PRISA",
-    },
-    {
-      title: "Tecnología",
-      content:
-        chosenFormats.length
-          ? chosenFormats
-              .map((format) => format.category)
-              .filter(Boolean)
-              .join(" · ")
-          : "Pendiente de definir.",
-      source: "Catálogo PRISA",
-    },
-    {
-      title: "KPI",
-      content:
-        discovery.result.length > 0
-          ? `Medición alineada a: ${discovery.result.join(", ")}${
-              discovery.reaction.length
-                ? ` · reacción esperada: ${discovery.reaction.join(", ")}`
-                : ""
-            }.`
-          : "Pendiente de definir a partir del resultado esperado.",
-      source: "Discovery",
+        [
+          selectedBroadcaster?.name
+            ? `Emisora: ${selectedBroadcaster.name}`
+            : "Emisora: Sin emisora seleccionada",
+          ...ecosystemDetails,
+        ].join("\n"),
+      source: "Selección + catálogo PRISA",
     },
   ];
 
@@ -4189,7 +4130,7 @@ function ProposalScreen({
       value &&
       !value.toLowerCase().includes("pendiente") &&
       !value.toLowerCase().includes("sin marca") &&
-      !value.toLowerCase().includes("sin formatos")
+      !value.toLowerCase().includes("sin emisora")
     );
   }).length;
 
@@ -4221,7 +4162,7 @@ function ProposalScreen({
           }}
         >
           <div className="reference-complete">
-            <strong>{completedSections}/17</strong>
+            <strong>{completedSections}/5</strong>
             <span>secciones con información</span>
           </div>
 
@@ -4358,9 +4299,11 @@ function ProposalScreen({
             lineHeight: 1.6,
           }}
         >
-          La propuesta llega hasta KPI. Se eliminaron
-          “Datos faltantes” y “Next steps” para mantener
-          el borrador limpio y enfocado en la solución.
+          La propuesta se concentra en cinco rubros:
+          Marca, Contexto, Insight, Concepto de campaña y
+          Emisora / ecosistema. Dentro de Emisora / ecosistema
+          se integran franquicia, formatos, solución, mecánica,
+          user journey, contenido, tecnología y KPI.
         </p>
       </div>
 
