@@ -4069,14 +4069,9 @@ function ProposalScreen({
     },
     {
       title: "Emisora / ecosistema",
-      content: [
-        `Emisora: ${selectedBroadcaster?.name || "Sin emisora seleccionada."}`,
-        `Franquicia: ${selectedFranchise?.name || "Sin franquicia"}`,
-        `Formatos: ${formatText}`,
-        `Solución: ${selectedBroadcaster?.name || "Pendiente de selección"}${
-          selectedFranchise ? ` + ${selectedFranchise.name}` : ""
-        }`,
-      ].join("\n"),
+      content: `Emisora: ${
+        selectedBroadcaster?.name || "Sin emisora seleccionada."
+      }`,
       source: "Selección + catálogo PRISA",
     },
   ];
