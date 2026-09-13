@@ -2007,8 +2007,9 @@ function DiscoveryScreen({
                   {question.number}
                 </div>
 
-                <div style={{ flex: 1 }}>
+                <div className="discovery-question-content" style={{ flex: 1 }}>
                   <h3
+                    className="discovery-question-title"
                     style={{
                       margin: 0,
                       color: "#eef2f7",
@@ -2022,7 +2023,7 @@ function DiscoveryScreen({
                     {question.description}
                   </p>
 
-                  <div className="reference-chip-wrap">
+                  <div className="reference-chip-wrap discovery-chip-wrap">
                     {options.map((option) => (
                       <ToggleChip
                         key={option}

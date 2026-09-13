@@ -4857,3 +4857,56 @@ img {
   .app-reference .reference-why-data > span { font-size: 8px !important; }
   .app-reference .reference-why-button { font-size: 9px; }
 }
+
+/* ============================================================
+   DESCUBRIMIENTO — AJUSTE DE TIPOGRAFÍA Y CENTRADO
+   ============================================================ */
+.app-reference .reference-insight-card .discovery-question-content {
+  min-width: 0;
+}
+
+.app-reference .reference-insight-card .discovery-question-title {
+  font-size: 16px !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+  color: #f4f6fa !important;
+}
+
+.app-reference .reference-insight-card .discovery-question-content > p {
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  text-align: center !important;
+  color: #aeb8ca !important;
+  margin: 9px 0 14px !important;
+}
+
+.app-reference .reference-insight-card .discovery-chip-wrap {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center !important;
+  align-items: center;
+  gap: 8px;
+  margin: 0 auto;
+}
+
+.app-reference .reference-insight-card .discovery-chip-wrap .reference-chip {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+  padding: 8px 10px !important;
+  color: #dfe5ef !important;
+}
+
+.app-reference .reference-insight-card .discovery-more-button {
+  display: block !important;
+  margin: 12px auto 0 !important;
+  text-align: center !important;
+  font-size: 11px !important;
+}
+
+.app-reference .reference-insight-card > div:first-child > div:first-child {
+  font-size: 11px !important;
+  padding-top: 3px !important;
+}
+
