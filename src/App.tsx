@@ -2007,9 +2007,8 @@ function DiscoveryScreen({
                   {question.number}
                 </div>
 
-                <div className="discovery-question-content" style={{ flex: 1 }}>
+                <div style={{ flex: 1 }}>
                   <h3
-                    className="discovery-question-title"
                     style={{
                       margin: 0,
                       color: "#eef2f7",
@@ -2023,7 +2022,7 @@ function DiscoveryScreen({
                     {question.description}
                   </p>
 
-                  <div className="reference-chip-wrap discovery-chip-wrap">
+                  <div className="reference-chip-wrap">
                     {options.map((option) => (
                       <ToggleChip
                         key={option}
@@ -3485,20 +3484,31 @@ function FormatsScreen({
                     </small>
                   </div>
 
-                  <button
-                    type="button"
-                    className="reference-why"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      setWhyBroadcasterId(
-                        whyBroadcasterId === broadcaster.id
-                          ? null
-                          : broadcaster.id
-                      );
-                    }}
-                  >
-                    Por qué ›
-                  </button>
+                  <div className="reference-why-data">
+                    <span>
+                      {broadcaster.coverage || "Cobertura no disponible"}
+                    </span>
+                    <span>
+                      {broadcaster.genderProfile || "Perfil demográfico no disponible"}
+                    </span>
+                    <span>
+                      {broadcaster.ages || "Edades no disponibles"}
+                    </span>
+                    <button
+                      type="button"
+                      className="reference-why-button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setWhyBroadcasterId(
+                          whyBroadcasterId === broadcaster.id
+                            ? null
+                            : broadcaster.id
+                        );
+                      }}
+                    >
+                      Ver datos completos ›
+                    </button>
+                  </div>
 
                   {whyBroadcasterId === broadcaster.id &&
                     recommendation && (
@@ -3515,18 +3525,36 @@ function FormatsScreen({
                         <strong
                           style={{
                             color: "#eef2f7",
-                            fontSize: 9,
+                            fontSize: 11,
                           }}
                         >
-                          ¿Por qué {recommendation.affinity}%?
+                          Datos de {broadcaster.name}
                         </strong>
+
+                        <div className="broadcaster-catalog-evidence">
+                          {broadcaster.coverage && (
+                            <span><strong>Cobertura:</strong> {broadcaster.coverage}</span>
+                          )}
+                          {broadcaster.genderProfile && (
+                            <span><strong>Perfil:</strong> {broadcaster.genderProfile}</span>
+                          )}
+                          {broadcaster.ages && (
+                            <span><strong>Edades:</strong> {broadcaster.ages}</span>
+                          )}
+                          {broadcaster.socioeconomic && (
+                            <span><strong>Nivel socioeconómico:</strong> {broadcaster.socioeconomic}</span>
+                          )}
+                          {broadcaster.interests && (
+                            <span><strong>Afinidades:</strong> {broadcaster.interests}</span>
+                          )}
+                        </div>
 
                         <div
                           style={{
                             display: "grid",
                             gridTemplateColumns: "repeat(5, 1fr)",
                             gap: 8,
-                            marginTop: 9,
+                            marginTop: 12,
                           }}
                         >
                           {[
@@ -3563,11 +3591,21 @@ function FormatsScreen({
                         <div
                           style={{
                             marginTop: 9,
-                            color: "#7d889d",
-                            fontSize: 8,
+                            color: "#aeb8c8",
+                            fontSize: 9,
+                            lineHeight: 1.5,
                           }}
                         >
                           {recommendation.reasons.join(" · ")}
+                        </div>
+                        <div
+                          style={{
+                            marginTop: 7,
+                            color: "#68748b",
+                            fontSize: 8,
+                          }}
+                        >
+                          Datos tomados de la hoja “Emisoras” del catálogo PRISA.
                         </div>
                       </div>
                     )}

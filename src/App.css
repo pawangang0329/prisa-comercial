@@ -4858,55 +4858,85 @@ img {
   .app-reference .reference-why-button { font-size: 9px; }
 }
 
+
 /* ============================================================
-   DESCUBRIMIENTO — AJUSTE DE TIPOGRAFÍA Y CENTRADO
+   FORMATOS — EVIDENCIA DE EMISORAS VISIBLE
    ============================================================ */
-.app-reference .reference-insight-card .discovery-question-content {
-  min-width: 0;
+.app-reference .reference-format-row {
+  align-items: center !important;
+  min-height: 92px;
 }
 
-.app-reference .reference-insight-card .discovery-question-title {
-  font-size: 16px !important;
-  line-height: 1.35 !important;
-  text-align: center !important;
-  color: #f4f6fa !important;
-}
-
-.app-reference .reference-insight-card .discovery-question-content > p {
-  font-size: 13px !important;
-  line-height: 1.55 !important;
-  text-align: center !important;
-  color: #aeb8ca !important;
-  margin: 9px 0 14px !important;
-}
-
-.app-reference .reference-insight-card .discovery-chip-wrap {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
+.app-reference .reference-why-data {
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
   justify-content: center !important;
-  align-items: center;
-  gap: 8px;
-  margin: 0 auto;
-}
-
-.app-reference .reference-insight-card .discovery-chip-wrap .reference-chip {
-  font-size: 11px !important;
-  line-height: 1.35 !important;
+  gap: 4px !important;
   text-align: center !important;
-  padding: 8px 10px !important;
-  color: #dfe5ef !important;
 }
 
-.app-reference .reference-insight-card .discovery-more-button {
+.app-reference .reference-why-data > span {
   display: block !important;
-  margin: 12px auto 0 !important;
-  text-align: center !important;
-  font-size: 11px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  color: #d8deea !important;
+  font-size: 9px !important;
+  line-height: 1.35 !important;
 }
 
-.app-reference .reference-insight-card > div:first-child > div:first-child {
-  font-size: 11px !important;
-  padding-top: 3px !important;
+.app-reference .reference-why-button {
+  margin-top: 3px !important;
+  padding: 2px 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #ff2b9d !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
 }
 
+.app-reference .broadcaster-catalog-evidence {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  margin-top: 10px !important;
+}
+
+.app-reference .broadcaster-catalog-evidence span {
+  padding: 6px 8px !important;
+  border: 1px solid #35405a !important;
+  border-radius: 7px !important;
+  color: #d4dbe7 !important;
+  background: #151d2c !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+
+.app-reference .broadcaster-catalog-evidence span strong {
+  color: #ffffff !important;
+  font-size: 10px !important;
+}
+
+@media (max-width: 1050px) {
+  .app-reference .reference-format-row {
+    grid-template-columns: 38px 38px minmax(150px, 1fr) 95px 190px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-reference .reference-format-row {
+    min-height: 100px !important;
+    grid-template-columns: 28px 28px minmax(100px, 1fr) 0 130px !important;
+  }
+  .app-reference .reference-why-data > span {
+    font-size: 8px !important;
+  }
+  .app-reference .reference-why-button {
+    font-size: 8px !important;
+  }
+}
