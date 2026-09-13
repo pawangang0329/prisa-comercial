@@ -3344,6 +3344,9 @@ function FormatsScreen({
             >
               {recommendedBroadcasters.slice(0, 3).map((recommendation, index) => {
                 const active = selectedBroadcasterId === recommendation.id;
+                const recommendedStation = broadcasters.find(
+                  (broadcaster) => broadcaster.id === recommendation.id
+                );
                 return (
                   <button
                     key={recommendation.id}
@@ -3379,29 +3382,33 @@ function FormatsScreen({
                     </div>
 
                     <small
-                      style={{
-                        display: "block",
-                        marginTop: 4,
-                        color: "#718098",
-                        fontSize: 7,
-                      }}
+                      className="recommendation-affinity-label"
                     >
                       Afinidad estimada
                     </small>
 
-                    <span
-                      style={{
-                        display: "block",
-                        marginTop: 7,
-                        color: "#8f9aae",
-                        fontSize: 7,
-                        lineHeight: 1.45,
-                      }}
-                    >
+                    <span className="recommendation-reason">
                       Mayor afinidad porque:{" "}
                       {(recommendation.reasons.slice(0, 2).join(" · ")) ||
                         "coincidencia con la información disponible."}
                     </span>
+
+                    {recommendedStation && (
+                      <div className="recommendation-station-evidence">
+                        <span>
+                          <strong>Cobertura:</strong>{" "}
+                          {recommendedStation.coverage || "No disponible"}
+                        </span>
+                        <span>
+                          <strong>Perfil:</strong>{" "}
+                          {recommendedStation.genderProfile || "No disponible"}
+                        </span>
+                        <span>
+                          <strong>Edades:</strong>{" "}
+                          {recommendedStation.ages || "No disponible"}
+                        </span>
+                      </div>
+                    )}
                   </button>
                 );
               })}
@@ -4293,12 +4300,7 @@ function ProposalScreen({
             >
               <h3>{section.title}</h3>
 
-              <span
-                style={{
-                  color: "#637087",
-                  fontSize: 7,
-                }}
-              >
+              <span className="proposal-section-source">
                 · {section.source}
               </span>
             </div>

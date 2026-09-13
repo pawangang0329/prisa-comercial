@@ -4940,3 +4940,81 @@ img {
     font-size: 8px !important;
   }
 }
+
+
+/* ============================================================
+   AJUSTE DE LEGIBILIDAD — RECOMENDACIONES Y PROPUESTA
+   ============================================================ */
+.app-reference .recommendation-affinity-label {
+  display: block !important;
+  margin-top: 6px !important;
+  color: #aeb8c9 !important;
+  font-size: 10px !important;
+  line-height: 1.4 !important;
+}
+
+.app-reference .recommendation-reason {
+  display: block !important;
+  margin-top: 7px !important;
+  color: #d0d7e3 !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+
+.app-reference .recommendation-station-evidence {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3px !important;
+  margin-top: 8px !important;
+  padding-top: 7px !important;
+  border-top: 1px solid #293248 !important;
+}
+
+.app-reference .recommendation-station-evidence span {
+  display: block !important;
+  color: #d7deea !important;
+  font-size: 10px !important;
+  line-height: 1.45 !important;
+}
+
+.app-reference .recommendation-station-evidence strong {
+  color: #ffffff !important;
+  font-size: 10px !important;
+}
+
+/* Los textos pequeños que identifican la fuente de cada rubro
+   deben poder leerse sin competir con el título. */
+.app-reference .proposal-section-source {
+  color: #9eabc0 !important;
+  font-size: 10px !important;
+  line-height: 1.35 !important;
+  font-weight: 500 !important;
+}
+
+.app-reference .reference-proposal-section h3 {
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+}
+
+.app-reference .reference-proposal-section p {
+  color: #e0e5ed !important;
+  font-size: 12px !important;
+  line-height: 1.7 !important;
+}
+
+.app-reference .reference-proposal-header h2 {
+  color: #f4f6fa !important;
+  font-size: 22px !important;
+}
+
+.app-reference .reference-proposal-header p {
+  color: #aeb8c9 !important;
+  font-size: 11px !important;
+  line-height: 1.55 !important;
+}
+
+/* También hacemos legible la explicación superior de la recomendación. */
+.app-reference .reference-card .recommendation-header-subtitle {
+  color: #aeb8c9 !important;
+  font-size: 10px !important;
+}
