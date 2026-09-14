@@ -4615,12 +4615,12 @@ function buildAnalyticalInsight(
   const challenge = [
     ...discovery.challenge,
     discovery.challengeMore.trim(),
-  ].filter(Boolean).join(", ");
+  ].filter(Boolean);
 
   const result = [
     ...discovery.result,
     discovery.resultMore.trim(),
-  ].filter(Boolean).join(", ");
+  ].filter(Boolean);
 
   const audience = [
     ...discovery.audience,
@@ -4628,42 +4628,65 @@ function buildAnalyticalInsight(
     brief.audience,
     brief.gender,
     ...brief.ageRanges,
-  ].filter(Boolean).join(", ");
+  ].filter(Boolean);
 
   const reaction = [
     ...discovery.reaction,
     discovery.reactionMore.trim(),
-  ].filter(Boolean).join(", ");
+  ].filter(Boolean);
 
-  const category = brief.category || "la categoría de la marca";
-  const channel = broadcaster?.name || "el ecosistema PRISA";
+  const category = brief.category || 'la categoría de la marca';
+  const channel = broadcaster?.name || 'el ecosistema PRISA';
   const formatNames = chosenFormats.map((format) => format.name).filter(Boolean);
 
-  if (!challenge && !result && !audience && !reaction && !brief.context) {
-    return "Aún no hay suficientes señales para construir un insight analítico. Completa Brief y Descubrimiento.";
+  if (!challenge.length && !result.length && !audience.length && !reaction.length && !brief.context.trim()) {
+    return 'Aún no hay suficientes señales para construir un insight analítico. Completa Brief y Descubrimiento.';
   }
 
-  const tension = challenge
-    ? `La principal tensión está en ${challenge.toLowerCase()}`
-    : `la necesidad de la marca en ${category}`;
+  const tension = challenge.length
+    ? challenge.join(' + ').toLowerCase()
+    : 'la necesidad de fortalecer la conexión de la marca con su mercado';
 
-  const desiredChange = result
-    ? `y la campaña necesita moverla hacia ${result.toLowerCase()}`
-    : "y convertir esa necesidad en una respuesta relevante para la audiencia";
+  const desiredChange = result.length
+    ? result.join(' + ').toLowerCase()
+    : 'generar una respuesta concreta de la audiencia';
 
-  const audienceClause = audience
-    ? ` en una audiencia definida por ${audience.toLowerCase()}`
-    : "";
+  const audienceClause = audience.length
+    ? `La señal se concentra en ${audience.join(', ').toLowerCase()}.`
+    : 'La audiencia aún requiere mayor definición.';
 
-  const reactionClause = reaction
-    ? `, buscando provocar ${reaction.toLowerCase()}`
-    : "";
+  const reactionClause = reaction.length
+    ? `Por eso, la comunicación debería provocar ${reaction.join(', ').toLowerCase()}.`
+    : 'La comunicación debe llevar esa necesidad a una acción o percepción observable.';
+
+  const contextClause = brief.context.trim()
+    ? `El contexto aportado por la marca indica que ${brief.context.trim().replace(/[.]+$/, '')}.`
+    : '';
 
   const formatClause = formatNames.length
-    ? ` La activación puede apoyarse en ${formatNames.join(", ")}`
-    : "";
+    ? `La selección de ${channel} y ${formatNames.join(', ')} permite llevar este planteamiento a un contexto de comunicación relevante.`
+    : `El rol de ${channel} será convertir este planteamiento en una experiencia de comunicación relevante.`;
 
-  return `${tension} ${desiredChange}${audienceClause}${reactionClause}. El rol de ${channel} es conectar esa necesidad con un contexto de comunicación relevante.${formatClause}.`;
+  return `La lectura conjunta del Brief y Discovery identifica una brecha en ${category}: ${tension} mientras la campaña necesita avanzar hacia ${desiredChange}. ${audienceClause} ${reactionClause} ${contextClause} ${formatClause}`.replace(/\s+/g, ' ').trim();
+}
+
+function buildBusinessReading(brief: BriefData, discovery: DiscoveryData): string {
+  const challenge = [...discovery.challenge, discovery.challengeMore.trim()].filter(Boolean);
+  const result = [...discovery.result, discovery.resultMore.trim()].filter(Boolean);
+  const context = brief.context.trim();
+
+  if (!challenge.length && !result.length && !context) {
+    return 'La presentación necesita más información de entrada para construir una lectura del negocio.';
+  }
+
+  const challengeText = challenge.length
+    ? `el reto declarado (${challenge.join(', ')})`
+    : 'el reto comercial';
+  const resultText = result.length
+    ? `el resultado buscado (${result.join(', ')})`
+    : 'el resultado esperado';
+
+  return `El análisis conecta ${challengeText} con ${resultText}${context ? ` y toma como contexto que ${context.replace(/[.]+$/, '')}` : ''}. La oportunidad no está en repetir estos datos, sino en traducirlos en una dirección de comunicación que ayude a cerrar esa brecha.`;
 }
 
 function buildCampaignConcept(
@@ -4672,27 +4695,24 @@ function buildCampaignConcept(
   broadcaster: Broadcaster | null,
   chosenFormats: RecommendedFormat[]
 ): string {
-  const insight = buildAnalyticalInsight(
-    brief,
-    discovery,
-    broadcaster,
-    chosenFormats
-  );
+  const challenge = [...discovery.challenge, discovery.challengeMore.trim()].filter(Boolean);
+  const result = [...discovery.result, discovery.resultMore.trim()].filter(Boolean);
+  const reaction = [...discovery.reaction, discovery.reactionMore.trim()].filter(Boolean);
+  const brand = brief.brand || 'la marca';
+  const category = brief.category || 'su categoría';
+  const channel = broadcaster?.name || 'el ecosistema PRISA';
+  const formatNames = chosenFormats.map((format) => format.name).filter(Boolean);
 
-  if (insight.startsWith("Aún no hay suficientes")) {
-    return insight;
+  if (!challenge.length && !result.length && !reaction.length && !brief.context.trim()) {
+    return 'Aún no hay suficientes señales para construir un concepto de campaña. Completa Brief y Descubrimiento.';
   }
 
-  const reaction = [
-    ...discovery.reaction,
-    discovery.reactionMore.trim(),
-  ].filter(Boolean);
+  const challengeText = challenge.length ? challenge[0].toLowerCase() : 'la necesidad detectada';
+  const resultText = result.length ? result[0].toLowerCase() : 'una respuesta de la audiencia';
+  const reactionText = reaction.length ? reaction[0].toLowerCase() : 'conexión';
+  const formatText = formatNames.length ? ` mediante ${formatNames.join(', ')}` : '';
 
-  const category = brief.category || "la categoría";
-  const brand = brief.brand || "la marca";
-  const action = reaction[0] || discovery.result[0] || "generar consideración";
-
-  return `Convertir el reto de ${brand} en una experiencia relevante dentro de ${category}, usando el ecosistema PRISA para que la audiencia pueda ${action.toLowerCase()}.`;
+  return `“De la necesidad a la acción”: una idea para ${brand} que transforma el reto de ${challengeText} en una experiencia de ${category}${formatText}, diseñada para que la audiencia pueda ${resultText} y termine asociando la marca con ${reactionText}. ${channel} funciona como el contexto que amplifica y da credibilidad a esa experiencia.`;
 }
 
 function PresentationScreen({
@@ -4740,7 +4760,7 @@ function PresentationScreen({
     chosen
   );
 
-  const challengeText = analyticalInsight;
+  const businessReading = buildBusinessReading(brief, discovery);
   const resultText = [
     ...discovery.result,
     discovery.resultMore,
@@ -4815,22 +4835,22 @@ function PresentationScreen({
         {slide === 1 && (
           <div className="presentation-slide-content presentation-centered-content">
             <span className="reference-slide-label">POR QUÉ ESTA CAMPAÑA</span>
-            <h2>La historia detrás del brief</h2>
+            <h2>La lectura que surge del brief</h2>
             <div className="story-list story-list-centered">
               <div className="story-item">
                 <span className="story-number">1</span>
-                <div><strong>Dónde está la marca hoy</strong><p>{brief.context || "Contexto pendiente de capturar con el cliente."}</p></div>
+                <div><strong>Lectura del negocio</strong><p>{businessReading}</p></div>
               </div>
               <div className="story-item">
                 <span className="story-number story-red">2</span>
-                <div><strong>Qué se le atravesó</strong><p>{challengeText}</p></div>
+                <div><strong>Tensión detectada</strong><p>{analyticalInsight}</p></div>
               </div>
               <div className="story-item">
                 <span className="story-number story-green">3</span>
-                <div><strong>Qué necesita que pase</strong><p>{resultText}</p></div>
+                <div><strong>Cambio que debe provocar</strong><p>{resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.</p></div>
               </div>
             </div>
-            <p className="slide-centered-extra">{additionalText}</p>
+            <p className="slide-centered-extra">Señal adicional considerada: {additionalText}</p>
           </div>
         )}
 
@@ -4838,8 +4858,8 @@ function PresentationScreen({
           <div className="presentation-slide-content presentation-centered-content">
             <span className="reference-slide-label">EL INSIGHT Y EL CONCEPTO</span>
             <div className="insight-slide-body insight-slide-centered">
-              <span>EL INSIGHT</span>
-              <h2>{challengeText}</h2>
+              <span>INSIGHT GENERADO POR EL ANÁLISIS</span>
+              <h2>{analyticalInsight}</h2>
               <div className="concept-box concept-box-centered">
                 <span>EL CONCEPTO</span>
                 <strong>{campaignConcept}</strong>

@@ -5018,3 +5018,49 @@ img {
   color: #aeb8c9 !important;
   font-size: 10px !important;
 }
+
+/* ============================================================
+   PRESENTACIÓN — INSIGHT Y CONCEPTO REALMENTE ANALÍTICOS
+   ============================================================ */
+.app-reference .presentation-centered-content .story-item strong {
+  color: #f4f6fa !important;
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+}
+
+.app-reference .presentation-centered-content .story-item p {
+  color: #c8d0de !important;
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+  max-width: 760px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.app-reference .presentation-centered-content .insight-slide-body > span,
+.app-reference .presentation-centered-content .concept-box > span,
+.app-reference .presentation-centered-content .slide-caption {
+  color: #9da9bc !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: .08em !important;
+}
+
+.app-reference .presentation-centered-content .insight-slide-body h2 {
+  color: #f4f6fa !important;
+  font-size: 22px !important;
+  line-height: 1.55 !important;
+  max-width: 900px !important;
+}
+
+.app-reference .presentation-centered-content .concept-box strong {
+  color: #f4f6fa !important;
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+}
+
+.app-reference .presentation-centered-content .slide-centered-extra {
+  color: #b9c3d3 !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+}
