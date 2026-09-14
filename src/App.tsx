@@ -4774,7 +4774,6 @@ function PresentationScreen({
   const profileRowsForDisplay: [string, string][] = presentationProfileRows.length
     ? presentationProfileRows
     : [["Perfil", "Disponible en el catálogo PRISA."]];
-
   const downloadPresentationPptx = async () => {
     const pptx = new PptxGenJS();
     pptx.layout = "LAYOUT_WIDE";
@@ -4782,250 +4781,572 @@ function PresentationScreen({
     pptx.subject = `Presentación de campaña · ${brief.brand || "Marca sin nombre"}`;
     pptx.title = `Presentación · ${brief.brand || "Marca sin nombre"}`;
     pptx.company = "PRISA Media Colombia";
+    pptx.theme = {
+      headFontFace: "Aptos Display",
+      bodyFontFace: "Aptos",
+    };
 
+    const W = 13.333;
     const bg = "080A10";
     const card = "151A27";
+    const border = "293248";
     const white = "F2F4F8";
+    const text2 = "D7DCE6";
     const muted = "A8B2C3";
+    const muted2 = "78849A";
     const pink = "FF2B9D";
+    const pinkSoft = "36142F";
+    const blue = "4E98FF";
+    const green = "25D978";
+    const yellow = "F0B52B";
 
-    const addBase = (title: string, kicker: string) => {
+    const addBackground = (slide: any) => {
+      slide.background = { color: bg };
+      slide.addShape(pptx.ShapeType.rect, {
+        x: 0, y: 0, w: W, h: 0.08,
+        fill: { color: pink }, line: { color: pink },
+      });
+      slide.addShape(pptx.ShapeType.rect, {
+        x: 0.48, y: 0.42, w: 0.72, h: 0.045,
+        fill: { color: pink }, line: { color: pink },
+      });
+    };
+
+    const addBase = (title: string, kicker: string, index: number) => {
       const slidePpt = pptx.addSlide();
-      slidePpt.background = { color: bg };
-      slidePpt.addShape(pptx.ShapeType.rect, { x: 0, y: 0, w: 13.333, h: 0.08, fill: { color: pink }, line: { color: pink } });
-      slidePpt.addText(kicker, { x: 0.65, y: 0.55, w: 12, h: 0.25, fontFace: "Aptos", fontSize: 10, bold: true, color: pink, charSpacing: 1.5, margin: 0, align: "center" });
-      slidePpt.addText(title, { x: 0.65, y: 0.9, w: 12, h: 0.55, fontFace: "Aptos", fontSize: 25, bold: true, color: white, margin: 0, align: "center", fit: "shrink" });
+      addBackground(slidePpt);
+      slidePpt.addText(kicker, {
+        x: 0.65, y: 0.43, w: 12.03, h: 0.25,
+        fontFace: "Aptos", fontSize: 9, bold: true, color: pink,
+        charSpacing: 1.5, margin: 0, align: "center",
+      });
+      slidePpt.addText(title, {
+        x: 0.65, y: 0.78, w: 12.03, h: 0.52,
+        fontFace: "Aptos Display", fontSize: 24, bold: true, color: white,
+        margin: 0, align: "center", fit: "shrink",
+      });
+      slidePpt.addText(`0${index}`, {
+        x: 12.42, y: 0.43, w: 0.38, h: 0.2,
+        fontFace: "Aptos", fontSize: 7, color: muted2, margin: 0, align: "right",
+      });
       return slidePpt;
     };
 
+    const addCard = (slidePpt: any, x: number, y: number, w: number, h: number) => {
+      slidePpt.addShape(pptx.ShapeType.roundRect, {
+        x, y, w, h,
+        rectRadius: 0.08,
+        fill: { color: card },
+        line: { color: border, width: 1 },
+      });
+    };
+
     // 1. Portada
     {
-      const s = addBase(brief.brand || "Marca sin nombre", "PROPUESTA DE INNOVACIÓN DIGITAL");
-      s.addText(brief.category || "Categoría por definir", { x: 1, y: 1.7, w: 11.3, h: 0.35, fontSize: 15, color: muted, align: "center", margin: 0 });
-      s.addText("Área de Innovación Digital · PRISA Media Colombia", { x: 1, y: 4.8, w: 11.3, h: 0.25, fontSize: 10, color: "657087", align: "center", margin: 0 });
+      const s = addBase(brief.brand || "Marca sin nombre", "PROPUESTA DE INNOVACIÓN DIGITAL", 1);
+      s.addText(brief.category || "Categoría por definir", {
+        x: 1, y: 1.72, w: 11.33, h: 0.38,
+        fontSize: 16, color: text2, margin: 0, align: "center",
+      });
+      s.addShape(pptx.ShapeType.line, {
+        x: 5.1, y: 2.35, w: 3.13, h: 0,
+        line: { color: pink, width: 1.2 },
+      });
+      s.addText("Área de Innovación Digital · PRISA Media Colombia", {
+        x: 1, y: 6.48, w: 11.33, h: 0.24,
+        fontSize: 9, color: muted2, margin: 0, align: "center",
+      });
     }
 
-    // 2. Por qué esta campaña
+    // 2. Por qué esta campaña — timeline horizontal
     {
-      const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA");
+      const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA", 2);
       const items = [
-        ["1 · Lectura del negocio", businessReading],
-        ["2 · Tensión detectada", analyticalInsight],
-        ["3 · Cambio que debe provocar", `${resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.`],
-      ];
-      items.forEach(([heading, body], i) => {
-        const x = 0.75 + i * 4.18;
-        s.addText(heading, { x, y: 2.0, w: 3.75, h: 0.3, fontSize: 13, bold: true, color: white, margin: 0, align: "center" });
-        s.addText(body, { x, y: 2.45, w: 3.75, h: 2.5, fontSize: 11, color: muted, margin: 0.08, breakLine: false, valign: "top", fit: "shrink", align: "left" });
+        ["Lectura del negocio", businessReading, pink],
+        ["Tensión detectada", analyticalInsight, "FF3E9F"],
+        ["Cambio que debe provocar", `${resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.`, green],
+      ] as [string, string, string][];
+
+      const centers = [2.25, 6.67, 11.08];
+      s.addShape(pptx.ShapeType.line, {
+        x: 2.25, y: 2.42, w: 8.83, h: 0,
+        line: { color: "8B3E78", width: 2 },
       });
-      s.addText(`Señal adicional considerada: ${additionalText}`, { x: 1.2, y: 5.55, w: 10.9, h: 0.45, fontSize: 10, color: muted, margin: 0, align: "center", fit: "shrink" });
+
+      items.forEach(([heading, body, markerColor], i) => {
+        const cx = centers[i];
+        s.addShape(pptx.ShapeType.ellipse, {
+          x: cx - 0.19, y: 2.23, w: 0.38, h: 0.38,
+          fill: { color: bg }, line: { color: markerColor, width: 2 },
+        });
+        s.addText(String(i + 1), {
+          x: cx - 0.15, y: 2.305, w: 0.30, h: 0.14,
+          fontSize: 8, bold: true, color: markerColor, margin: 0, align: "center",
+        });
+        s.addText(heading, {
+          x: cx - 1.72, y: 1.67, w: 3.44, h: 0.32,
+          fontSize: 12, bold: true, color: white, margin: 0, align: "center",
+          fit: "shrink",
+        });
+        addCard(s, cx - 1.73, 2.83, 3.46, 2.42);
+        s.addText(body, {
+          x: cx - 1.48, y: 3.13, w: 2.96, h: 1.83,
+          fontSize: 10.5, color: text2, margin: 0.02,
+          breakLine: false, valign: "middle", fit: "shrink", align: "center",
+        });
+      });
+
+      s.addText(`Señal adicional considerada: ${additionalText}`, {
+        x: 0.95, y: 5.85, w: 11.43, h: 0.48,
+        fontSize: 9.5, color: muted, margin: 0, align: "center", fit: "shrink",
+      });
     }
 
     // 3. Insight y concepto
     {
-      const s = addBase("Insight y concepto", "EL INSIGHT Y EL CONCEPTO");
-      s.addText("INSIGHT GENERADO POR EL ANÁLISIS", { x: 1, y: 1.8, w: 11.3, h: 0.3, fontSize: 11, bold: true, color: "8FA7C8", margin: 0, align: "center" });
-      s.addText(analyticalInsight, { x: 1.2, y: 2.2, w: 10.9, h: 1.45, fontSize: 13, bold: true, color: white, margin: 0.05, fit: "shrink", valign: "middle", align: "center" });
-      s.addShape(pptx.ShapeType.roundRect, { x: 1.35, y: 4.05, w: 10.63, h: 1.25, fill: { color: "36142F" }, line: { color: pink, width: 1 } });
-      s.addText("EL CONCEPTO", { x: 1.7, y: 4.28, w: 9.95, h: 0.25, fontSize: 10, bold: true, color: "AAB7C9", margin: 0, align: "center" });
-      s.addText(campaignConcept, { x: 1.7, y: 4.62, w: 9.95, h: 0.48, fontSize: 12, bold: true, color: white, margin: 0, fit: "shrink", align: "center" });
-      s.addText(`Resultado buscado: ${resultText}`, { x: 1.2, y: 5.65, w: 10.9, h: 0.3, fontSize: 10, color: muted, margin: 0, align: "center", fit: "shrink" });
+      const s = addBase("Insight y concepto", "EL INSIGHT Y EL CONCEPTO", 3);
+
+      s.addText("INSIGHT GENERADO POR EL ANÁLISIS", {
+        x: 1, y: 1.62, w: 11.33, h: 0.25,
+        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
+      });
+
+      addCard(s, 1.05, 2.02, 11.23, 1.55);
+      s.addText(analyticalInsight, {
+        x: 1.38, y: 2.35, w: 10.57, h: 0.9,
+        fontSize: 14, bold: true, color: white, margin: 0.02,
+        fit: "shrink", valign: "middle", align: "center",
+      });
+
+      s.addShape(pptx.ShapeType.roundRect, {
+        x: 1.05, y: 4.02, w: 11.23, h: 1.55,
+        fill: { color: pinkSoft }, line: { color: pink, width: 1.2 },
+      });
+      s.addText("EL CONCEPTO", {
+        x: 1.35, y: 4.30, w: 10.63, h: 0.24,
+        fontSize: 9, bold: true, color: "AAB7C9", margin: 0, align: "center",
+      });
+      s.addText(campaignConcept, {
+        x: 1.38, y: 4.66, w: 10.57, h: 0.55,
+        fontSize: 14, bold: true, color: white, margin: 0.02,
+        fit: "shrink", valign: "middle", align: "center",
+      });
+      s.addText(`Resultado buscado: ${resultText}`, {
+        x: 1, y: 6.02, w: 11.33, h: 0.28,
+        fontSize: 10, color: muted, margin: 0, align: "center", fit: "shrink",
+      });
     }
 
     // 4. A quién y dónde
     {
-      const s = addBase(`${broadcasterName}`, "A QUIÉN LE HABLAMOS Y DÓNDE");
-      s.addText(audienceText, { x: 1, y: 1.55, w: 11.3, h: 0.4, fontSize: 14, color: white, margin: 0, align: "center", fit: "shrink" });
-      s.addText("AUDIENCIA", { x: 0.8, y: 2.2, w: 5.7, h: 0.25, fontSize: 10, bold: true, color: "8FA7C8", margin: 0, align: "center" });
-      s.addShape(pptx.ShapeType.roundRect, { x: 0.75, y: 2.55, w: 5.75, h: 2.8, fill: { color: card }, line: { color: "293248", width: 1 } });
-      s.addText(`Audiencia\n${audienceText}\n\nRegiones objetivo\n${selectedRegions}`, { x: 1.05, y: 2.85, w: 5.15, h: 2.1, fontSize: 12, color: white, margin: 0.03, breakLine: false, fit: "shrink", align: "center", valign: "middle" });
-      s.addText("PERFIL DE LA EMISORA", { x: 6.85, y: 2.2, w: 5.7, h: 0.25, fontSize: 10, bold: true, color: "8FA7C8", margin: 0, align: "center" });
-      s.addShape(pptx.ShapeType.roundRect, { x: 6.8, y: 2.55, w: 5.75, h: 2.8, fill: { color: card }, line: { color: "293248", width: 1 } });
-      const profileText = presentationProfileRows.map(([label, value]) => `${label}: ${value}`).join("\n");
-      const interests = affinityTags.length ? affinityTags.join(" · ") : "Sin afinidades registradas";
-      s.addText(`${profileText}\n\nAfinidades: ${interests}`, { x: 7.1, y: 2.85, w: 5.15, h: 2.1, fontSize: 11.5, color: white, margin: 0.03, fit: "shrink", valign: "middle", align: "left" });
+      const s = addBase(broadcasterName, "A QUIÉN LE HABLAMOS Y DÓNDE", 4);
+      s.addText(audienceText, {
+        x: 1, y: 1.47, w: 11.33, h: 0.38,
+        fontSize: 14, color: white, margin: 0, align: "center", fit: "shrink",
+      });
+
+      addCard(s, 0.72, 2.10, 5.82, 3.72);
+      addCard(s, 6.79, 2.10, 5.82, 3.72);
+
+      s.addText("AUDIENCIA", {
+        x: 1.02, y: 2.38, w: 5.22, h: 0.22,
+        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
+      });
+      s.addText(audienceText, {
+        x: 1.05, y: 2.78, w: 5.16, h: 0.55,
+        fontSize: 12, color: white, margin: 0, align: "center", fit: "shrink",
+      });
+      s.addText("REGIONES OBJETIVO", {
+        x: 1.02, y: 3.75, w: 5.22, h: 0.22,
+        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
+      });
+      s.addText(selectedRegions, {
+        x: 1.05, y: 4.15, w: 5.16, h: 0.65,
+        fontSize: 12, color: white, margin: 0, align: "center", fit: "shrink",
+      });
+
+      s.addText("PERFIL DE LA EMISORA", {
+        x: 7.09, y: 2.38, w: 5.22, h: 0.22,
+        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
+      });
+
+      const profileLines = presentationProfileRows.map(([label, value]) => `${label}: ${value}`);
+      profileLines.forEach((line, i) => {
+        s.addText(line, {
+          x: 7.18, y: 2.78 + i * 0.47, w: 5.04, h: 0.32,
+          fontSize: 9.5, color: text2, margin: 0, fit: "shrink",
+        });
+      });
+      s.addText("AFINIDADES", {
+        x: 7.09, y: 5.00, w: 5.22, h: 0.2,
+        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
+      });
+      s.addText(affinityTags.length ? affinityTags.join(" · ") : "Sin afinidades registradas", {
+        x: 7.18, y: 5.28, w: 5.04, h: 0.38,
+        fontSize: 9.5, color: white, margin: 0, fit: "shrink", align: "center",
+      });
     }
 
     // 5. Cómo se arma
     {
-      const s = addBase("Dónde entra cada pieza", "CÓMO SE ARMA LA SOLUCIÓN");
-      const pieces = [
-        ["EMISORA", broadcasterName, "Aporta audiencia, contexto editorial e inventario."],
-        ["FRANQUICIA", franchiseName, selectedFranchise ? selectedFranchise.description || "Integra el territorio editorial seleccionado." : "La franquicia es opcional para esta campaña."],
-        ["FORMATOS", chosen.length ? chosen.map((format) => format.name).join(" · ") : "Por seleccionar", "Define la mecánica de interacción."],
-        ["ACCIÓN", reactionText, "Lo que la audiencia debería hacer o sentir y que podemos medir."],
+      const s = addBase("Dónde entra cada pieza", "CÓMO SE ARMA LA SOLUCIÓN", 5);
+      const pieces: [string, string, string, string][] = [
+        ["EMISORA", broadcasterName, "Aporta audiencia, contexto editorial e inventario.", blue],
+        ["FRANQUICIA", franchiseName, selectedFranchise ? selectedFranchise.description || "Integra el territorio editorial seleccionado." : "La franquicia es opcional para esta campaña.", green],
+        ["FORMATOS", chosen.length ? chosen.map((format) => format.name).join(" · ") : "Por seleccionar", "Define la mecánica de interacción.", pink],
+        ["ACCIÓN", reactionText, "Lo que la audiencia debería hacer o sentir y que podemos medir.", yellow],
       ];
-      pieces.forEach(([kicker, name, body], i) => {
-        const x = 0.45 + i * 3.2;
-        s.addShape(pptx.ShapeType.roundRect, { x, y: 2.0, w: 2.8, h: 3.1, fill: { color: card }, line: { color: "293248", width: 1 } });
-        s.addText(kicker, { x: x + 0.18, y: 2.3, w: 2.44, h: 0.25, fontSize: 9, bold: true, color: pink, margin: 0, align: "center" });
-        s.addText(name, { x: x + 0.18, y: 2.8, w: 2.44, h: 0.55, fontSize: 12, bold: true, color: white, margin: 0.02, fit: "shrink", align: "center", valign: "middle" });
-        s.addText(body, { x: x + 0.18, y: 3.65, w: 2.44, h: 1.05, fontSize: 10, color: muted, margin: 0.03, fit: "shrink", align: "center", valign: "middle" });
+      const cardX = [0.38, 3.68, 6.98, 10.28];
+
+      pieces.forEach(([kicker, name, body, accent], i) => {
+        const x = cardX[i];
+        addCard(s, x, 2.00, 2.68, 3.45);
+        s.addShape(pptx.ShapeType.ellipse, {
+          x: x + 0.20, y: 2.24, w: 0.34, h: 0.34,
+          fill: { color: accent }, line: { color: accent },
+        });
+        s.addText(kicker, {
+          x: x + 0.66, y: 2.28, w: 1.76, h: 0.20,
+          fontSize: 8.5, bold: true, color: accent, margin: 0, align: "left",
+        });
+        s.addText(name, {
+          x: x + 0.22, y: 2.88, w: 2.24, h: 0.68,
+          fontSize: 13, bold: true, color: white, margin: 0.02,
+          fit: "shrink", align: "center", valign: "middle",
+        });
+        s.addText(body, {
+          x: x + 0.22, y: 3.82, w: 2.24, h: 1.05,
+          fontSize: 10, color: muted, margin: 0.02,
+          fit: "shrink", align: "center", valign: "middle",
+        });
+        if (i < 3) {
+          s.addShape(pptx.ShapeType.chevron, {
+            x: x + 2.79, y: 3.42, w: 0.34, h: 0.42,
+            fill: { color: "263047" }, line: { color: "263047" },
+          });
+        }
       });
     }
 
     // 6. Recorrido y medición
     {
-      const s = addBase("Cómo se vive y qué medimos", "CÓMO SE VIVE Y QUÉ MEDIMOS");
+      const s = addBase("Cómo se vive y qué medimos", "CÓMO SE VIVE Y QUÉ MEDIMOS", 6);
+      s.addText("CÓMO SE VIVE", {
+        x: 1, y: 1.62, w: 11.33, h: 0.22,
+        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
+      });
+
       const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
-      journey.forEach((_, i) => s.addShape(pptx.ShapeType.roundRect, { x: 0.45 + i * 2.08, y: 2.15, w: 1.72, h: 0.62, fill: { color: card }, line: { color: "293248", width: 1 } }));
-      journey.forEach((step, i) => s.addText(step, { x: 0.45 + i * 2.08, y: 2.34, w: 1.72, h: 0.2, fontSize: 10, color: white, margin: 0, align: "center" }));
-      s.addText("QUÉ MEDIMOS", { x: 1, y: 3.45, w: 11.3, h: 0.25, fontSize: 10, bold: true, color: "8FA7C8", margin: 0, align: "center" });
-      const measurement = chosen.length ? `La propuesta medirá la experiencia asociada a ${chosen.map((format) => format.name).join(", ")}.` : "Los KPI se definirán a partir de la propuesta y los formatos seleccionados.";
-      s.addText(measurement, { x: 1.1, y: 3.9, w: 11.1, h: 0.55, fontSize: 14, color: white, margin: 0, fit: "shrink", align: "center" });
-      s.addText(`Resultado esperado: ${resultText}`, { x: 1, y: 4.75, w: 11.3, h: 0.4, fontSize: 11, color: muted, margin: 0, align: "center", fit: "shrink" });
+      const startX = 0.56;
+      const stepW = 1.84;
+      journey.forEach((step, i) => {
+        const x = startX + i * 2.08;
+        addCard(s, x, 2.03, stepW, 0.72);
+        s.addText(step, {
+          x, y: 2.27, w: stepW, h: 0.2,
+          fontSize: 10.5, color: white, margin: 0, align: "center",
+        });
+        if (i < journey.length - 1) {
+          s.addShape(pptx.ShapeType.line, {
+            x: x + stepW + 0.04, y: 2.39, w: 0.19, h: 0,
+            line: { color: muted2, width: 1.2, beginArrowType: "none", endArrowType: "triangle" },
+          });
+        }
+      });
+
+      s.addText("QUÉ MEDIMOS", {
+        x: 1, y: 3.42, w: 11.33, h: 0.22,
+        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
+      });
+
+      addCard(s, 1.15, 3.83, 11.03, 1.05);
+      const measurement = chosen.length
+        ? `La propuesta medirá la experiencia asociada a ${chosen.map((format) => format.name).join(", ")}.`
+        : "Los KPI se definirán a partir de la propuesta y los formatos seleccionados.";
+      s.addText(measurement, {
+        x: 1.45, y: 4.13, w: 10.43, h: 0.35,
+        fontSize: 14, color: white, margin: 0, align: "center", fit: "shrink",
+      });
+      s.addText(`Resultado esperado: ${resultText}`, {
+        x: 1.2, y: 5.55, w: 10.93, h: 0.3,
+        fontSize: 10.5, color: muted, margin: 0, align: "center", fit: "shrink",
+      });
     }
 
-    await pptx.writeFile({ fileName: `Presentacion_${(brief.brand || "PRISA").replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_-]+/g, "_")}.pptx` });
+    await pptx.writeFile({
+      fileName: `Presentacion_${(brief.brand || "PRISA").replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_-]+/g, "_")}.pptx`,
+    });
   };
 
   const downloadPresentationPdf = () => {
-    const pdf = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
+    // PDF en 16:9 real para conservar la lógica de una presentación,
+    // en lugar de comprimir las diapositivas dentro de A4.
+    const pdf = new jsPDF({
+      orientation: "landscape",
+      unit: "pt",
+      format: [960, 540],
+      compress: true,
+    });
 
-    const addPageBase = (kicker: string, title: string) => {
-      pdf.setFillColor(8, 10, 16);
+    const pageWidth = 960;
+    const pageHeight = 540;
+    const bg: [number, number, number] = [8, 10, 16];
+    const card: [number, number, number] = [21, 26, 39];
+    const border: [number, number, number] = [41, 50, 72];
+    const white: [number, number, number] = [242, 244, 248];
+    const text2: [number, number, number] = [215, 220, 230];
+    const muted: [number, number, number] = [168, 178, 195];
+    const muted2: [number, number, number] = [120, 132, 154];
+    const pink: [number, number, number] = [255, 43, 157];
+    const pinkSoft: [number, number, number] = [54, 20, 47];
+    const blue: [number, number, number] = [78, 152, 255];
+    const green: [number, number, number] = [37, 217, 120];
+    const yellow: [number, number, number] = [240, 181, 43];
+
+    const addPageBase = (kicker: string, title: string, index: number) => {
+      pdf.setFillColor(...bg);
       pdf.rect(0, 0, pageWidth, pageHeight, "F");
-      pdf.setFillColor(255, 43, 157);
-      pdf.rect(0, 0, pageWidth, 2.5, "F");
-      pdf.setTextColor(255, 43, 157);
+      pdf.setFillColor(...pink);
+      pdf.rect(0, 0, pageWidth, 5, "F");
+      pdf.setFillColor(...pink);
+      pdf.rect(34, 28, 80, 3, "F");
+
+      pdf.setTextColor(...pink);
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(9);
-      pdf.text(kicker, pageWidth / 2, 18, { align: "center" });
-      pdf.setTextColor(242, 244, 248);
-      pdf.setFontSize(22);
-      pdf.text(title, pageWidth / 2, 28, { align: "center" });
+      pdf.setFontSize(10);
+      pdf.text(kicker, pageWidth / 2, 43, { align: "center" });
+
+      pdf.setTextColor(...white);
+      pdf.setFontSize(25);
+      pdf.text(title, pageWidth / 2, 72, { align: "center" });
+
+      pdf.setTextColor(...muted2);
+      pdf.setFontSize(8);
+      pdf.text(`0${index}`, pageWidth - 38, 42, { align: "right" });
     };
 
-    const addWrapped = (text: string, x: number, y: number, width: number, size = 10, color: [number, number, number] = [168, 178, 195], align: "left" | "center" = "left") => {
-      pdf.setTextColor(...color);
+    const wrappedLines = (
+      value: string,
+      width: number,
+      size: number,
+      maxLines = 99,
+    ): string[] => {
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(size);
-      const lines = pdf.splitTextToSize(text || "—", width);
-      if (align === "center") {
-        pdf.text(lines, x + width / 2, y, { align: "center" });
-      } else {
-        pdf.text(lines, x, y);
+      const lines = pdf.splitTextToSize(value || "—", width) as string[];
+      return lines.slice(0, maxLines);
+    };
+
+    const addWrapped = (
+      value: string,
+      x: number,
+      y: number,
+      width: number,
+      size = 12,
+      color: [number, number, number] = muted,
+      align: "left" | "center" = "left",
+      maxHeight?: number,
+    ) => {
+      let currentSize = size;
+      let lines = wrappedLines(value, width, currentSize);
+      if (maxHeight) {
+        while (lines.length * currentSize * 1.22 > maxHeight && currentSize > 7.5) {
+          currentSize -= 0.5;
+          lines = wrappedLines(value, width, currentSize);
+        }
       }
-      return y + lines.length * (size * 0.45);
+      pdf.setTextColor(...color);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(currentSize);
+      const lineHeight = currentSize * 1.22;
+      pdf.text(lines, align === "center" ? x + width / 2 : x, y, {
+        align,
+        lineHeightFactor: 1.22,
+      });
+      return y + lines.length * lineHeight;
+    };
+
+    const addCard = (x: number, y: number, w: number, h: number, fill = card) => {
+      pdf.setFillColor(...fill);
+      pdf.setDrawColor(...border);
+      pdf.roundedRect(x, y, w, h, 9, 9, "FD");
     };
 
     // 1. Portada
-    addPageBase("PROPUESTA DE INNOVACIÓN DIGITAL", brief.brand || "Marca sin nombre");
-    pdf.setTextColor(160, 169, 185);
-    pdf.setFontSize(14);
-    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 45, { align: "center" });
-    pdf.setTextColor(101, 112, 135);
-    pdf.setFontSize(9);
-    pdf.text("Área de Innovación Digital · PRISA Media Colombia", pageWidth / 2, 175, { align: "center" });
+    addPageBase("PROPUESTA DE INNOVACIÓN DIGITAL", brief.brand || "Marca sin nombre", 1);
+    pdf.setTextColor(...text2);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(17);
+    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 178, { align: "center" });
+    pdf.setDrawColor(...pink);
+    pdf.setLineWidth(1.5);
+    pdf.line(405, 215, 555, 215);
+    pdf.setTextColor(...muted2);
+    pdf.setFontSize(10);
+    pdf.text("Área de Innovación Digital · PRISA Media Colombia", pageWidth / 2, 486, { align: "center" });
 
     // 2. Por qué esta campaña
     pdf.addPage();
-    addPageBase("POR QUÉ ESTA CAMPAÑA", "La lectura que surge del brief");
-    const timelineItems: [string, string][] = [
-      ["Lectura del negocio", businessReading],
-      ["Tensión detectada", analyticalInsight],
-      ["Cambio que debe provocar", `${resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.`],
+    addPageBase("POR QUÉ ESTA CAMPAÑA", "La lectura que surge del brief", 2);
+    const timelineItems: [string, string, [number, number, number]][] = [
+      ["Lectura del negocio", businessReading, pink],
+      ["Tensión detectada", analyticalInsight, [255, 62, 159]],
+      ["Cambio que debe provocar", `${resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.`, green],
     ];
-    timelineItems.forEach(([heading, body], index) => {
-      const x = 15 + index * 93;
-      pdf.setTextColor(242, 244, 248);
+    const centers = [180, 480, 780];
+
+    pdf.setDrawColor(139, 62, 120);
+    pdf.setLineWidth(2);
+    pdf.line(180, 185, 780, 185);
+
+    timelineItems.forEach(([heading, body, markerColor], index) => {
+      const cx = centers[index];
+      pdf.setFillColor(...bg);
+      pdf.setDrawColor(...markerColor);
+      pdf.setLineWidth(2);
+      pdf.circle(cx, 185, 15, "FD");
+      pdf.setTextColor(...markerColor);
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(11);
-      pdf.text(`${index + 1}. ${heading}`, x + 40, 52, { align: "center" });
-      addWrapped(body, x, 64, 80, 9.5);
+      pdf.setFontSize(10);
+      pdf.text(String(index + 1), cx, 189, { align: "center" });
+
+      pdf.setTextColor(...white);
+      pdf.setFontSize(13);
+      pdf.text(heading, cx, 150, { align: "center" });
+
+      addCard(cx - 130, 220, 260, 188);
+      addWrapped(body, cx - 108, 254, 216, 11.5, text2, "center", 142);
     });
-    addWrapped(`Señal adicional considerada: ${additionalText}`, 25, 178, pageWidth - 50, 9, [143, 160, 181], "center");
+
+    addWrapped(
+      `Señal adicional considerada: ${additionalText}`,
+      85, 460, 790, 10, muted, "center", 35,
+    );
 
     // 3. Insight y concepto
     pdf.addPage();
-    addPageBase("EL INSIGHT Y EL CONCEPTO", "Insight y concepto");
+    addPageBase("EL INSIGHT Y EL CONCEPTO", "Insight y concepto", 3);
     pdf.setTextColor(143, 167, 200);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(9);
-    pdf.text("INSIGHT GENERADO POR EL ANÁLISIS", pageWidth / 2, 45, { align: "center" });
-    addWrapped(analyticalInsight, 30, 58, pageWidth - 60, 12, [242, 244, 248], "center");
-    pdf.setFillColor(54, 20, 47);
-    pdf.setDrawColor(255, 43, 157);
-    pdf.roundedRect(25, 98, pageWidth - 50, 48, 4, 4, "FD");
+    pdf.setFontSize(10);
+    pdf.text("INSIGHT GENERADO POR EL ANÁLISIS", pageWidth / 2, 125, { align: "center" });
+
+    addCard(72, 150, 816, 118);
+    addWrapped(analyticalInsight, 105, 194, 750, 16, white, "center", 72);
+
+    pdf.setFillColor(...pinkSoft);
+    pdf.setDrawColor(...pink);
+    pdf.setLineWidth(1.2);
+    pdf.roundedRect(72, 302, 816, 120, 9, 9, "FD");
     pdf.setTextColor(170, 183, 201);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(9);
-    pdf.text("EL CONCEPTO", pageWidth / 2, 111, { align: "center" });
-    addWrapped(campaignConcept, 40, 123, pageWidth - 80, 11, [242, 244, 248], "center");
-    addWrapped(`Resultado buscado: ${resultText}`, 30, 164, pageWidth - 60, 9, [143, 160, 181], "center");
+    pdf.setFontSize(10);
+    pdf.text("EL CONCEPTO", pageWidth / 2, 333, { align: "center" });
+    addWrapped(campaignConcept, 105, 372, 750, 15, white, "center", 60);
+    addWrapped(`Resultado buscado: ${resultText}`, 90, 470, 780, 10, muted, "center", 30);
 
     // 4. A quién y dónde
     pdf.addPage();
-    addPageBase("A QUIÉN LE HABLAMOS Y DÓNDE", broadcasterName);
-    addWrapped(audienceText, 25, 43, pageWidth - 50, 11, [242, 244, 248], "center");
-    const boxY = 58;
-    pdf.setFillColor(21, 26, 39);
-    pdf.setDrawColor(41, 50, 72);
-    pdf.roundedRect(12, boxY, 130, 112, 4, 4, "FD");
-    pdf.roundedRect(148, boxY, 130, 112, 4, 4, "FD");
+    addPageBase("A QUIÉN LE HABLAMOS Y DÓNDE", broadcasterName, 4);
+    addWrapped(audienceText, 80, 105, 800, 14, white, "center", 30);
+
+    addCard(48, 132, 414, 300);
+    addCard(498, 132, 414, 300);
+
     pdf.setTextColor(143, 167, 200);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(8);
-    pdf.text("AUDIENCIA", 77, 70, { align: "center" });
-    addWrapped(audienceText, 23, 80, 108, 9.5, [242, 244, 248], "center");
-    pdf.text("REGIONES OBJETIVO", 77, 120, { align: "center" });
-    addWrapped(selectedRegions, 23, 130, 108, 9.5, [242, 244, 248], "center");
-    pdf.text("PERFIL DE LA EMISORA", 213, 70, { align: "center" });
-    let profileY = 82;
+    pdf.setFontSize(10);
+    pdf.text("AUDIENCIA", 255, 163, { align: "center" });
+    addWrapped(audienceText, 85, 205, 340, 13, white, "center", 52);
+    pdf.text("REGIONES OBJETIVO", 255, 288, { align: "center" });
+    addWrapped(selectedRegions, 85, 325, 340, 13, white, "center", 65);
+
+    pdf.text("PERFIL DE LA EMISORA", 705, 163, { align: "center" });
+    let profileY = 202;
     presentationProfileRows.forEach(([label, value]) => {
       pdf.setTextColor(174, 187, 208);
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(8.5);
-      pdf.text(`${label}:`, 158, profileY);
-      profileY = addWrapped(value, 190, profileY, 82, 8.5, [242, 244, 248]);
-      profileY += 3;
+      pdf.setFontSize(9.5);
+      pdf.text(`${label}:`, 526, profileY);
+      addWrapped(value, 620, profileY, 255, 9.5, text2, "left", 22);
+      profileY += 39;
     });
-    addWrapped(`Afinidades: ${affinityTags.length ? affinityTags.join(" · ") : "Sin afinidades registradas"}`, 158, Math.min(profileY + 2, 157), 112, 8.5, [242, 244, 248]);
+    pdf.setTextColor(143, 167, 200);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(9.5);
+    pdf.text("AFINIDADES", 705, 386, { align: "center" });
+    addWrapped(
+      affinityTags.length ? affinityTags.join(" · ") : "Sin afinidades registradas",
+      535, 408, 340, 9.5, white, "center", 25,
+    );
 
     // 5. Cómo se arma
     pdf.addPage();
-    addPageBase("CÓMO SE ARMA LA SOLUCIÓN", "Dónde entra cada pieza");
-    const pieces: [string, string, string][] = [
-      ["EMISORA", broadcasterName, "Aporta audiencia, contexto editorial e inventario."],
-      ["FRANQUICIA", franchiseName, selectedFranchise ? selectedFranchise.description || "Integra el territorio editorial seleccionado." : "La franquicia es opcional para esta campaña."],
-      ["FORMATOS", chosen.length ? chosen.map((format) => format.name).join(" · ") : "Por seleccionar", "Define la mecánica de interacción."],
-      ["ACCIÓN", reactionText, "Lo que la audiencia debería hacer o sentir y que podemos medir."],
+    addPageBase("CÓMO SE ARMA LA SOLUCIÓN", "Dónde entra cada pieza", 5);
+    const pieces: [string, string, string, [number, number, number]][] = [
+      ["EMISORA", broadcasterName, "Aporta audiencia, contexto editorial e inventario.", blue],
+      ["FRANQUICIA", franchiseName, selectedFranchise ? selectedFranchise.description || "Integra el territorio editorial seleccionado." : "La franquicia es opcional para esta campaña.", green],
+      ["FORMATOS", chosen.length ? chosen.map((format) => format.name).join(" · ") : "Por seleccionar", "Define la mecánica de interacción.", pink],
+      ["ACCIÓN", reactionText, "Lo que la audiencia debería hacer o sentir y que podemos medir.", yellow],
     ];
-    pieces.forEach(([kicker, name, body], index) => {
-      const x = 8 + index * 69;
-      pdf.setFillColor(21, 26, 39);
-      pdf.setDrawColor(41, 50, 72);
-      pdf.roundedRect(x, 58, 62, 108, 4, 4, "FD");
-      pdf.setTextColor(255, 43, 157);
+    const pieceX = [28, 268, 508, 748];
+
+    pieces.forEach(([kicker, name, body, accent], index) => {
+      const x = pieceX[index];
+      addCard(x, 160, 204, 240);
+      pdf.setFillColor(...accent);
+      pdf.circle(x + 23, 185, 7, "F");
+      pdf.setTextColor(...accent);
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(8);
-      pdf.text(kicker, x + 31, 72, { align: "center" });
-      addWrapped(name, x + 5, 87, 52, 10, [242, 244, 248], "center");
-      addWrapped(body, x + 5, 112, 52, 8.5, [168, 178, 195], "center");
+      pdf.setFontSize(9);
+      pdf.text(kicker, x + 39, 189);
+
+      addWrapped(name, x + 18, 245, 168, 13, white, "center", 50);
+      addWrapped(body, x + 18, 315, 168, 10.5, muted, "center", 75);
+
+      if (index < 3) {
+        pdf.setTextColor(...muted2);
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(18);
+        pdf.text("›", x + 214, 285, { align: "center" });
+      }
     });
 
     // 6. Recorrido y medición
     pdf.addPage();
-    addPageBase("CÓMO SE VIVE Y QUÉ MEDIMOS", "Cómo se vive y qué medimos");
-    const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
-    journey.forEach((step, index) => {
-      const x = 8 + index * 45.5;
-      pdf.setFillColor(21, 26, 39);
-      pdf.setDrawColor(41, 50, 72);
-      pdf.roundedRect(x, 60, 40, 17, 3, 3, "FD");
-      pdf.setTextColor(242, 244, 248);
-      pdf.setFontSize(8.5);
-      pdf.text(step, x + 20, 70.5, { align: "center" });
-    });
+    addPageBase("CÓMO SE VIVE Y QUÉ MEDIMOS", "Cómo se vive y qué medimos", 6);
     pdf.setTextColor(143, 167, 200);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(9);
-    pdf.text("QUÉ MEDIMOS", pageWidth / 2, 103, { align: "center" });
-    const measurement = chosen.length ? `La propuesta medirá la experiencia asociada a ${chosen.map((format) => format.name).join(", ")}.` : "Los KPI se definirán a partir de la propuesta y los formatos seleccionados.";
-    addWrapped(measurement, 25, 116, pageWidth - 50, 11, [242, 244, 248], "center");
-    addWrapped(`Resultado esperado: ${resultText}`, 25, 143, pageWidth - 50, 9.5, [168, 178, 195], "center");
+    pdf.setFontSize(10);
+    pdf.text("CÓMO SE VIVE", pageWidth / 2, 125, { align: "center" });
+
+    const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
+    journey.forEach((step, index) => {
+      const x = 42 + index * 164;
+      addCard(x, 148, 138, 50);
+      pdf.setTextColor(...white);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(11);
+      pdf.text(step, x + 69, 178, { align: "center" });
+      if (index < 5) {
+        pdf.setTextColor(...muted2);
+        pdf.setFontSize(16);
+        pdf.text("›", x + 149, 180, { align: "center" });
+      }
+    });
+
+    pdf.setTextColor(143, 167, 200);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(10);
+    pdf.text("QUÉ MEDIMOS", pageWidth / 2, 270, { align: "center" });
+
+    addCard(90, 300, 780, 82);
+    const measurement = chosen.length
+      ? `La propuesta medirá la experiencia asociada a ${chosen.map((format) => format.name).join(", ")}.`
+      : "Los KPI se definirán a partir de la propuesta y los formatos seleccionados.";
+    addWrapped(measurement, 125, 345, 710, 15, white, "center", 38);
+
+    addWrapped(`Resultado esperado: ${resultText}`, 90, 425, 780, 11, muted, "center", 30);
 
     pdf.save(`Presentacion_${(brief.brand || "PRISA").replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_-]+/g, "_")}.pdf`);
   };
