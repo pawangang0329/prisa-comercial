@@ -1603,7 +1603,7 @@ function BriefScreen({
 
             </div>
 
-            <small>
+            <small className="brief-demographic-helper">
               Puedes elegir Mujeres, Hombres o ambos.
             </small>
           </div>
@@ -1630,7 +1630,7 @@ function BriefScreen({
 
             </div>
 
-            <small>
+            <small className="brief-demographic-helper">
               Puede seleccionarse más de uno.
             </small>
           </div>
@@ -1690,7 +1690,7 @@ function BriefScreen({
 
         </div>
 
-        <small>
+        <small className="brief-demographic-helper">
           La fuente llega a departamento/región.
           No hay desglose por ciudad.
         </small>
@@ -2774,7 +2774,7 @@ function InsightsScreen({
           {brief.category && <span>Categoría: {brief.category}</span>}
         </div>
 
-        <p style={{ margin: "9px 0 0", color: "#68748b", fontSize: 8 }}>
+        <p className="insights-source-explanation">
           Las señales se construyen a partir del Brief y de las respuestas capturadas
           en Descubrimiento. No reemplazan la información original del cliente.
         </p>
@@ -3020,13 +3020,7 @@ function OpportunitiesScreen({
           {brief.category && <span>Categoría: {brief.category}</span>}
         </div>
 
-        <p
-          style={{
-            margin: "9px 0 0",
-            color: "#68748b",
-            fontSize: 8,
-          }}
-        >
+        <p className="opportunities-source-explanation">
           El sistema no reemplaza la información del cliente: la organiza para
           detectar dónde existe una oportunidad de activación.
         </p>
@@ -3318,14 +3312,7 @@ function FormatsScreen({
                 <h2 style={{ margin: "5px 0 0", fontSize: 14 }}>
                   Emisoras con mayor afinidad
                 </h2>
-                <span
-                  style={{
-                    display: "block",
-                    marginTop: 5,
-                    color: "#6f7b91",
-                    fontSize: 8,
-                  }}
-                >
+                <span className="formats-recommendation-note">
                   Basado en Brief + Discovery + catálogo
                 </span>
               </div>
@@ -3680,14 +3667,7 @@ function FormatsScreen({
                 <h2 style={{ margin: "5px 0 0", fontSize: 14 }}>
                   Franquicias con mayor afinidad
                 </h2>
-                <span
-                  style={{
-                    display: "block",
-                    marginTop: 5,
-                    color: "#6f7b91",
-                    fontSize: 8,
-                  }}
-                >
+                <span className="formats-recommendation-note">
                   Basado en Brief + Discovery + catálogo
                 </span>
               </div>
@@ -4191,31 +4171,16 @@ function ProposalScreen({
 
   return (
     <div className="reference-content">
-      <div className="reference-proposal-header">
-        <div>
+      <div className="reference-proposal-header proposal-header-centered">
+        <div className="proposal-header-copy">
           <span className="reference-eyebrow">PROPUESTA</span>
-          <h2 style={{ margin: "4px 0 0" }}>
-            Borrador de propuesta
-          </h2>
-          <p
-            style={{
-              margin: "5px 0 0",
-              color: "#778399",
-              fontSize: 9,
-            }}
-          >
-            Estructura comercial construida a partir del
-            Brief, Discovery y las selecciones realizadas.
+          <h2>Borrador de propuesta</h2>
+          <p>
+            Estructura comercial construida a partir del Brief, Discovery y las selecciones realizadas.
           </p>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-          }}
-        >
+        <div className="proposal-header-status">
           <div className="reference-complete">
             <strong>{completedSections}/5</strong>
             <span>secciones con información</span>
@@ -4753,6 +4718,7 @@ function PresentationScreen({
 }) {
   const chosen = formats.filter((format) => selectedFormats.includes(format.id));
   const [slide, setSlide] = useState(0);
+  const [showPresentationDownloadMenu, setShowPresentationDownloadMenu] = useState(false);
 
   const broadcasterName = selectedBroadcaster?.name || "Emisora por seleccionar";
   const franchiseName = selectedFranchise?.name || "Sin franquicia";
@@ -5234,27 +5200,48 @@ function PresentationScreen({
         ))}
       </div>
 
-      <div className="presentation-export-actions">
-        <button className="secondary-button" type="button" onClick={downloadPresentationPdf}>
-          <FileText size={13} /> Descargar PDF
-        </button>
-        <button className="secondary-button" type="button" onClick={downloadPresentationPptx}>
-          <Layers3 size={13} /> Descargar PowerPoint
-        </button>
-      </div>
+      <div className="reference-presentation-footer presentation-footer-actions">
+        <div className="presentation-footer-left">
+          <button className="secondary-button" type="button" onClick={onSave}>
+            <CheckCircle2 size={13} /> Guardar campaña
+          </button>
 
-      <div
-        className="reference-presentation-footer"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: 12,
-        }}
-      >
-        <button className="secondary-button" type="button" onClick={onSave}>
-          <CheckCircle2 size={13} /> Guardar campaña
-        </button>
+          <div className="presentation-download-wrap">
+            <button
+              className="secondary-button presentation-download-button"
+              type="button"
+              onClick={() => setShowPresentationDownloadMenu((current) => !current)}
+              aria-expanded={showPresentationDownloadMenu}
+            >
+              <FileText size={13} /> Descargar presentación
+              <ChevronDown size={13} />
+            </button>
+
+            {showPresentationDownloadMenu && (
+              <div className="presentation-download-menu">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPresentationDownloadMenu(false);
+                    downloadPresentationPdf();
+                  }}
+                >
+                  <FileText size={14} /> PDF
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPresentationDownloadMenu(false);
+                    void downloadPresentationPptx();
+                  }}
+                >
+                  <Layers3 size={14} /> PowerPoint (.pptx)
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
         <button
           className="secondary-button"
           type="button"
