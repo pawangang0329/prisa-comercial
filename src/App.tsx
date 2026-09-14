@@ -3492,15 +3492,6 @@ function FormatsScreen({
                   </div>
 
                   <div className="reference-why-data">
-                    <span>
-                      {broadcaster.coverage || "Cobertura no disponible"}
-                    </span>
-                    <span>
-                      {broadcaster.genderProfile || "Perfil demográfico no disponible"}
-                    </span>
-                    <span>
-                      {broadcaster.ages || "Edades no disponibles"}
-                    </span>
                     <button
                       type="button"
                       className="reference-why-button"

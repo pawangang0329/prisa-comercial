@@ -5508,3 +5508,33 @@ img {
     font-size: 12.5px !important;
   }
 }
+
+
+/* ===== FORMATOS · DATOS SOLO AL ABRIR ===== */
+.reference-why-data{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-width:110px!important;
+}
+.reference-why-data .reference-why-button{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  margin:0!important;
+  color:#ff2b9d!important;
+  font-size:10px!important;
+  font-weight:700!important;
+  white-space:nowrap!important;
+}
+.reference-why-data > span{display:none!important;}
+.broadcaster-catalog-evidence{
+  display:flex!important;
+  flex-direction:column!important;
+  gap:6px!important;
+  color:#eef2f7!important;
+  font-size:10px!important;
+  line-height:1.5!important;
+}
+.broadcaster-catalog-evidence span{color:#cbd3df!important;}
+.broadcaster-catalog-evidence strong{color:#fff!important;}
