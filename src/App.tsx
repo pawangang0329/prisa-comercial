@@ -4812,7 +4812,7 @@ function PresentationScreen({
       });
     };
 
-    const addBase = (title: string, kicker: string, index: number, titleFontSize = 24) => {
+    const addBase = (title: string, kicker: string, index: number) => {
       const slidePpt = pptx.addSlide();
       addBackground(slidePpt);
       slidePpt.addText(kicker, {
@@ -4822,7 +4822,7 @@ function PresentationScreen({
       });
       slidePpt.addText(title, {
         x: 0.65, y: 0.78, w: 12.03, h: 0.52,
-        fontFace: "Aptos Display", fontSize: titleFontSize, bold: true, color: white,
+        fontFace: "Aptos Display", fontSize: 24, bold: true, color: white,
         margin: 0, align: "center", fit: "shrink",
       });
       slidePpt.addText(`0${index}`, {
@@ -4841,20 +4841,48 @@ function PresentationScreen({
       });
     };
 
-    // 1. Portada
+    // 1. Portada — composición centrada verticalmente
     {
-      const s = addBase(brief.brand || "Marca sin nombre", "PROPUESTA DE INNOVACIÓN DIGITAL", 1, 36);
+      const s = pptx.addSlide();
+      addBackground(s);
+
+      // Número de lámina
+      s.addText("01", {
+        x: 12.42, y: 0.43, w: 0.38, h: 0.20,
+        fontFace: "Aptos", fontSize: 7, color: muted2, margin: 0, align: "right",
+      });
+
+      // Encabezado superior
+      s.addText("PROPUESTA DE INNOVACIÓN DIGITAL", {
+        x: 0.65, y: 1.55, w: 12.03, h: 0.28,
+        fontFace: "Aptos", fontSize: 11, bold: true, color: pink,
+        charSpacing: 1.5, margin: 0, align: "center",
+      });
+
+      // Marca: protagonista de la portada
+      s.addText(brief.brand || "Marca sin nombre", {
+        x: 0.70, y: 2.02, w: 11.93, h: 0.82,
+        fontFace: "Aptos Display", fontSize: 40, bold: true, color: white,
+        margin: 0, align: "center", valign: "middle", fit: "shrink",
+      });
+
+      // Categoría
       s.addText(brief.category || "Categoría por definir", {
-        x: 1, y: 1.72, w: 11.33, h: 0.38,
-        fontSize: 16, color: text2, margin: 0, align: "center",
+        x: 1, y: 3.08, w: 11.33, h: 0.42,
+        fontFace: "Aptos", fontSize: 18, color: text2, margin: 0, align: "center",
+        fit: "shrink",
       });
+
+      // Divisor central
       s.addShape(pptx.ShapeType.line, {
-        x: 5.1, y: 2.35, w: 3.13, h: 0,
-        line: { color: pink, width: 1.2 },
+        x: 5.08, y: 3.72, w: 3.17, h: 0,
+        line: { color: pink, width: 1.4 },
       });
+
+      // Pie centrado
       s.addText("Área de Innovación Digital · PRISA Media Colombia", {
         x: 1, y: 6.48, w: 11.33, h: 0.24,
-        fontSize: 9, color: muted2, margin: 0, align: "center",
+        fontFace: "Aptos", fontSize: 10, color: muted2, margin: 0, align: "center",
       });
     }
 
@@ -5037,19 +5065,25 @@ function PresentationScreen({
       });
 
       const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
-      const startX = 0.56;
-      const stepW = 1.84;
+      const journeyCardW = 1.45;
+      const journeyCardH = 0.62;
+      const journeyGap = 0.25;
+      const journeyArrowW = 0.22;
+      const journeyTotalW = journey.length * journeyCardW + (journey.length - 1) * (journeyGap + journeyArrowW);
+      const journeyStartX = (W - journeyTotalW) / 2;
+
       journey.forEach((step, i) => {
-        const x = startX + i * 2.08;
-        addCard(s, x, 2.03, stepW, 0.72);
+        const x = journeyStartX + i * (journeyCardW + journeyGap + journeyArrowW);
+        addCard(s, x, 2.03, journeyCardW, journeyCardH);
         s.addText(step, {
-          x, y: 2.27, w: stepW, h: 0.2,
-          fontSize: 10.5, color: white, margin: 0, align: "center",
+          x, y: 2.25, w: journeyCardW, h: 0.18,
+          fontSize: 9.5, color: white, margin: 0, align: "center",
+          fit: "shrink",
         });
         if (i < journey.length - 1) {
-          s.addShape(pptx.ShapeType.line, {
-            x: x + stepW + 0.04, y: 2.39, w: 0.19, h: 0,
-            line: { color: muted2, width: 1.2, beginArrowType: "none", endArrowType: "triangle" },
+          s.addText("›", {
+            x: x + journeyCardW + journeyGap, y: 2.22, w: journeyArrowW, h: 0.25,
+            fontSize: 13, bold: true, color: muted2, margin: 0, align: "center",
           });
         }
       });
@@ -5103,7 +5137,7 @@ function PresentationScreen({
     const green: [number, number, number] = [37, 217, 120];
     const yellow: [number, number, number] = [240, 181, 43];
 
-    const addPageBase = (kicker: string, title: string, index: number, titleFontSize = 25) => {
+    const addPageBase = (kicker: string, title: string, index: number) => {
       pdf.setFillColor(...bg);
       pdf.rect(0, 0, pageWidth, pageHeight, "F");
       pdf.setFillColor(...pink);
@@ -5117,7 +5151,7 @@ function PresentationScreen({
       pdf.text(kicker, pageWidth / 2, 43, { align: "center" });
 
       pdf.setTextColor(...white);
-      pdf.setFontSize(titleFontSize);
+      pdf.setFontSize(25);
       pdf.text(title, pageWidth / 2, 72, { align: "center" });
 
       pdf.setTextColor(...muted2);
@@ -5172,16 +5206,46 @@ function PresentationScreen({
       pdf.roundedRect(x, y, w, h, 9, 9, "FD");
     };
 
-    // 1. Portada
-    addPageBase("PROPUESTA DE INNOVACIÓN DIGITAL", brief.brand || "Marca sin nombre", 1, 38);
+    // 1. Portada — composición centrada verticalmente
+    pdf.setFillColor(...bg);
+    pdf.rect(0, 0, pageWidth, pageHeight, "F");
+    pdf.setFillColor(...pink);
+    pdf.rect(0, 0, pageWidth, 5, "F");
+    pdf.setFillColor(...pink);
+    pdf.rect(34, 28, 80, 3, "F");
+
+    // Número de lámina
+    pdf.setTextColor(...muted2);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9);
+    pdf.text("01", pageWidth - 38, 42, { align: "right" });
+
+    // Encabezado superior
+    pdf.setTextColor(...pink);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(11);
+    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 157, { align: "center" });
+
+    // Marca protagonista
+    pdf.setTextColor(...white);
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(52);
+    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 222, { align: "center" });
+
+    // Categoría
     pdf.setTextColor(...text2);
     pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(17);
-    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 178, { align: "center" });
+    pdf.setFontSize(20);
+    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 285, { align: "center" });
+
+    // Divisor central
     pdf.setDrawColor(...pink);
     pdf.setLineWidth(1.5);
-    pdf.line(405, 215, 555, 215);
+    pdf.line(405, 330, 555, 330);
+
+    // Pie centrado
     pdf.setTextColor(...muted2);
+    pdf.setFont("helvetica", "normal");
     pdf.setFontSize(10);
     pdf.text("Área de Innovación Digital · PRISA Media Colombia", pageWidth / 2, 486, { align: "center" });
 
@@ -5320,23 +5384,28 @@ function PresentationScreen({
     pdf.setFontSize(10);
     pdf.text("CÓMO SE VIVE", pageWidth / 2, 125, { align: "center" });
 
+    // Recorrido centrado: seis pasos + cinco conectores
     const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
-    const journeyCardWidth = 118;
-    const journeyGap = 20;
-    const journeyTotalWidth = journeyCardWidth * journey.length + journeyGap * (journey.length - 1);
-    const journeyStartX = (pageWidth - journeyTotalWidth) / 2;
+    const journeyCardW = 116;
+    const journeyCardH = 48;
+    const journeyGap = 28;
+    const journeyArrowW = 22;
+    const journeyTotalW = journey.length * journeyCardW + (journey.length - 1) * (journeyGap + journeyArrowW);
+    const journeyStartX = (pageWidth - journeyTotalW) / 2;
 
     journey.forEach((step, index) => {
-      const x = journeyStartX + index * (journeyCardWidth + journeyGap);
-      addCard(x, 148, journeyCardWidth, 46);
+      const x = journeyStartX + index * (journeyCardW + journeyGap + journeyArrowW);
+      addCard(x, 148, journeyCardW, journeyCardH);
       pdf.setTextColor(...white);
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
-      pdf.text(step, x + journeyCardWidth / 2, 176, { align: "center" });
-      if (index < 5) {
+      pdf.text(step, x + journeyCardW / 2, 177, { align: "center" });
+
+      if (index < journey.length - 1) {
         pdf.setTextColor(...muted2);
-        pdf.setFontSize(14);
-        pdf.text("›", x + journeyCardWidth + journeyGap / 2, 177, { align: "center" });
+        pdf.setFont("helvetica", "bold");
+        pdf.setFontSize(15);
+        pdf.text("›", x + journeyCardW + journeyGap / 2 + journeyArrowW / 2, 179, { align: "center" });
       }
     });
 
