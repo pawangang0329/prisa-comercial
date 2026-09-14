@@ -5064,3 +5064,136 @@ img {
   font-size: 12px !important;
   line-height: 1.6 !important;
 }
+
+
+/* ============================================================
+   PRESENTACIÓN — HISTORIA COMO LÍNEA DE TIEMPO
+   ============================================================ */
+.story-timeline {
+  position: relative;
+  width: min(760px, 100%);
+  margin: 24px auto 10px;
+  padding: 4px 0;
+}
+
+.story-timeline::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  bottom: 18px;
+  width: 2px;
+  background: linear-gradient(to bottom, #5d9eff 0%, #ff2b9d 50%, #36d981 100%);
+  opacity: .65;
+}
+
+.story-timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 15px;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.story-timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.story-timeline-marker {
+  position: relative;
+  z-index: 1;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #5d9eff;
+  border-radius: 50%;
+  background: #101624;
+  color: #5d9eff;
+  font-size: 11px;
+  font-weight: 800;
+  box-shadow: 0 0 0 5px #101624;
+}
+
+.story-timeline-marker.story-red {
+  border-color: #ff5871;
+  color: #ff5871;
+}
+
+.story-timeline-marker.story-green {
+  border-color: #36d981;
+  color: #36d981;
+}
+
+.story-timeline-content {
+  min-height: 36px;
+  padding: 2px 0 3px;
+  text-align: left;
+}
+
+.story-timeline-content strong {
+  display: block;
+  color: #eef2f7;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.story-timeline-content p {
+  margin: 6px 0 0;
+  color: #b7c1d2;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+/* El insight de la siguiente lámina debe ser contundente, pero no gigante. */
+.slide-3 .insight-slide-body h2,
+.insight-slide-centered h2 {
+  max-width: 700px;
+  margin: 9px auto 23px;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+.slide-3 .concept-box strong,
+.concept-box-centered strong {
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .story-timeline {
+    margin-top: 18px;
+  }
+
+  .story-timeline-item {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 11px;
+  }
+
+  .story-timeline::before {
+    left: 16px;
+  }
+
+  .story-timeline-marker {
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+  }
+
+  .story-timeline-content strong {
+    font-size: 12px;
+  }
+
+  .story-timeline-content p {
+    font-size: 10px;
+    line-height: 1.6;
+  }
+
+  .slide-3 .insight-slide-body h2,
+  .insight-slide-centered h2 {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+}

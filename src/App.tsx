@@ -4836,18 +4836,27 @@ function PresentationScreen({
           <div className="presentation-slide-content presentation-centered-content">
             <span className="reference-slide-label">POR QUÉ ESTA CAMPAÑA</span>
             <h2>La lectura que surge del brief</h2>
-            <div className="story-list story-list-centered">
-              <div className="story-item">
-                <span className="story-number">1</span>
-                <div><strong>Lectura del negocio</strong><p>{businessReading}</p></div>
+            <div className="story-timeline">
+              <div className="story-timeline-item">
+                <div className="story-timeline-marker">1</div>
+                <div className="story-timeline-content">
+                  <strong>Lectura del negocio</strong>
+                  <p>{businessReading}</p>
+                </div>
               </div>
-              <div className="story-item">
-                <span className="story-number story-red">2</span>
-                <div><strong>Tensión detectada</strong><p>{analyticalInsight}</p></div>
+              <div className="story-timeline-item">
+                <div className="story-timeline-marker story-red">2</div>
+                <div className="story-timeline-content">
+                  <strong>Tensión detectada</strong>
+                  <p>{analyticalInsight}</p>
+                </div>
               </div>
-              <div className="story-item">
-                <span className="story-number story-green">3</span>
-                <div><strong>Cambio que debe provocar</strong><p>{resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.</p></div>
+              <div className="story-timeline-item">
+                <div className="story-timeline-marker story-green">3</div>
+                <div className="story-timeline-content">
+                  <strong>Cambio que debe provocar</strong>
+                  <p>{resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.</p>
+                </div>
               </div>
             </div>
             <p className="slide-centered-extra">Señal adicional considerada: {additionalText}</p>
