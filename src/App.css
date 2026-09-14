@@ -5686,3 +5686,51 @@ img {
     text-align: center !important;
   }
 }
+
+
+/* ============================================================
+   PRESENTACIÓN — MÁS PRESENCIA EN ESCRITORIO
+   La lámina ocupa más espacio horizontal y vertical sin alterar
+   la composición móvil ni el contenido de las 6 láminas.
+   ============================================================ */
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .app-reference .reference-presentation-warning {
+    max-width: 1080px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .app-reference .reference-slide {
+    width: min(1080px, calc(100vw - 250px)) !important;
+    max-width: 1080px !important;
+    min-height: 607px !important;
+    aspect-ratio: 16 / 9 !important;
+    padding: 60px 68px !important;
+    box-sizing: border-box !important;
+  }
+
+  .app-reference .reference-thumbnails,
+  .app-reference .reference-presentation-footer {
+    max-width: 1080px !important;
+  }
+}
+
+@media screen and (min-width: 761px) and (max-width: 1250px) {
+  .app-reference .reference-slide {
+    width: min(960px, calc(100vw - 210px)) !important;
+    max-width: 960px !important;
+    min-height: 540px !important;
+    padding: 50px 56px !important;
+  }
+
+  .app-reference .reference-thumbnails,
+  .app-reference .reference-presentation-footer,
+  .app-reference .reference-presentation-warning {
+    max-width: 960px !important;
+  }
+}
