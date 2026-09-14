@@ -5593,3 +5593,69 @@ img {
 .app-reference .recommendation-expanded-data .recommendation-station-evidence strong {
   color: #ffffff !important;
 }
+
+
+/* =========================================================
+   BRIEF — AJUSTE FINAL DE TIPOGRAFÍA Y CENTRADO
+   ========================================================= */
+.app-reference .reference-brief-head > div:first-child {
+  text-align: center;
+  width: 100%;
+}
+
+.app-reference .brief-title {
+  margin: 0;
+  color: #f4f7fb;
+  font-size: 20px;
+  line-height: 1.25;
+  font-weight: 700;
+  text-align: center;
+}
+
+.app-reference .brief-subtitle {
+  margin: 7px auto 0;
+  max-width: 720px;
+  color: #aeb8c9;
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 400;
+  text-align: center;
+}
+
+.app-reference .brief-helper-text {
+  display: block;
+  margin-top: 9px;
+  color: #aeb8c9;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .app-reference .reference-brief-head > div:first-child {
+    width: 100%;
+    text-align: center;
+  }
+
+  .app-reference .brief-title {
+    width: 100%;
+    font-size: 22px;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .app-reference .brief-subtitle {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .app-reference .brief-helper-text {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+}

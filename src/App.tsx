@@ -1394,16 +1394,12 @@ function BriefScreen({
 
       <div className="reference-brief-head">
         <div>
-          <h2 style={{ margin: 0, fontSize: 16 }}>
+          <h2 className="brief-title">
             Brief de la marca
           </h2>
 
           <p
-            style={{
-              margin: "5px 0 0",
-              color: "#778398",
-              fontSize: 9,
-            }}
+            className="brief-subtitle"
           >
             Lo que sabes antes de entrar a la reunión.
             Puede quedar incompleto.
@@ -1471,9 +1467,8 @@ function BriefScreen({
 
         </div>
 
-        <small>
-          Define si la comunicación está dirigida a
-          consumidores finales o a otras empresas.
+        <small className="brief-helper-text">
+          Define si la comunicación está dirigida a consumidores finales o a otras empresas.
         </small>
       </div>
 
