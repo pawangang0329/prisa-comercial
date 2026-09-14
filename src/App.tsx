@@ -4855,28 +4855,28 @@ function PresentationScreen({
       // Encabezado superior
       s.addText("PROPUESTA DE INNOVACIÓN DIGITAL", {
         x: 0.65, y: 1.55, w: 12.03, h: 0.28,
-        fontFace: "Aptos", fontSize: 11, bold: true, color: pink,
+        fontFace: "Aptos", fontSize: 14, bold: true, color: pink,
         charSpacing: 1.5, margin: 0, align: "center",
       });
 
       // Marca: protagonista de la portada
       s.addText(brief.brand || "Marca sin nombre", {
-        x: 0.70, y: 2.02, w: 11.93, h: 0.82,
-        fontFace: "Aptos Display", fontSize: 40, bold: true, color: white,
+        x: 0.55, y: 1.95, w: 12.23, h: 1.08,
+        fontFace: "Aptos Display", fontSize: 56, bold: true, color: white,
         margin: 0, align: "center", valign: "middle", fit: "shrink",
       });
 
       // Categoría
       s.addText(brief.category || "Categoría por definir", {
-        x: 1, y: 3.08, w: 11.33, h: 0.42,
-        fontFace: "Aptos", fontSize: 18, color: text2, margin: 0, align: "center",
+        x: 0.8, y: 3.20, w: 11.73, h: 0.52,
+        fontFace: "Aptos", fontSize: 23, color: text2, margin: 0, align: "center",
         fit: "shrink",
       });
 
       // Divisor central
       s.addShape(pptx.ShapeType.line, {
-        x: 5.08, y: 3.72, w: 3.17, h: 0,
-        line: { color: pink, width: 1.4 },
+        x: 4.75, y: 3.95, w: 3.83, h: 0,
+        line: { color: pink, width: 1.6 },
       });
 
       // Pie centrado
@@ -5223,25 +5223,25 @@ function PresentationScreen({
     // Encabezado superior
     pdf.setTextColor(...pink);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(11);
-    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 157, { align: "center" });
+    pdf.setFontSize(14);
+    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 145, { align: "center" });
 
     // Marca protagonista
     pdf.setTextColor(...white);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(52);
-    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 222, { align: "center" });
+    pdf.setFontSize(68);
+    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 220, { align: "center" });
 
     // Categoría
     pdf.setTextColor(...text2);
     pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(20);
-    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 285, { align: "center" });
+    pdf.setFontSize(24);
+    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 290, { align: "center" });
 
     // Divisor central
     pdf.setDrawColor(...pink);
-    pdf.setLineWidth(1.5);
-    pdf.line(405, 330, 555, 330);
+    pdf.setLineWidth(1.7);
+    pdf.line(390, 340, 570, 340);
 
     // Pie centrado
     pdf.setTextColor(...muted2);
