@@ -5197,3 +5197,314 @@ img {
     line-height: 1.45;
   }
 }
+
+/* ============================================================
+   AJUSTE FINAL — HISTORIA COMO LÍNEA DE TIEMPO HORIZONTAL
+   ============================================================ */
+.app-reference .reference-slide.slide-2 .reference-slide-label {
+  display: block !important;
+  color: #ff2b9d !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .13em !important;
+  margin-bottom: 10px !important;
+  text-align: center !important;
+}
+
+.app-reference .reference-slide.slide-2 .presentation-slide-content > h2 {
+  font-size: 23px !important;
+  margin-bottom: 24px !important;
+  text-align: center !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline {
+  position: relative !important;
+  width: min(900px, 100%) !important;
+  margin: 8px auto 12px !important;
+  padding: 0 8px 4px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline::before {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 0 !important;
+  left: 8% !important;
+  right: 8% !important;
+  top: 27px !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, #7c63d8 0%, #ff2b9d 50%, #36d981 100%) !important;
+  opacity: .8 !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-item {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-marker {
+  order: 1 !important;
+  width: 38px !important;
+  height: 38px !important;
+  flex: 0 0 38px !important;
+  border: 2px solid #7c63d8 !important;
+  border-radius: 50% !important;
+  background: #101624 !important;
+  color: #a99bf2 !important;
+  font-size: 11px !important;
+  box-shadow: 0 0 0 6px #101624 !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-item:nth-child(2) .story-timeline-marker {
+  border-color: #ff2b9d !important;
+  color: #ff65b8 !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-item:nth-child(3) .story-timeline-marker {
+  border-color: #36d981 !important;
+  color: #63eaa0 !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-content {
+  order: 2 !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  margin-top: 13px !important;
+  padding: 12px 13px 13px !important;
+  background: #151b29 !important;
+  border: 1px solid #2b354b !important;
+  border-radius: 9px !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-content strong {
+  display: block !important;
+  color: #f4f6fa !important;
+  font-size: 12px !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-content p {
+  margin: 7px 0 0 !important;
+  color: #aeb9cb !important;
+  font-size: 9.5px !important;
+  line-height: 1.55 !important;
+}
+
+.app-reference .reference-slide.slide-2 .slide-centered-extra {
+  margin-top: 8px !important;
+  color: #9da9bc !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+  text-align: center !important;
+}
+
+/* ============================================================
+   AJUSTE FINAL — INSIGHT / CONCEPTO: MÁS PEQUEÑOS Y LEGIBLES
+   ============================================================ */
+.app-reference .reference-slide.slide-3 .reference-slide-label {
+  display: block !important;
+  color: #ff2b9d !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: .13em !important;
+  margin-bottom: 12px !important;
+  text-align: center !important;
+}
+
+.app-reference .reference-slide.slide-3 .insight-slide-body > span {
+  color: #9da9bc !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: .1em !important;
+}
+
+.app-reference .reference-slide.slide-3 .insight-slide-body h2,
+.app-reference .reference-slide.slide-3 .insight-slide-centered h2 {
+  max-width: 720px !important;
+  margin: 8px auto 18px !important;
+  color: #f4f6fa !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 600 !important;
+  letter-spacing: -.01em !important;
+  text-align: center !important;
+}
+
+.app-reference .reference-slide.slide-3 .concept-box {
+  max-width: 600px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 13px 16px !important;
+}
+
+.app-reference .reference-slide.slide-3 .concept-box > span {
+  color: #9da9bc !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+}
+
+.app-reference .reference-slide.slide-3 .concept-box strong,
+.app-reference .reference-slide.slide-3 .concept-box-centered strong {
+  margin-top: 6px !important;
+  color: #f4f6fa !important;
+  font-size: 10.5px !important;
+  line-height: 1.55 !important;
+  font-weight: 600 !important;
+}
+
+.app-reference .reference-slide.slide-3 .slide-centered-extra {
+  color: #aeb9cb !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+
+@media (max-width: 760px) {
+  .app-reference .reference-slide.slide-2 .story-timeline {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding: 0 !important;
+  }
+
+  .app-reference .reference-slide.slide-2 .story-timeline::before {
+    left: 50% !important;
+    right: auto !important;
+    top: 18px !important;
+    bottom: 18px !important;
+    width: 2px !important;
+    height: auto !important;
+    transform: translateX(-50%) !important;
+    background: linear-gradient(to bottom, #7c63d8 0%, #ff2b9d 50%, #36d981 100%) !important;
+  }
+
+  .app-reference .reference-slide.slide-2 .story-timeline-content {
+    max-width: 90% !important;
+  }
+
+  .app-reference .reference-slide.slide-2 .presentation-slide-content > h2 {
+    font-size: 20px !important;
+  }
+
+  .app-reference .reference-slide.slide-3 .insight-slide-body h2,
+  .app-reference .reference-slide.slide-3 .insight-slide-centered h2 {
+    font-size: 13px !important;
+  }
+}
+
+/* ============================================================
+   LÍNEA DE TIEMPO — COMPOSICIÓN MÁS CERCANA A UNA TIMELINE REAL
+   Evento arriba → punto en la línea → descripción abajo
+   ============================================================ */
+.app-reference .reference-slide.slide-2 .story-timeline {
+  align-items: start !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline::before {
+  top: 48px !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-item {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: 30px 38px auto !important;
+  gap: 0 !important;
+  align-items: center !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-content {
+  display: contents !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-content strong {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  min-height: 22px !important;
+  padding: 0 5px !important;
+  text-align: center !important;
+  color: #f4f6fa !important;
+  font-size: 12px !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-marker {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  justify-self: center !important;
+  align-self: center !important;
+  z-index: 2 !important;
+}
+
+.app-reference .reference-slide.slide-2 .story-timeline-content p {
+  grid-column: 1 !important;
+  grid-row: 3 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  min-height: 92px !important;
+  margin: 12px 0 0 !important;
+  padding: 11px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #151b29 !important;
+  border: 1px solid #2b354b !important;
+  border-radius: 8px !important;
+  color: #aeb9cb !important;
+  font-size: 9.5px !important;
+  line-height: 1.5 !important;
+  text-align: center !important;
+}
+
+/* El título de sección rosado nunca se oculta en esta lámina. */
+.app-reference .reference-slide.slide-2 .reference-slide-label,
+.app-reference .reference-slide.slide-3 .reference-slide-label {
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Insight todavía más compacto: protagonista sin ocupar toda la lámina. */
+.app-reference .reference-slide.slide-3 .insight-slide-body h2,
+.app-reference .reference-slide.slide-3 .insight-slide-centered h2 {
+  font-size: 13.5px !important;
+  line-height: 1.5 !important;
+  max-width: 690px !important;
+  margin-top: 7px !important;
+  margin-bottom: 16px !important;
+}
+
+@media (max-width: 760px) {
+  .app-reference .reference-slide.slide-2 .story-timeline::before {
+    top: 48px !important;
+    bottom: 48px !important;
+    left: 50% !important;
+    right: auto !important;
+    width: 2px !important;
+    height: auto !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .app-reference .reference-slide.slide-2 .story-timeline-item {
+    grid-template-rows: 30px 34px auto !important;
+  }
+
+  .app-reference .reference-slide.slide-2 .story-timeline-marker {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  .app-reference .reference-slide.slide-3 .insight-slide-body h2,
+  .app-reference .reference-slide.slide-3 .insight-slide-centered h2 {
+    font-size: 12.5px !important;
+  }
+}
