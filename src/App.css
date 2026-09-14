@@ -5911,3 +5911,204 @@ img {
     font-size: 9px !important;
   }
 }
+
+/* ============================================================
+   PRESENTACIÓN — MÁS APROVECHAMIENTO DEL ANCHO + PERFIL LEGIBLE
+   ============================================================ */
+.app-reference .reference-presentation-shell .reference-slide,
+.app-reference .reference-presentation-shell .reference-thumbnails,
+.app-reference .reference-presentation-shell .reference-presentation-warning,
+.app-reference .reference-presentation-shell .reference-presentation-footer,
+.app-reference .reference-presentation-shell .presentation-export-actions {
+  width: min(1180px, calc(100vw - 250px)) !important;
+  max-width: 1180px !important;
+}
+
+.app-reference .reference-presentation-shell .presentation-centered-content {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+}
+
+.app-reference .reference-presentation-shell .audience-slide-centered-grid {
+  width: 100% !important;
+  max-width: none !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 24px !important;
+}
+
+.app-reference .reference-presentation-shell .audience-center-card {
+  text-align: left !important;
+  padding: 24px !important;
+  min-height: 300px !important;
+}
+
+.app-reference .reference-presentation-shell .audience-center-card > .slide-caption {
+  text-align: center !important;
+  font-size: 12px !important;
+  margin-bottom: 14px !important;
+}
+
+.broadcaster-profile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.broadcaster-profile-row {
+  display: grid;
+  grid-template-columns: 155px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 10px 0;
+  border-bottom: 1px solid #293248;
+}
+
+.broadcaster-profile-row:last-child {
+  border-bottom: 0;
+}
+
+.broadcaster-profile-row strong {
+  color: #aebbd0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.broadcaster-profile-row span {
+  color: #eef2f7;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.profile-affinity-caption {
+  display: block;
+  margin-top: 12px !important;
+  margin-bottom: 10px !important;
+  text-align: left !important;
+}
+
+.app-reference .reference-presentation-shell .affinity-list span {
+  font-size: 11px !important;
+  padding: 7px 9px !important;
+}
+
+.presentation-export-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+  margin: 14px auto 0;
+}
+
+.presentation-export-actions .secondary-button {
+  font-size: 11px;
+}
+
+/* Usar todo el ancho interno disponible en las seis láminas. */
+.app-reference .reference-presentation-shell .story-timeline,
+.app-reference .reference-presentation-shell .insight-slide-centered,
+.app-reference .reference-presentation-shell .solution-flow,
+.app-reference .reference-presentation-shell .journey-area-centered {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.app-reference .reference-presentation-shell .story-timeline {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  padding: 24px 0 8px !important;
+}
+
+.app-reference .reference-presentation-shell .story-timeline::before {
+  left: 7% !important;
+  right: 7% !important;
+  top: 24px !important;
+  bottom: auto !important;
+  width: auto !important;
+  height: 2px !important;
+  background: linear-gradient(to right, #5d9eff 0%, #ff2b9d 50%, #36d981 100%) !important;
+}
+
+.app-reference .reference-presentation-shell .story-timeline-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 13px !important;
+  margin: 0 !important;
+}
+
+.app-reference .reference-presentation-shell .story-timeline-content {
+  width: 100% !important;
+  text-align: center !important;
+  padding: 0 10px !important;
+}
+
+.app-reference .reference-presentation-shell .story-timeline-content p {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+}
+
+@media screen and (max-width: 760px) {
+  .app-reference .reference-presentation-shell .reference-slide,
+  .app-reference .reference-presentation-shell .reference-thumbnails,
+  .app-reference .reference-presentation-shell .reference-presentation-warning,
+  .app-reference .reference-presentation-shell .reference-presentation-footer,
+  .app-reference .reference-presentation-shell .presentation-export-actions {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .app-reference .reference-presentation-shell .audience-slide-centered-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .app-reference .reference-presentation-shell .audience-center-card {
+    min-height: 0 !important;
+    padding: 16px !important;
+  }
+
+  .broadcaster-profile-row {
+    grid-template-columns: 1fr !important;
+    gap: 4px !important;
+  }
+
+  .broadcaster-profile-row strong { font-size: 11px !important; }
+  .broadcaster-profile-row span { font-size: 12px !important; }
+
+  .presentation-export-actions {
+    justify-content: stretch !important;
+  }
+
+  .presentation-export-actions .secondary-button {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .app-reference .reference-presentation-shell .story-timeline {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .app-reference .reference-presentation-shell .story-timeline::before {
+    left: 18px !important;
+    right: auto !important;
+    top: 18px !important;
+    bottom: 18px !important;
+    width: 2px !important;
+    height: auto !important;
+  }
+
+  .app-reference .reference-presentation-shell .story-timeline-item {
+    display: grid !important;
+    grid-template-columns: 38px minmax(0, 1fr) !important;
+    flex-direction: initial !important;
+    align-items: start !important;
+    gap: 13px !important;
+  }
+
+  .app-reference .reference-presentation-shell .story-timeline-content {
+    text-align: left !important;
+    padding: 0 !important;
+  }
+}
