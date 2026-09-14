@@ -5538,3 +5538,58 @@ img {
 }
 .broadcaster-catalog-evidence span{color:#cbd3df!important;}
 .broadcaster-catalog-evidence strong{color:#fff!important;}
+
+
+/* ===== RECOMENDACIÓN AUTOMÁTICA · DATOS SOLO AL ABRIR ===== */
+.app-reference .recommendation-card {
+  position: relative;
+  transition: border-color .15s ease, background .15s ease;
+}
+.app-reference .recommendation-card:focus-visible {
+  outline: 2px solid #ec0f82;
+  outline-offset: 2px;
+}
+.app-reference .recommendation-details-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0 0;
+  padding: 7px 8px;
+  border: 1px solid #35405a;
+  border-radius: 7px;
+  background: #151c2b;
+  color: #ff2b9d !important;
+  font-size: 10px !important;
+  font-weight: 700;
+  cursor: pointer;
+}
+.app-reference .recommendation-details-button:hover {
+  border-color: #ec0f82;
+  background: #241325;
+}
+.app-reference .recommendation-expanded-data {
+  margin-top: 9px;
+  padding-top: 9px;
+  border-top: 1px solid #293248;
+}
+.app-reference .recommendation-expanded-data .recommendation-reason {
+  display: block;
+  color: #d8deea !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+.app-reference .recommendation-expanded-data .recommendation-station-evidence {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+  margin-top: 8px !important;
+}
+.app-reference .recommendation-expanded-data .recommendation-station-evidence span {
+  color: #cbd3df !important;
+  font-size: 9px !important;
+  line-height: 1.4 !important;
+}
+.app-reference .recommendation-expanded-data .recommendation-station-evidence strong {
+  color: #ffffff !important;
+}

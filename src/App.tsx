@@ -3348,10 +3348,18 @@ function FormatsScreen({
                   (broadcaster) => broadcaster.id === recommendation.id
                 );
                 return (
-                  <button
+                  <div
                     key={recommendation.id}
-                    type="button"
+                    role="button"
+                    tabIndex={0}
                     onClick={() => toggleBroadcaster(recommendation.id)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        toggleBroadcaster(recommendation.id);
+                      }
+                    }}
+                    className="recommendation-card"
                     style={{
                       textAlign: "left",
                       border: `1px solid ${active ? "#ec0f82" : "#293248"}`,
@@ -3359,6 +3367,7 @@ function FormatsScreen({
                       borderRadius: 10,
                       padding: 11,
                       color: "#eef2f7",
+                      cursor: "pointer",
                     }}
                   >
                     <div
@@ -3381,35 +3390,57 @@ function FormatsScreen({
                       </strong>
                     </div>
 
-                    <small
-                      className="recommendation-affinity-label"
-                    >
+                    <small className="recommendation-affinity-label">
                       Afinidad estimada
                     </small>
 
-                    <span className="recommendation-reason">
-                      Mayor afinidad porque:{" "}
-                      {(recommendation.reasons.slice(0, 2).join(" · ")) ||
-                        "coincidencia con la información disponible."}
-                    </span>
+                    <button
+                      type="button"
+                      className="recommendation-details-button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setWhyBroadcasterId(
+                          whyBroadcasterId === recommendation.id
+                            ? null
+                            : recommendation.id
+                        );
+                      }}
+                    >
+                      Ver datos completos ›
+                    </button>
 
-                    {recommendedStation && (
-                      <div className="recommendation-station-evidence">
-                        <span>
-                          <strong>Cobertura:</strong>{" "}
-                          {recommendedStation.coverage || "No disponible"}
-                        </span>
-                        <span>
-                          <strong>Perfil:</strong>{" "}
-                          {recommendedStation.genderProfile || "No disponible"}
-                        </span>
-                        <span>
-                          <strong>Edades:</strong>{" "}
-                          {recommendedStation.ages || "No disponible"}
-                        </span>
+                    {whyBroadcasterId === recommendation.id && recommendedStation && (
+                      <div className="recommendation-expanded-data">
+                        <div className="recommendation-reason">
+                          Mayor afinidad porque: {" "}
+                          {(recommendation.reasons.slice(0, 2).join(" · ")) ||
+                            "coincidencia con la información disponible."}
+                        </div>
+                        <div className="recommendation-station-evidence">
+                          <span>
+                            <strong>Cobertura:</strong>{" "}
+                            {recommendedStation.coverage || "No disponible"}
+                          </span>
+                          <span>
+                            <strong>Perfil:</strong>{" "}
+                            {recommendedStation.genderProfile || "No disponible"}
+                          </span>
+                          <span>
+                            <strong>Edades:</strong>{" "}
+                            {recommendedStation.ages || "No disponible"}
+                          </span>
+                          <span>
+                            <strong>Nivel socioeconómico:</strong>{" "}
+                            {recommendedStation.socioeconomic || "No disponible"}
+                          </span>
+                          <span>
+                            <strong>Afinidades:</strong>{" "}
+                            {recommendedStation.interests || "No disponible"}
+                          </span>
+                        </div>
                       </div>
                     )}
-                  </button>
+                  </div>
                 );
               })}
             </div>
