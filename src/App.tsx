@@ -4812,7 +4812,7 @@ function PresentationScreen({
       });
     };
 
-    const addBase = (title: string, kicker: string, index: number) => {
+    const addBase = (title: string, kicker: string, index: number, titleFontSize = 24) => {
       const slidePpt = pptx.addSlide();
       addBackground(slidePpt);
       slidePpt.addText(kicker, {
@@ -4822,7 +4822,7 @@ function PresentationScreen({
       });
       slidePpt.addText(title, {
         x: 0.65, y: 0.78, w: 12.03, h: 0.52,
-        fontFace: "Aptos Display", fontSize: 24, bold: true, color: white,
+        fontFace: "Aptos Display", fontSize: titleFontSize, bold: true, color: white,
         margin: 0, align: "center", fit: "shrink",
       });
       slidePpt.addText(`0${index}`, {
@@ -4843,7 +4843,7 @@ function PresentationScreen({
 
     // 1. Portada
     {
-      const s = addBase(brief.brand || "Marca sin nombre", "PROPUESTA DE INNOVACIÓN DIGITAL", 1);
+      const s = addBase(brief.brand || "Marca sin nombre", "PROPUESTA DE INNOVACIÓN DIGITAL", 1, 36);
       s.addText(brief.category || "Categoría por definir", {
         x: 1, y: 1.72, w: 11.33, h: 0.38,
         fontSize: 16, color: text2, margin: 0, align: "center",
@@ -5103,7 +5103,7 @@ function PresentationScreen({
     const green: [number, number, number] = [37, 217, 120];
     const yellow: [number, number, number] = [240, 181, 43];
 
-    const addPageBase = (kicker: string, title: string, index: number) => {
+    const addPageBase = (kicker: string, title: string, index: number, titleFontSize = 25) => {
       pdf.setFillColor(...bg);
       pdf.rect(0, 0, pageWidth, pageHeight, "F");
       pdf.setFillColor(...pink);
@@ -5117,7 +5117,7 @@ function PresentationScreen({
       pdf.text(kicker, pageWidth / 2, 43, { align: "center" });
 
       pdf.setTextColor(...white);
-      pdf.setFontSize(25);
+      pdf.setFontSize(titleFontSize);
       pdf.text(title, pageWidth / 2, 72, { align: "center" });
 
       pdf.setTextColor(...muted2);
@@ -5173,7 +5173,7 @@ function PresentationScreen({
     };
 
     // 1. Portada
-    addPageBase("PROPUESTA DE INNOVACIÓN DIGITAL", brief.brand || "Marca sin nombre", 1);
+    addPageBase("PROPUESTA DE INNOVACIÓN DIGITAL", brief.brand || "Marca sin nombre", 1, 38);
     pdf.setTextColor(...text2);
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(17);
@@ -5321,17 +5321,22 @@ function PresentationScreen({
     pdf.text("CÓMO SE VIVE", pageWidth / 2, 125, { align: "center" });
 
     const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
+    const journeyCardWidth = 118;
+    const journeyGap = 20;
+    const journeyTotalWidth = journeyCardWidth * journey.length + journeyGap * (journey.length - 1);
+    const journeyStartX = (pageWidth - journeyTotalWidth) / 2;
+
     journey.forEach((step, index) => {
-      const x = 42 + index * 164;
-      addCard(x, 148, 138, 50);
+      const x = journeyStartX + index * (journeyCardWidth + journeyGap);
+      addCard(x, 148, journeyCardWidth, 46);
       pdf.setTextColor(...white);
       pdf.setFont("helvetica", "normal");
-      pdf.setFontSize(11);
-      pdf.text(step, x + 69, 178, { align: "center" });
+      pdf.setFontSize(10);
+      pdf.text(step, x + journeyCardWidth / 2, 176, { align: "center" });
       if (index < 5) {
         pdf.setTextColor(...muted2);
-        pdf.setFontSize(16);
-        pdf.text("›", x + 149, 180, { align: "center" });
+        pdf.setFontSize(14);
+        pdf.text("›", x + journeyCardWidth + journeyGap / 2, 177, { align: "center" });
       }
     });
 
