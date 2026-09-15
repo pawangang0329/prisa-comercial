@@ -4932,7 +4932,7 @@ function PresentationScreen({
           reader.onerror = reject;
           reader.readAsDataURL(logoBlob);
         });
-        s.addImage({ data: logoData, x: 0.48, y: 0.42, w: 1.55, h: 0.56, transparency: 0 });
+        s.addImage({ data: logoData, x: 0.48, y: 0.38, w: 1.90, h: 0.68, transparency: 0 });
       } catch {
         // Si el logo no puede cargarse, la portada conserva el diseño sin él.
       }
@@ -4945,28 +4945,28 @@ function PresentationScreen({
 
       // Encabezado superior
       s.addText("PROPUESTA DE INNOVACIÓN DIGITAL", {
-        x: 0.65, y: 1.42, w: 12.03, h: 0.30,
-        fontFace: "Aptos", fontSize: 15, bold: true, color: pink,
+        x: 0.65, y: 1.34, w: 12.03, h: 0.34,
+        fontFace: "Aptos", fontSize: 16, bold: true, color: pink,
         charSpacing: 1.5, margin: 0, align: "center",
       });
 
       // Marca: protagonista de la portada
       s.addText(brief.brand || "Marca sin nombre", {
-        x: 0.55, y: 1.82, w: 12.23, h: 1.22,
-        fontFace: "Aptos Display", fontSize: 64, bold: true, color: white,
+        x: 0.55, y: 1.72, w: 12.23, h: 1.48,
+        fontFace: "Aptos Display", fontSize: 82, bold: true, color: white,
         margin: 0, align: "center", valign: "middle", fit: "shrink",
       });
 
       // Categoría
       s.addText(brief.category || "Categoría por definir", {
-        x: 0.8, y: 3.20, w: 11.73, h: 0.56,
-        fontFace: "Aptos", fontSize: 25, color: text2, margin: 0, align: "center",
+        x: 0.8, y: 3.28, w: 11.73, h: 0.60,
+        fontFace: "Aptos", fontSize: 27, color: text2, margin: 0, align: "center",
         fit: "shrink",
       });
 
       // Divisor central
       s.addShape(pptx.ShapeType.line, {
-        x: 4.50, y: 4.02, w: 4.33, h: 0,
+        x: 4.50, y: 4.12, w: 4.33, h: 0,
         line: { color: pink, width: 1.6 },
       });
 
@@ -5156,10 +5156,10 @@ function PresentationScreen({
       });
 
       const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
-      const journeyCardW = 1.45;
-      const journeyCardH = 0.62;
-      const journeyGap = 0.25;
-      const journeyArrowW = 0.22;
+      const journeyCardW = 1.38;
+      const journeyCardH = 0.58;
+      const journeyGap = 0.18;
+      const journeyArrowW = 0.18;
       const journeyTotalW = journey.length * journeyCardW + (journey.length - 1) * (journeyGap + journeyArrowW);
       const journeyStartX = (W - journeyTotalW) / 2;
 
@@ -5168,7 +5168,7 @@ function PresentationScreen({
         addCard(s, x, 2.03, journeyCardW, journeyCardH);
         s.addText(step, {
           x, y: 2.25, w: journeyCardW, h: 0.18,
-          fontSize: 9.5, color: white, margin: 0, align: "center",
+          fontSize: 8.8, color: white, margin: 0, align: "center",
           fit: "shrink",
         });
         if (i < journey.length - 1) {
@@ -5315,7 +5315,7 @@ function PresentationScreen({
         reader.onerror = reject;
         reader.readAsDataURL(logoBlob);
       });
-      pdf.addImage(logoData, "PNG", 34, 36, 122, 44);
+      pdf.addImage(logoData, "PNG", 34, 34, 150, 54);
     } catch {
       // Si el logo no puede cargarse, la portada conserva el diseño sin él.
     }
@@ -5329,25 +5329,25 @@ function PresentationScreen({
     // Encabezado superior
     pdf.setTextColor(...pink);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(15);
-    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 136, { align: "center" });
+    pdf.setFontSize(16);
+    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 132, { align: "center" });
 
     // Marca protagonista
     pdf.setTextColor(...white);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(78);
-    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 218, { align: "center" });
+    pdf.setFontSize(86);
+    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 220, { align: "center" });
 
     // Categoría
     pdf.setTextColor(...text2);
     pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(26);
-    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 292, { align: "center" });
+    pdf.setFontSize(28);
+    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 300, { align: "center" });
 
     // Divisor central
     pdf.setDrawColor(...pink);
     pdf.setLineWidth(1.7);
-    pdf.line(380, 346, 580, 346);
+    pdf.line(380, 354, 580, 354);
 
     // Pie centrado
     pdf.setTextColor(...muted2);
@@ -5492,10 +5492,10 @@ function PresentationScreen({
 
     // Recorrido centrado: seis pasos + cinco conectores
     const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
-    const journeyCardW = 116;
-    const journeyCardH = 48;
-    const journeyGap = 28;
-    const journeyArrowW = 22;
+    const journeyCardW = 108;
+    const journeyCardH = 45;
+    const journeyGap = 22;
+    const journeyArrowW = 18;
     const journeyTotalW = journey.length * journeyCardW + (journey.length - 1) * (journeyGap + journeyArrowW);
     const journeyStartX = (pageWidth - journeyTotalW) / 2;
 
