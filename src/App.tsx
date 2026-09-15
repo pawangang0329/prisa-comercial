@@ -370,6 +370,24 @@ function parseNumber(value: unknown): number {
   return Number.isFinite(result) ? result : 0;
 }
 
+function parsePercentEntries(value: unknown): Array<[string, number]> {
+  const source = text(value);
+  if (!source) return [];
+  const entries: Array<[string, number]> = [];
+  const pattern = /([^|]+?)\s+(\d+(?:[.,]\d+)?)%/g;
+  let match: RegExpExecArray | null;
+  while ((match = pattern.exec(source)) !== null) {
+    const label = match[1].trim().replace(/[:\-]+$/, "").trim();
+    const valueNumber = Number(match[2].replace(",", "."));
+    if (label && Number.isFinite(valueNumber)) entries.push([label, valueNumber]);
+  }
+  return entries;
+}
+
+function uniqueText(values: string[]): string[] {
+  return Array.from(new Set(values.map((value) => value.trim()).filter(Boolean)));
+}
+
 async function readWorkbook(url: string): Promise<ExcelRow[]> {
   const response = await fetch(url, { cache: "no-store" });
   if (!response.ok) {
@@ -4782,6 +4800,7 @@ function PresentationScreen({
   selectedFormats,
   selectedBroadcaster,
   selectedFranchise,
+  regionInventory,
   onSave,
 }: {
   brief: BriefData;
@@ -4790,6 +4809,7 @@ function PresentationScreen({
   selectedFormats: string[];
   selectedBroadcaster: Broadcaster | null;
   selectedFranchise: Franchise | null;
+  regionInventory: RegionInventory[];
   onSave: () => void;
 }) {
   const chosen = formats.filter((format) => selectedFormats.includes(format.id));
@@ -4834,22 +4854,40 @@ function PresentationScreen({
 
   const additionalText = discovery.moreInformation.trim() || "Sin información adicional registrada.";
 
-  const selectedRegions = brief.regions.length ? brief.regions.join(" · ") : "Cobertura nacional";
   const affinityTags = selectedBroadcaster?.interests
     ? selectedBroadcaster.interests.split(/[;,|]/).map((item) => item.trim()).filter(Boolean).slice(0, 4)
     : [];
 
   const prevSlide = () => setSlide((current) => Math.max(0, current - 1));
   const nextSlide = () => setSlide((current) => Math.min(5, current + 1));
-  const presentationProfileRows: [string, string][] = [
-    ["Cobertura", selectedBroadcaster?.profile],
-    ["Perfil", selectedBroadcaster?.genderProfile],
-    ["Edades", selectedBroadcaster?.ages],
-    ["Nivel socioeconómico", selectedBroadcaster?.socioeconomic],
-  ].filter(([, value]) => Boolean(value)) as [string, string][];
-  const profileRowsForDisplay: [string, string][] = presentationProfileRows.length
-    ? presentationProfileRows
-    : [["Perfil", "Disponible en el catálogo PRISA."]];
+  const genderEntries = parsePercentEntries(selectedBroadcaster?.genderProfile)
+    .filter(([label]) => /mujer|hombre/i.test(label))
+    .slice(0, 2);
+  const ageEntries = parsePercentEntries(selectedBroadcaster?.ages)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3);
+  const audienceSegments = uniqueText([
+    ...discovery.audience,
+    brief.gender,
+    ...brief.ageRanges,
+    ...brief.regions,
+  ]).slice(0, 6);
+  const totalRegionInventory = regionInventory.reduce((sum, item) => sum + item.value, 0);
+  const selectedRegionSet = new Set(brief.regions.map(normalize));
+  const targetRegionInventory = regionInventory
+    .filter((item) => selectedRegionSet.has(normalize(item.name)))
+    .reduce((sum, item) => sum + item.value, 0);
+  const targetRegionShare = totalRegionInventory > 0
+    ? Math.round((targetRegionInventory / totalRegionInventory) * 100)
+    : 0;
+  const regionShares = regionInventory
+    .filter((item) => item.value > 0)
+    .map((item) => ({
+      name: item.name,
+      share: totalRegionInventory > 0 ? Math.round((item.value / totalRegionInventory) * 100) : 0,
+    }))
+    .sort((a, b) => b.share - a.share)
+    .slice(0, 5);
   const downloadPresentationPptx = async () => {
     const pptx = new PptxGenJS();
     pptx.layout = "LAYOUT_WIDE";
@@ -4893,7 +4931,7 @@ function PresentationScreen({
       addBackground(slidePpt);
       slidePpt.addText(kicker, {
         x: 0.65, y: 0.43, w: 12.03, h: 0.25,
-        fontFace: "Aptos", fontSize: 9, bold: true, color: pink,
+        fontFace: "Aptos", fontSize: 13, bold: true, color: pink,
         charSpacing: 1.5, margin: 0, align: "center",
       });
       slidePpt.addText(title, {
@@ -5056,54 +5094,61 @@ function PresentationScreen({
       });
     }
 
-    // 4. A quién y dónde
+    // 4. A quién y dónde — perfil y distribución gráfica
     {
       const s = addBase(broadcasterName, "A QUIÉN LE HABLAMOS Y DÓNDE", 4);
       s.addText(audienceText, {
-        x: 1, y: 1.47, w: 11.33, h: 0.38,
-        fontSize: 14, color: white, margin: 0, align: "center", fit: "shrink",
+        x: 0.85, y: 1.38, w: 11.63, h: 0.34,
+        fontSize: 13, color: white, margin: 0, align: "center", fit: "shrink",
       });
 
-      addCard(s, 0.72, 2.10, 5.82, 3.72);
-      addCard(s, 6.79, 2.10, 5.82, 3.72);
+      addCard(s, 0.52, 1.92, 6.05, 3.88);
+      addCard(s, 6.76, 1.92, 6.05, 3.88);
 
-      s.addText("AUDIENCIA", {
-        x: 1.02, y: 2.38, w: 5.22, h: 0.22,
-        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
-      });
-      s.addText(audienceText, {
-        x: 1.05, y: 2.78, w: 5.16, h: 0.55,
-        fontSize: 12, color: white, margin: 0, align: "center", fit: "shrink",
-      });
-      s.addText("REGIONES OBJETIVO", {
-        x: 1.02, y: 3.75, w: 5.22, h: 0.22,
-        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
-      });
-      s.addText(selectedRegions, {
-        x: 1.05, y: 4.15, w: 5.16, h: 0.65,
-        fontSize: 12, color: white, margin: 0, align: "center", fit: "shrink",
-      });
-
-      s.addText("PERFIL DE LA EMISORA", {
-        x: 7.09, y: 2.38, w: 5.22, h: 0.22,
-        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
-      });
-
-      const profileLines = presentationProfileRows.map(([label, value]) => `${label}: ${value}`);
-      profileLines.forEach((line, i) => {
-        s.addText(line, {
-          x: 7.18, y: 2.78 + i * 0.47, w: 5.04, h: 0.32,
-          fontSize: 9.5, color: text2, margin: 0, fit: "shrink",
+      s.addText("SEGMENTOS", { x: 0.82, y: 2.15, w: 5.45, h: 0.2, fontSize: 9, bold: true, color: "8FA7C8", margin: 0 });
+      const segments = audienceSegments.length ? audienceSegments : ["Audiencia por definir"];
+      segments.forEach((segment, i) => {
+        const col = i % 3;
+        const row = Math.floor(i / 3);
+        s.addShape(pptx.ShapeType.roundRect, {
+          x: 0.82 + col * 1.72, y: 2.43 + row * 0.38, w: 1.55, h: 0.25,
+          fill: { color: "35142F" }, line: { color: "35142F", transparency: 100 },
         });
+        s.addText(segment, { x: 0.88 + col * 1.72, y: 2.49 + row * 0.38, w: 1.43, h: 0.12, fontSize: 7.2, color: pink, margin: 0, align: "center", fit: "shrink" });
       });
-      s.addText("AFINIDADES", {
-        x: 7.09, y: 5.00, w: 5.22, h: 0.2,
-        fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
+
+      s.addText("PERFIL DOCUMENTADO", { x: 0.82, y: 3.20, w: 5.45, h: 0.2, fontSize: 9, bold: true, color: "8FA7C8", margin: 0 });
+      let gx = 0.82;
+      genderEntries.slice(0, 2).forEach(([label, value], i) => {
+        s.addText(`${label} ${Math.round(value)}%`, { x: gx, y: 3.48, w: 1.15, h: 0.15, fontSize: 7.5, color: i === 0 ? pink : blue, margin: 0 });
+        gx += 1.65;
       });
-      s.addText(affinityTags.length ? affinityTags.join(" · ") : "Sin afinidades registradas", {
-        x: 7.18, y: 5.28, w: 5.04, h: 0.38,
-        fontSize: 9.5, color: white, margin: 0, fit: "shrink", align: "center",
+      s.addShape(pptx.ShapeType.rect, { x: 0.82, y: 3.76, w: 5.45, h: 0.08, fill: { color: "3A8FFF" }, line: { color: "3A8FFF" } });
+      if (genderEntries[0]) {
+        s.addShape(pptx.ShapeType.rect, { x: 0.82, y: 3.76, w: 5.45 * Math.min(100, genderEntries[0][1]) / 100, h: 0.08, fill: { color: pink }, line: { color: pink } });
+      }
+
+      s.addText("EDADES CON MÁS PESO", { x: 0.82, y: 4.08, w: 5.45, h: 0.2, fontSize: 9, bold: true, color: "8FA7C8", margin: 0 });
+      ageEntries.forEach(([label, value], i) => {
+        const y = 4.40 + i * 0.38;
+        s.addText(label, { x: 0.82, y, w: 0.70, h: 0.14, fontSize: 7.5, color: muted, margin: 0 });
+        s.addShape(pptx.ShapeType.rect, { x: 1.55, y: y + 0.03, w: 3.95, h: 0.07, fill: { color: "20283A" }, line: { color: "20283A" } });
+        s.addShape(pptx.ShapeType.rect, { x: 1.55, y: y + 0.03, w: 3.95 * Math.min(100, value) / 100, h: 0.07, fill: { color: pink }, line: { color: pink } });
+        s.addText(`${Math.round(value)}%`, { x: 5.62, y, w: 0.60, h: 0.14, fontSize: 7.5, color: white, margin: 0, align: "right" });
       });
+
+      s.addText(`${targetRegionShare}%`, { x: 7.10, y: 2.17, w: 1.05, h: 0.45, fontSize: 29, bold: true, color: pink, margin: 0 });
+      s.addText("del inventario de la emisora cae en las regiones objetivo", { x: 7.12, y: 2.66, w: 4.95, h: 0.25, fontSize: 8.5, color: text2, margin: 0, fit: "shrink" });
+      s.addText("REPARTO POR REGIÓN", { x: 7.12, y: 3.05, w: 5.35, h: 0.2, fontSize: 9, bold: true, color: "8FA7C8", margin: 0 });
+      regionShares.forEach((region, i) => {
+        const y = 3.40 + i * 0.40;
+        s.addText(region.name, { x: 7.12, y, w: 1.25, h: 0.14, fontSize: 7.2, color: text2, margin: 0, fit: "shrink" });
+        s.addShape(pptx.ShapeType.rect, { x: 8.55, y: y + 0.03, w: 3.25, h: 0.07, fill: { color: "20283A" }, line: { color: "20283A" } });
+        s.addShape(pptx.ShapeType.rect, { x: 8.55, y: y + 0.03, w: 3.25 * Math.min(100, region.share) / 100, h: 0.07, fill: { color: pink }, line: { color: pink } });
+        s.addText(`${region.share}%`, { x: 11.93, y, w: 0.45, h: 0.14, fontSize: 7.2, color: muted, margin: 0, align: "right" });
+      });
+      s.addText("AFINIDADES", { x: 7.12, y: 5.48, w: 5.35, h: 0.2, fontSize: 9, bold: true, color: "8FA7C8", margin: 0 });
+      s.addText(affinityTags.length ? affinityTags.slice(0, 3).join("   ·   ") : "Sin afinidades registradas", { x: 7.12, y: 5.72, w: 5.35, h: 0.22, fontSize: 8.5, color: white, margin: 0, align: "center", fit: "shrink" });
     }
 
     // 5. Cómo se arma
@@ -5238,7 +5283,7 @@ function PresentationScreen({
 
       pdf.setTextColor(...pink);
       pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(10);
+      pdf.setFontSize(13);
       pdf.text(kicker, pageWidth / 2, 43, { align: "center" });
 
       pdf.setTextColor(...white);
@@ -5415,40 +5460,57 @@ function PresentationScreen({
     addWrapped(campaignConcept, 105, 372, 750, 15, white, "center", 60);
     addWrapped(`Resultado buscado: ${resultText}`, 90, 470, 780, 10, muted, "center", 30);
 
-    // 4. A quién y dónde
+    // 4. A quién y dónde — perfil y distribución gráfica
     pdf.addPage();
     addPageBase("A QUIÉN LE HABLAMOS Y DÓNDE", broadcasterName, 4);
-    addWrapped(audienceText, 80, 125, 800, 14, white, "center", 30);
+    addWrapped(audienceText, 80, 112, 800, 13, white, "center", 26);
 
-    addCard(65, 165, 395, 315);
-    addCard(500, 165, 395, 315);
+    addCard(45, 145, 415, 330);
+    addCard(500, 145, 415, 330);
 
-    pdf.setTextColor(143, 167, 200);
-    pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(10);
-    pdf.text("AUDIENCIA", 262.5, 198, { align: "center" });
-    addWrapped(audienceText, 90, 239, 345, 13, white, "center", 52);
-    pdf.text("REGIONES OBJETIVO", 262.5, 332, { align: "center" });
-    addWrapped(selectedRegions, 90, 369, 345, 13, white, "center", 65);
-
-    pdf.text("PERFIL DE LA EMISORA", 697.5, 198, { align: "center" });
-    let profileY = 237;
-    presentationProfileRows.forEach(([label, value]) => {
-      pdf.setTextColor(174, 187, 208);
-      pdf.setFont("helvetica", "bold");
-      pdf.setFontSize(9.5);
-      pdf.text(`${label}:`, 526, profileY);
-      addWrapped(value, 620, profileY, 255, 9.5, text2, "left", 22);
-      profileY += 39;
-    });
     pdf.setTextColor(143, 167, 200);
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(9.5);
-    pdf.text("AFINIDADES", 697.5, 428, { align: "center" });
-    addWrapped(
-      affinityTags.length ? affinityTags.join(" · ") : "Sin afinidades registradas",
-      530, 451, 335, 9.5, white, "center", 25,
-    );
+    pdf.text("SEGMENTOS", 68, 170);
+    const segmentsPdf = audienceSegments.length ? audienceSegments : ["Audiencia por definir"];
+    segmentsPdf.slice(0, 6).forEach((segment, i) => {
+      const col = i % 3; const row = Math.floor(i / 3);
+      const x = 68 + col * 116; const y = 190 + row * 25;
+      pdf.setFillColor(53, 20, 47); pdf.roundedRect(x, y, 104, 18, 5, 5, "F");
+      pdf.setTextColor(...pink); pdf.setFontSize(7.5); pdf.text(segment, x + 52, y + 12, { align: "center" });
+    });
+
+    pdf.setTextColor(143, 167, 200); pdf.setFontSize(9.5); pdf.text("PERFIL DOCUMENTADO", 68, 250);
+    let pdfGenderX = 68;
+    genderEntries.slice(0, 2).forEach(([label, value], i) => {
+      pdf.setTextColor(...(i === 0 ? pink : blue)); pdf.setFontSize(8);
+      pdf.text(`${label} ${Math.round(value)}%`, pdfGenderX, 268); pdfGenderX += 105;
+    });
+    pdf.setFillColor(58, 143, 255); pdf.rect(68, 280, 355, 5, "F");
+    if (genderEntries[0]) { pdf.setFillColor(...pink); pdf.rect(68, 280, 355 * Math.min(100, genderEntries[0][1]) / 100, 5, "F"); }
+
+    pdf.setTextColor(143, 167, 200); pdf.setFontSize(9.5); pdf.text("EDADES CON MÁS PESO", 68, 309);
+    ageEntries.forEach(([label, value], i) => {
+      const y = 331 + i * 32;
+      pdf.setTextColor(...muted); pdf.setFontSize(8); pdf.text(label, 68, y);
+      pdf.setFillColor(32, 40, 58); pdf.rect(128, y - 7, 250, 5, "F");
+      pdf.setFillColor(...pink); pdf.rect(128, y - 7, 250 * Math.min(100, value) / 100, 5, "F");
+      pdf.setTextColor(...white); pdf.text(`${Math.round(value)}%`, 405, y, { align: "right" });
+    });
+
+    pdf.setTextColor(...pink); pdf.setFont("helvetica", "bold"); pdf.setFontSize(29); pdf.text(`${targetRegionShare}%`, 522, 184);
+    pdf.setTextColor(...text2); pdf.setFont("helvetica", "normal"); pdf.setFontSize(8.5);
+    addWrapped("del inventario de la emisora cae en las regiones objetivo", 522, 208, 350, 8.5, text2, "left", 24);
+    pdf.setTextColor(143, 167, 200); pdf.setFont("helvetica", "bold"); pdf.setFontSize(9.5); pdf.text("REPARTO POR REGIÓN", 522, 248);
+    regionShares.forEach((region, i) => {
+      const y = 270 + i * 30;
+      pdf.setTextColor(...text2); pdf.setFontSize(7.5); pdf.text(region.name, 522, y);
+      pdf.setFillColor(32, 40, 58); pdf.rect(620, y - 6, 220, 5, "F");
+      pdf.setFillColor(...pink); pdf.rect(620, y - 6, 220 * Math.min(100, region.share) / 100, 5, "F");
+      pdf.setTextColor(...muted); pdf.text(`${region.share}%`, 862, y, { align: "right" });
+    });
+    pdf.setTextColor(143, 167, 200); pdf.setFont("helvetica", "bold"); pdf.setFontSize(9.5); pdf.text("AFINIDADES", 522, 435);
+    addWrapped(affinityTags.length ? affinityTags.slice(0, 3).join(" · ") : "Sin afinidades registradas", 522, 457, 350, 8.5, white, "center", 24);
 
     // 5. Cómo se arma
     pdf.addPage();
@@ -5623,38 +5685,79 @@ function PresentationScreen({
         )}
 
         {slide === 3 && (
-          <div className="presentation-slide-content presentation-centered-content">
+          <div className="presentation-slide-content presentation-centered-content audience-chart-slide">
             <span className="reference-slide-label">A QUIÉN LE HABLAMOS Y DÓNDE</span>
             <h2>{broadcasterName}</h2>
             <p className="slide-large-subtitle">{audienceText}</p>
-            <div className="audience-slide-centered-grid">
-              <div className="audience-center-card">
-                <span className="slide-caption">AUDIENCIA</span>
-                <p>{audienceText}</p>
-                <span className="slide-caption">REGIONES OBJETIVO</span>
-                <p>{selectedRegions}</p>
+
+            <div className="audience-chart-layout">
+              <div className="audience-chart-left">
+                <span className="slide-caption audience-chart-caption">SEGMENTOS</span>
+                <div className="audience-segment-chips">
+                  {(audienceSegments.length ? audienceSegments : ["Audiencia por definir"]).map((value) => (
+                    <span key={value}>{value}</span>
+                  ))}
+                </div>
+
+                <span className="slide-caption audience-chart-caption">PERFIL DOCUMENTADO</span>
+                <div className="gender-chart">
+                  {genderEntries.length ? genderEntries.map(([label, value], index) => (
+                    <div className="gender-chart-row" key={label}>
+                      <span className={index === 0 ? "gender-label gender-pink" : "gender-label gender-blue"}>
+                        {label} {Math.round(value)}%
+                      </span>
+                      <div className="gender-track">
+                        <div className={index === 0 ? "gender-fill gender-fill-pink" : "gender-fill gender-fill-blue"} style={{ width: `${Math.min(100, value)}%` }} />
+                      </div>
+                    </div>
+                  )) : (
+                    <div className="audience-chart-empty">Sin distribución demográfica registrada.</div>
+                  )}
+                </div>
+
+                <span className="slide-caption audience-chart-caption">EDADES CON MÁS PESO</span>
+                <div className="age-chart">
+                  {ageEntries.length ? ageEntries.map(([label, value]) => (
+                    <div className="age-chart-row" key={label}>
+                      <span>{label}</span>
+                      <div className="age-track"><div className="age-fill" style={{ width: `${Math.min(100, value)}%` }} /></div>
+                      <strong>{Math.round(value)}%</strong>
+                    </div>
+                  )) : (
+                    <div className="audience-chart-empty">Sin distribución de edades registrada.</div>
+                  )}
+                </div>
               </div>
-              <div className="audience-center-card">
-                <span className="slide-caption">PERFIL DE LA EMISORA</span>
-                <div className="broadcaster-profile-list">
-                  {profileRowsForDisplay.map(([label, value]) => (
-                    <div className="broadcaster-profile-row" key={label}>
-                      <strong>{label}</strong>
-                      <span>{value}</span>
+
+              <div className="audience-chart-right">
+                <div className="target-share-block">
+                  <strong>{targetRegionShare}%</strong>
+                  <span>del inventario de la emisora cae en las regiones objetivo</span>
+                </div>
+
+                <span className="slide-caption audience-chart-caption">REPARTO POR REGIÓN</span>
+                <div className="region-chart">
+                  {(regionShares.length ? regionShares : [{ name: "Sin datos regionales", share: 0 }]).map((region) => (
+                    <div className="region-chart-row" key={region.name}>
+                      <span>{region.name}</span>
+                      <div className="region-track"><div className="region-fill" style={{ width: `${Math.min(100, region.share)}%` }} /></div>
+                      <strong>{region.share}%</strong>
                     </div>
                   ))}
                 </div>
-                <span className="slide-caption profile-affinity-caption">AFINIDADES</span>
-                <div className="affinity-list affinity-list-centered">
-                  {(affinityTags.length ? affinityTags : ["Sin afinidades registradas"]).map((value) => (
+
+                <span className="slide-caption audience-chart-caption">AFINIDADES</span>
+                <div className="audience-affinity-chips">
+                  {(affinityTags.length ? affinityTags.slice(0, 3) : ["Sin afinidades registradas"]).map((value) => (
                     <span key={value}>{value}</span>
                   ))}
                 </div>
               </div>
             </div>
+
+            <small className="audience-chart-source">Perfil de audiencia e inventario Jul-Ago 2026 · nivel departamento/región</small>
           </div>
         )}
-
         {slide === 4 && (
           <div className="presentation-slide-content presentation-centered-content">
             <span className="reference-slide-label">CÓMO SE ARMA LA SOLUCIÓN</span>
@@ -6539,6 +6642,7 @@ export default function App() {
             selectedFormats={selectedFormats}
             selectedBroadcaster={broadcasters.find((item) => item.id === selectedBroadcasterId) ?? null}
             selectedFranchise={franchises.find((item) => item.id === selectedFranchiseId) ?? null}
+            regionInventory={regionInventory}
             onSave={saveCampaign}
           />
         );

@@ -6964,3 +6964,351 @@ img {
     flex-wrap: wrap !important;
   }
 }
+
+/* ============================================================
+   AJUSTE FINAL — PRESENTACIÓN SEGÚN REFERENCIAS VISUALES
+   ============================================================ */
+
+/* Los seis encabezados rosados de las láminas deben destacar más. */
+.app-reference .reference-presentation-shell .reference-slide-label {
+  font-size: 14px !important;
+  line-height: 1.25 !important;
+  letter-spacing: .17em !important;
+  font-weight: 900 !important;
+}
+
+/* ---------- 01 · PORTADA ---------- */
+.app-reference .reference-presentation-shell .reference-slide.slide-1 {
+  min-height: 590px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content {
+  min-height: 510px !important;
+  justify-content: center !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-1 .presentation-cover-logo {
+  top: 0 !important;
+  left: 0 !important;
+  width: 175px !important;
+  max-height: 72px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-1 .reference-slide-label {
+  font-size: 14px !important;
+  margin-bottom: 14px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content h1 {
+  font-size: 88px !important;
+  line-height: 1 !important;
+  margin: 10px 0 16px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-large-subtitle {
+  font-size: 25px !important;
+}
+
+/* ---------- 02 · POR QUÉ ESTA CAMPAÑA ---------- */
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content {
+  justify-content: flex-start !important;
+  padding-top: 30px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .reference-slide-label {
+  font-size: 14px !important;
+  margin-bottom: 10px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content > h2 {
+  font-size: 34px !important;
+  margin: 0 !important;
+}
+
+/* La línea queda debajo de los títulos; los círculos/números se apoyan
+   directamente sobre la línea, nunca debajo de las tarjetas. */
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+  position: relative !important;
+  width: min(940px, 100%) !important;
+  margin: 30px auto 8px !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline::before {
+  left: 8% !important;
+  right: 8% !important;
+  top: 49px !important;
+  height: 2px !important;
+  bottom: auto !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  grid-template-rows: 34px 38px auto !important;
+  gap: 0 !important;
+  align-items: center !important;
+  min-width: 0 !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content {
+  display: contents !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content strong {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  align-self: end !important;
+  min-height: 22px !important;
+  padding: 0 4px !important;
+  color: #f4f6fa !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+  text-align: center !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-marker {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  justify-self: center !important;
+  align-self: center !important;
+  z-index: 3 !important;
+  width: 38px !important;
+  height: 38px !important;
+  box-shadow: 0 0 0 6px #101624 !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+  grid-column: 1 !important;
+  grid-row: 3 !important;
+  width: 100% !important;
+  min-height: 110px !important;
+  margin: 13px 0 0 !important;
+  padding: 13px 14px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  background: #151b29 !important;
+  border: 1px solid #2b354b !important;
+  border-radius: 9px !important;
+  color: #b7c1d2 !important;
+  font-size: 11px !important;
+  line-height: 1.55 !important;
+  text-align: center !important;
+}
+
+/* ---------- 04 · A QUIÉN LE HABLAMOS Y DÓNDE ---------- */
+.app-reference .reference-presentation-shell .reference-slide.slide-4 {
+  min-height: 590px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-4 .presentation-centered-content {
+  justify-content: flex-start !important;
+  padding-top: 25px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-4 .reference-slide-label {
+  font-size: 14px !important;
+  margin-bottom: 7px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-4 .presentation-centered-content > h2 {
+  font-size: 29px !important;
+  line-height: 1.1 !important;
+  margin: 0 !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-4 .slide-large-subtitle {
+  margin: 7px 0 0 !important;
+  font-size: 15px !important;
+  line-height: 1.3 !important;
+}
+
+.audience-chart-layout {
+  width: min(980px, 100%) !important;
+  margin: 24px auto 0 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: 30px !important;
+  text-align: left !important;
+}
+.audience-chart-left,
+.audience-chart-right {
+  min-width: 0 !important;
+}
+.audience-chart-caption {
+  display: block !important;
+  margin: 0 0 9px !important;
+  color: #7f91aa !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  letter-spacing: .05em !important;
+  text-align: left !important;
+}
+.audience-segment-chips,
+.audience-affinity-chips {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  margin-bottom: 22px !important;
+}
+.audience-segment-chips span {
+  padding: 7px 11px !important;
+  border-radius: 999px !important;
+  background: #35142f !important;
+  color: #ff2b9d !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+.gender-chart {
+  margin-bottom: 22px !important;
+}
+.gender-chart-row {
+  display: grid !important;
+  grid-template-columns: 108px minmax(0, 1fr) !important;
+  gap: 10px !important;
+  align-items: center !important;
+  margin: 6px 0 !important;
+}
+.gender-label {
+  font-size: 10px !important;
+  white-space: nowrap !important;
+}
+.gender-pink { color: #ff2b9d !important; }
+.gender-blue { color: #4e98ff !important; }
+.gender-track {
+  height: 7px !important;
+  overflow: hidden !important;
+  border-radius: 999px !important;
+  background: #20283a !important;
+  display: flex !important;
+}
+.gender-fill { height: 100% !important; }
+.gender-fill-pink { background: #ec0f82 !important; }
+.gender-fill-blue { background: #3a8fff !important; }
+.age-chart {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 9px !important;
+}
+.age-chart-row {
+  display: grid !important;
+  grid-template-columns: 48px minmax(0, 1fr) 38px !important;
+  gap: 9px !important;
+  align-items: center !important;
+}
+.age-chart-row > span,
+.age-chart-row > strong {
+  font-size: 10px !important;
+  color: #aab5c7 !important;
+}
+.age-chart-row > strong { color: #eef2f7 !important; text-align: right !important; }
+.age-track,
+.region-track {
+  height: 6px !important;
+  overflow: hidden !important;
+  border-radius: 999px !important;
+  background: #20283a !important;
+}
+.age-fill,
+.region-fill {
+  height: 100% !important;
+  border-radius: inherit !important;
+  background: #ec0f82 !important;
+}
+.target-share-block {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  margin: -1px 0 22px !important;
+}
+.target-share-block strong {
+  color: #ff2b9d !important;
+  font-size: 39px !important;
+  line-height: 1 !important;
+  letter-spacing: -.03em !important;
+}
+.target-share-block span {
+  margin-top: 5px !important;
+  color: #a8b2c3 !important;
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+}
+.region-chart {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 9px !important;
+  margin-bottom: 22px !important;
+}
+.region-chart-row {
+  display: grid !important;
+  grid-template-columns: 115px minmax(0, 1fr) 34px !important;
+  gap: 10px !important;
+  align-items: center !important;
+}
+.region-chart-row > span,
+.region-chart-row > strong {
+  font-size: 10px !important;
+  line-height: 1.2 !important;
+}
+.region-chart-row > span { color: #a8b2c3 !important; white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important; }
+.region-chart-row > strong { color: #a8b2c3 !important; text-align: right !important; }
+.audience-affinity-chips { margin-bottom: 0 !important; }
+.audience-affinity-chips span {
+  padding: 7px 10px !important;
+  border: 1px solid #293248 !important;
+  border-radius: 999px !important;
+  color: #b5c0d0 !important;
+  font-size: 10px !important;
+  background: transparent !important;
+}
+.audience-affinity-chips span::first-letter { color: #4e98ff !important; }
+.audience-chart-source {
+  display: block !important;
+  width: min(980px, 100%) !important;
+  margin: 28px auto 0 !important;
+  color: #69758c !important;
+  font-size: 9px !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+}
+.audience-chart-empty { color: #78849a !important; font-size: 10px !important; }
+
+/* ---------- 06 · CÓMO SE VIVE Y QUÉ MEDIMOS ---------- */
+.app-reference .reference-presentation-shell .reference-slide.slide-6 {
+  min-height: 590px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-6 .presentation-centered-content {
+  min-height: 510px !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-6 .reference-slide-label {
+  font-size: 14px !important;
+  margin-bottom: 22px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-6 .journey-area-centered {
+  margin: 0 auto !important;
+  max-width: 900px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-6 .journey-area-centered > .slide-caption {
+  font-size: 11px !important;
+  margin-bottom: 14px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-6 .journey-centered {
+  margin: 14px auto 30px !important;
+}
+.app-reference .reference-presentation-shell .reference-slide.slide-6 .measure-text {
+  font-size: 15px !important;
+  line-height: 1.5 !important;
+}
+
+@media (max-width: 900px) {
+  .audience-chart-layout { grid-template-columns: 1fr !important; gap: 20px !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 { min-height: 760px !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .audience-chart-layout { margin-top: 18px !important; }
+}
+
+@media (max-width: 760px) {
+  .app-reference .reference-presentation-shell .reference-slide-label { font-size: 12px !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-1 .presentation-cover-logo { width: 130px !important; max-height: 54px !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content h1 { font-size: 52px !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-large-subtitle { font-size: 18px !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline { grid-template-columns: 1fr !important; gap: 16px !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline::before { left: 50% !important; right: auto !important; top: 49px !important; bottom: 49px !important; width: 2px !important; height: auto !important; transform: translateX(-50%) !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item { grid-template-rows: 34px 38px auto !important; }
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 { min-height: 900px !important; }
+  .region-chart-row { grid-template-columns: 105px minmax(0, 1fr) 32px !important; }
+}
