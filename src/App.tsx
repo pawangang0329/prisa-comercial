@@ -691,6 +691,82 @@ function ReferenceStyles() {
       .final-slide-content>div{text-align:center!important;}
       .final-message{text-align:center!important;}
       /* ===== PRESENTACIÓN: centrado vertical real de las 6 láminas ===== */
+
+      /* ===== PORTADA Y LÁMINAS 2/4: AJUSTE FINAL ===== */
+      .slide-cover-content{
+        gap:0!important;
+      }
+      .presentation-cover-logo{
+        position:absolute!important;
+        left:0!important;
+        top:32px!important;
+        width:145px!important;
+        height:auto!important;
+        max-height:52px!important;
+        object-fit:contain!important;
+        object-position:left center!important;
+        z-index:3!important;
+      }
+      .slide-cover-content .reference-slide-label{
+        font-size:11px!important;
+        margin-bottom:18px!important;
+      }
+      .slide-cover-content h1{
+        font-size:56px!important;
+        line-height:1.05!important;
+        margin:0!important;
+      }
+      .slide-cover-content .slide-large-subtitle{
+        font-size:25px!important;
+        margin-top:18px!important;
+      }
+      .slide-cover-content small{
+        margin-top:118px!important;
+        font-size:9px!important;
+      }
+      .slide-2 .presentation-centered-content .reference-slide-label{
+        font-size:11px!important;
+        margin-bottom:8px!important;
+      }
+      .slide-2 .presentation-centered-content h2{
+        font-size:30px!important;
+        line-height:1.15!important;
+        margin:0!important;
+      }
+      .slide-4 .presentation-centered-content{
+        padding:54px 56px 48px!important;
+        justify-content:center!important;
+      }
+      .slide-4 .presentation-centered-content > .reference-slide-label{
+        margin-bottom:7px!important;
+      }
+      .slide-4 .presentation-centered-content > h2{
+        font-size:30px!important;
+        line-height:1.15!important;
+        margin:0!important;
+      }
+      .slide-4 .presentation-centered-content > .slide-large-subtitle{
+        margin:8px 0 0!important;
+        font-size:14px!important;
+      }
+      .slide-4 .audience-slide-centered-grid{
+        width:100%!important;
+        max-width:760px!important;
+        margin:22px auto 0!important;
+        gap:22px!important;
+      }
+      .slide-4 .audience-center-card{
+        min-height:270px!important;
+        padding:24px!important;
+      }
+      .slide-4 .audience-center-card .slide-caption{
+        font-size:10px!important;
+      }
+      .slide-4 .audience-center-card p{
+        font-size:13px!important;
+        line-height:1.55!important;
+      }
+
       /* ===== MOBILE: OVERRIDE DE REFERENCIA (se declara después de los estilos anteriores) ===== */
       @media screen and (max-width:760px){
         html,body,#root{width:100%!important;min-width:0!important;max-width:100%!important;overflow-x:hidden!important;}
@@ -4812,7 +4888,7 @@ function PresentationScreen({
       });
     };
 
-    const addBase = (title: string, kicker: string, index: number) => {
+    const addBase = (title: string, kicker: string, index: number, titleSize = 24) => {
       const slidePpt = pptx.addSlide();
       addBackground(slidePpt);
       slidePpt.addText(kicker, {
@@ -4822,7 +4898,7 @@ function PresentationScreen({
       });
       slidePpt.addText(title, {
         x: 0.65, y: 0.78, w: 12.03, h: 0.52,
-        fontFace: "Aptos Display", fontSize: 24, bold: true, color: white,
+        fontFace: "Aptos Display", fontSize: titleSize, bold: true, color: white,
         margin: 0, align: "center", fit: "shrink",
       });
       slidePpt.addText(`0${index}`, {
@@ -4846,6 +4922,21 @@ function PresentationScreen({
       const s = pptx.addSlide();
       addBackground(s);
 
+      // Logo PRISA arriba a la izquierda, exclusivo de la portada
+      try {
+        const logoResponse = await fetch(PRISALogo);
+        const logoBlob = await logoResponse.blob();
+        const logoData = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(String(reader.result));
+          reader.onerror = reject;
+          reader.readAsDataURL(logoBlob);
+        });
+        s.addImage({ data: logoData, x: 0.48, y: 0.42, w: 1.55, h: 0.56, transparency: 0 });
+      } catch {
+        // Si el logo no puede cargarse, la portada conserva el diseño sin él.
+      }
+
       // Número de lámina
       s.addText("01", {
         x: 12.42, y: 0.43, w: 0.38, h: 0.20,
@@ -4854,28 +4945,28 @@ function PresentationScreen({
 
       // Encabezado superior
       s.addText("PROPUESTA DE INNOVACIÓN DIGITAL", {
-        x: 0.65, y: 1.55, w: 12.03, h: 0.28,
-        fontFace: "Aptos", fontSize: 14, bold: true, color: pink,
+        x: 0.65, y: 1.42, w: 12.03, h: 0.30,
+        fontFace: "Aptos", fontSize: 15, bold: true, color: pink,
         charSpacing: 1.5, margin: 0, align: "center",
       });
 
       // Marca: protagonista de la portada
       s.addText(brief.brand || "Marca sin nombre", {
-        x: 0.55, y: 1.95, w: 12.23, h: 1.08,
-        fontFace: "Aptos Display", fontSize: 56, bold: true, color: white,
+        x: 0.55, y: 1.82, w: 12.23, h: 1.22,
+        fontFace: "Aptos Display", fontSize: 64, bold: true, color: white,
         margin: 0, align: "center", valign: "middle", fit: "shrink",
       });
 
       // Categoría
       s.addText(brief.category || "Categoría por definir", {
-        x: 0.8, y: 3.20, w: 11.73, h: 0.52,
-        fontFace: "Aptos", fontSize: 23, color: text2, margin: 0, align: "center",
+        x: 0.8, y: 3.20, w: 11.73, h: 0.56,
+        fontFace: "Aptos", fontSize: 25, color: text2, margin: 0, align: "center",
         fit: "shrink",
       });
 
       // Divisor central
       s.addShape(pptx.ShapeType.line, {
-        x: 4.75, y: 3.95, w: 3.83, h: 0,
+        x: 4.50, y: 4.02, w: 4.33, h: 0,
         line: { color: pink, width: 1.6 },
       });
 
@@ -4888,7 +4979,7 @@ function PresentationScreen({
 
     // 2. Por qué esta campaña — timeline horizontal
     {
-      const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA", 2);
+      const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA", 2, 30);
       const items = [
         ["Lectura del negocio", businessReading, pink],
         ["Tensión detectada", analyticalInsight, "FF3E9F"],
@@ -5112,7 +5203,7 @@ function PresentationScreen({
     });
   };
 
-  const downloadPresentationPdf = () => {
+  const downloadPresentationPdf = async () => {
     // PDF en 16:9 real para conservar la lógica de una presentación,
     // en lugar de comprimir las diapositivas dentro de A4.
     const pdf = new jsPDF({
@@ -5137,7 +5228,7 @@ function PresentationScreen({
     const green: [number, number, number] = [37, 217, 120];
     const yellow: [number, number, number] = [240, 181, 43];
 
-    const addPageBase = (kicker: string, title: string, index: number) => {
+    const addPageBase = (kicker: string, title: string, index: number, titleSize = 25) => {
       pdf.setFillColor(...bg);
       pdf.rect(0, 0, pageWidth, pageHeight, "F");
       pdf.setFillColor(...pink);
@@ -5151,7 +5242,7 @@ function PresentationScreen({
       pdf.text(kicker, pageWidth / 2, 43, { align: "center" });
 
       pdf.setTextColor(...white);
-      pdf.setFontSize(25);
+      pdf.setFontSize(titleSize);
       pdf.text(title, pageWidth / 2, 72, { align: "center" });
 
       pdf.setTextColor(...muted2);
@@ -5214,6 +5305,21 @@ function PresentationScreen({
     pdf.setFillColor(...pink);
     pdf.rect(34, 28, 80, 3, "F");
 
+    // Logo PRISA arriba a la izquierda, exclusivo de la portada
+    try {
+      const logoResponse = await fetch(PRISALogo);
+      const logoBlob = await logoResponse.blob();
+      const logoData = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(String(reader.result));
+        reader.onerror = reject;
+        reader.readAsDataURL(logoBlob);
+      });
+      pdf.addImage(logoData, "PNG", 34, 36, 122, 44);
+    } catch {
+      // Si el logo no puede cargarse, la portada conserva el diseño sin él.
+    }
+
     // Número de lámina
     pdf.setTextColor(...muted2);
     pdf.setFont("helvetica", "normal");
@@ -5223,25 +5329,25 @@ function PresentationScreen({
     // Encabezado superior
     pdf.setTextColor(...pink);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(14);
-    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 145, { align: "center" });
+    pdf.setFontSize(15);
+    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 136, { align: "center" });
 
     // Marca protagonista
     pdf.setTextColor(...white);
     pdf.setFont("helvetica", "bold");
-    pdf.setFontSize(68);
-    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 220, { align: "center" });
+    pdf.setFontSize(78);
+    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 218, { align: "center" });
 
     // Categoría
     pdf.setTextColor(...text2);
     pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(24);
-    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 290, { align: "center" });
+    pdf.setFontSize(26);
+    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 292, { align: "center" });
 
     // Divisor central
     pdf.setDrawColor(...pink);
     pdf.setLineWidth(1.7);
-    pdf.line(390, 340, 570, 340);
+    pdf.line(380, 346, 580, 346);
 
     // Pie centrado
     pdf.setTextColor(...muted2);
@@ -5251,7 +5357,7 @@ function PresentationScreen({
 
     // 2. Por qué esta campaña
     pdf.addPage();
-    addPageBase("POR QUÉ ESTA CAMPAÑA", "La lectura que surge del brief", 2);
+    addPageBase("POR QUÉ ESTA CAMPAÑA", "La lectura que surge del brief", 2, 30);
     const timelineItems: [string, string, [number, number, number]][] = [
       ["Lectura del negocio", businessReading, pink],
       ["Tensión detectada", analyticalInsight, [255, 62, 159]],
@@ -5312,21 +5418,21 @@ function PresentationScreen({
     // 4. A quién y dónde
     pdf.addPage();
     addPageBase("A QUIÉN LE HABLAMOS Y DÓNDE", broadcasterName, 4);
-    addWrapped(audienceText, 80, 105, 800, 14, white, "center", 30);
+    addWrapped(audienceText, 80, 125, 800, 14, white, "center", 30);
 
-    addCard(48, 132, 414, 300);
-    addCard(498, 132, 414, 300);
+    addCard(65, 165, 395, 315);
+    addCard(500, 165, 395, 315);
 
     pdf.setTextColor(143, 167, 200);
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(10);
-    pdf.text("AUDIENCIA", 255, 163, { align: "center" });
-    addWrapped(audienceText, 85, 205, 340, 13, white, "center", 52);
-    pdf.text("REGIONES OBJETIVO", 255, 288, { align: "center" });
-    addWrapped(selectedRegions, 85, 325, 340, 13, white, "center", 65);
+    pdf.text("AUDIENCIA", 262.5, 198, { align: "center" });
+    addWrapped(audienceText, 90, 239, 345, 13, white, "center", 52);
+    pdf.text("REGIONES OBJETIVO", 262.5, 332, { align: "center" });
+    addWrapped(selectedRegions, 90, 369, 345, 13, white, "center", 65);
 
-    pdf.text("PERFIL DE LA EMISORA", 705, 163, { align: "center" });
-    let profileY = 202;
+    pdf.text("PERFIL DE LA EMISORA", 697.5, 198, { align: "center" });
+    let profileY = 237;
     presentationProfileRows.forEach(([label, value]) => {
       pdf.setTextColor(174, 187, 208);
       pdf.setFont("helvetica", "bold");
@@ -5338,10 +5444,10 @@ function PresentationScreen({
     pdf.setTextColor(143, 167, 200);
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(9.5);
-    pdf.text("AFINIDADES", 705, 386, { align: "center" });
+    pdf.text("AFINIDADES", 697.5, 428, { align: "center" });
     addWrapped(
       affinityTags.length ? affinityTags.join(" · ") : "Sin afinidades registradas",
-      535, 408, 340, 9.5, white, "center", 25,
+      530, 451, 335, 9.5, white, "center", 25,
     );
 
     // 5. Cómo se arma
@@ -5462,6 +5568,7 @@ function PresentationScreen({
       <div className={`reference-slide slide-${slide + 1}`}>
         {slide === 0 && (
           <div className="presentation-slide-content presentation-centered-content slide-cover-content">
+            <img className="presentation-cover-logo" src={PRISALogo} alt="PRISA Media" />
             <span className="reference-slide-label">PROPUESTA DE INNOVACIÓN DIGITAL</span>
             <h1>{brief.brand || "Marca sin nombre"}</h1>
             <p className="slide-large-subtitle">{brief.category || "Categoría por definir"}</p>
@@ -5618,7 +5725,7 @@ function PresentationScreen({
                   type="button"
                   onClick={() => {
                     setShowPresentationDownloadMenu(false);
-                    downloadPresentationPdf();
+                    void downloadPresentationPdf();
                   }}
                 >
                   <FileText size={14} /> PDF
