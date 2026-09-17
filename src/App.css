@@ -7312,3 +7312,281 @@ img {
   .app-reference .reference-presentation-shell .reference-slide.slide-4 { min-height: 900px !important; }
   .region-chart-row { grid-template-columns: 105px minmax(0, 1fr) 32px !important; }
 }
+
+/* ============================================================
+   PRISA — PRESENTACIÓN FINAL
+   Las 6 láminas usan exactamente el mismo lienzo visual que la
+   portada. El contenido se ajusta dentro del lienzo sin alterar
+   el tamaño exterior de cada lámina.
+   ============================================================ */
+
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide {
+    width: min(1180px, calc(100vw - 250px)) !important;
+    max-width: 1180px !important;
+    height: 590px !important;
+    min-height: 590px !important;
+    max-height: 590px !important;
+    aspect-ratio: auto !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* El contenido interno nunca puede empujar el lienzo hacia abajo. */
+  .app-reference .reference-presentation-shell .reference-slide .presentation-centered-content {
+    min-height: 0 !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* 01 · Portada: exactamente la composición de referencia. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content h1 {
+    font-size: 76px !important;
+    line-height: .98 !important;
+    margin: 10px 0 14px !important;
+  }
+
+  /* 02 · Título ligeramente menor para que la historia completa respire. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content {
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content > h2 {
+    font-size: 29px !important;
+    line-height: 1.12 !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: 405px !important;
+    margin: 22px auto 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    min-height: 0 !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    min-height: 0 !important;
+    max-height: 175px !important;
+    margin-top: 11px !important;
+    padding: 11px 12px !important;
+    font-size: 10px !important;
+    line-height: 1.38 !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content strong {
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* 03 · Insight: el texto baja de tamaño si necesita más aire,
+     manteniendo siempre el título rosado visible. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-3 .presentation-centered-content {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-3 .insight-slide-body {
+    width: 100% !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-3 .insight-slide-body h2 {
+    font-size: 14px !important;
+    line-height: 1.42 !important;
+    max-height: 145px !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-3 .concept-box {
+    max-height: 150px !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-3 .concept-box strong {
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* 04 · A quién y dónde: conserva las gráficas, no las tarjetas
+     antiguas de perfil. Todo queda dentro del mismo lienzo. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .presentation-centered-content {
+    padding-top: 18px !important;
+    padding-bottom: 16px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .presentation-centered-content > h2 {
+    font-size: 27px !important;
+    line-height: 1.08 !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .audience-chart-layout {
+    width: min(980px, 100%) !important;
+    margin-top: 18px !important;
+    gap: 26px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .audience-chart-caption {
+    font-size: 10px !important;
+    margin-bottom: 7px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .audience-segment-chips {
+    margin-bottom: 16px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .gender-chart,
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .age-chart,
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .region-chart {
+    margin-bottom: 14px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .target-share-block strong {
+    font-size: 36px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .target-share-block span {
+    font-size: 10px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 .audience-chart-source {
+    margin-top: 15px !important;
+    font-size: 8px !important;
+  }
+
+  /* 05 · Cómo se arma. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .presentation-centered-content {
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .solution-flow {
+    width: 100% !important;
+    max-width: 980px !important;
+    margin: 18px auto 0 !important;
+    gap: 6px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-card {
+    min-height: 135px !important;
+    max-height: 155px !important;
+    overflow: hidden !important;
+    padding: 12px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-card p {
+    font-size: 9px !important;
+    line-height: 1.42 !important;
+  }
+
+  /* 06 · Cómo se vive y qué medimos: centrado de arriba, abajo
+     y laterales, con una separación corta entre bloques. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-6 .presentation-centered-content {
+    padding: 0 20px !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-6 .reference-slide-label {
+    margin-bottom: 14px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-6 .journey-area-centered {
+    width: min(900px, 100%) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-6 .journey-area-centered > .slide-caption {
+    margin-bottom: 9px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-6 .journey-centered {
+    margin: 10px auto 16px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-6 .measure-text {
+    margin: 0 auto !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    max-width: 820px !important;
+  }
+}
+
+/* En tablets conserva exactamente el mismo alto exterior de la portada. */
+@media screen and (min-width: 761px) and (max-width: 1250px) {
+  .app-reference .reference-presentation-shell .reference-slide {
+    width: min(100%, calc(100vw - 210px)) !important;
+    height: 590px !important;
+    min-height: 590px !important;
+    max-height: 590px !important;
+    padding: 50px 56px !important;
+  }
+}
+
+/* Móvil: las seis láminas comparten el mismo lienzo. */
+@media screen and (max-width: 760px) {
+  .app-reference .reference-presentation-shell .reference-slide {
+    width: 100% !important;
+    height: 590px !important;
+    min-height: 590px !important;
+    max-height: 590px !important;
+    aspect-ratio: auto !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide .presentation-centered-content {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content {
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content h1 {
+    font-size: 52px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content > h2 {
+    font-size: 25px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    max-height: 440px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-4 {
+    min-height: 590px !important;
+    max-height: 590px !important;
+  }
+}
