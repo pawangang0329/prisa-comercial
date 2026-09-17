@@ -5039,7 +5039,7 @@ function PresentationScreen({
       const centers = [2.25, 6.67, 11.08];
       const lineY = 2.30;
       const cardY = 2.62;
-      const cardH = 3.45;
+      const cardH = 4.15;
 
       s.addShape(pptx.ShapeType.line, {
         x: 2.25, y: lineY, w: 8.83, h: 0,
@@ -5052,12 +5052,12 @@ function PresentationScreen({
         const length = body.trim().length;
         // La lámina ahora tiene más aire vertical: priorizamos legibilidad
         // y solo reducimos un poco los textos excepcionalmente largos.
-        if (length > 900) return 10.5;
-        if (length > 750) return 11;
-        if (length > 600) return 11.5;
-        if (length > 450) return 12;
-        if (length > 300) return 12.5;
-        return 13.5;
+        if (length > 900) return 11.5;
+        if (length > 750) return 12;
+        if (length > 600) return 12.5;
+        if (length > 450) return 13;
+        if (length > 300) return 13.5;
+        return 14.5;
       };
 
       items.forEach(([heading, body, markerColor], i) => {
@@ -5087,8 +5087,8 @@ function PresentationScreen({
       });
 
       s.addText(`Señal adicional considerada: ${additionalText}`, {
-        x: 0.95, y: 6.22, w: 11.43, h: 0.42,
-        fontSize: 10, color: muted, margin: 0, align: "center", fit: "shrink",
+        x: 0.95, y: 7.02, w: 11.43, h: 0.24,
+        fontSize: 9.5, color: muted, margin: 0, align: "center", fit: "shrink",
       });
     }
 

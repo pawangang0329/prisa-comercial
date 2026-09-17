@@ -7726,3 +7726,65 @@ img {
     line-height: 1.5 !important;
   }
 }
+
+
+/* ============================================================
+   TIMELINE — MÁS ESPACIO HACIA ABAJO v3
+   Las tarjetas ocupan el espacio inferior disponible del lienzo.
+   ============================================================ */
+
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    max-height: 390px !important;
+    margin: 22px auto 0 !important;
+    overflow: visible !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    height: 355px !important;
+    min-height: 355px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content {
+    height: 330px !important;
+    min-height: 330px !important;
+    padding: 16px 16px 22px !important;
+    box-sizing: border-box !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    max-height: 275px !important;
+    margin-top: 10px !important;
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+    overflow: hidden !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .slide-centered-extra {
+    margin-top: 4px !important;
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    max-height: 470px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    min-height: 315px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content {
+    min-height: 295px !important;
+    height: 295px !important;
+    padding: 16px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    max-height: 250px !important;
+    font-size: 10.5px !important;
+    line-height: 1.5 !important;
+  }
+}
