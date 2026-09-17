@@ -5039,7 +5039,7 @@ function PresentationScreen({
       const centers = [2.25, 6.67, 11.08];
       const lineY = 2.30;
       const cardY = 2.62;
-      const cardH = 3.18;
+      const cardH = 3.45;
 
       s.addShape(pptx.ShapeType.line, {
         x: 2.25, y: lineY, w: 8.83, h: 0,
@@ -5087,8 +5087,8 @@ function PresentationScreen({
       });
 
       s.addText(`Señal adicional considerada: ${additionalText}`, {
-        x: 0.95, y: 6.02, w: 11.43, h: 0.42,
-        fontSize: 9.5, color: muted, margin: 0, align: "center", fit: "shrink",
+        x: 0.95, y: 6.22, w: 11.43, h: 0.42,
+        fontSize: 10, color: muted, margin: 0, align: "center", fit: "shrink",
       });
     }
 

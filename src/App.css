@@ -7676,3 +7676,53 @@ img {
     font-size: 10.5px !important;
   }
 }
+
+
+/* ============================================================
+   TIMELINE — ESPACIO VERTICAL EXTRA v2
+   ============================================================ */
+
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    max-height: 475px !important;
+    margin: 22px auto 4px !important;
+    overflow: visible !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    height: 270px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content {
+    min-height: 245px !important;
+    height: 245px !important;
+    padding: 14px 15px 18px !important;
+    box-sizing: border-box !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    max-height: 215px !important;
+    margin-top: 8px !important;
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .slide-centered-extra {
+    margin-top: 2px !important;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content {
+    min-height: 225px !important;
+    padding: 14px 15px 18px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    max-height: 195px !important;
+    font-size: 10.5px !important;
+    line-height: 1.5 !important;
+  }
+}
