@@ -4983,28 +4983,28 @@ function PresentationScreen({
 
       // Encabezado superior
       s.addText("PROPUESTA DE INNOVACIÓN DIGITAL", {
-        x: 0.65, y: 1.34, w: 12.03, h: 0.34,
+        x: 0.65, y: 2.08, w: 12.03, h: 0.34,
         fontFace: "Aptos", fontSize: 16, bold: true, color: pink,
         charSpacing: 1.5, margin: 0, align: "center",
       });
 
       // Marca: protagonista de la portada
       s.addText(brief.brand || "Marca sin nombre", {
-        x: 0.55, y: 1.72, w: 12.23, h: 1.48,
+        x: 0.55, y: 2.45, w: 12.23, h: 1.48,
         fontFace: "Aptos Display", fontSize: 82, bold: true, color: white,
         margin: 0, align: "center", valign: "middle", fit: "shrink",
       });
 
       // Categoría
       s.addText(brief.category || "Categoría por definir", {
-        x: 0.8, y: 3.28, w: 11.73, h: 0.60,
+        x: 0.8, y: 4.01, w: 11.73, h: 0.60,
         fontFace: "Aptos", fontSize: 27, color: text2, margin: 0, align: "center",
         fit: "shrink",
       });
 
       // Divisor central
       s.addShape(pptx.ShapeType.line, {
-        x: 4.50, y: 4.12, w: 4.33, h: 0,
+        x: 4.50, y: 4.82, w: 4.33, h: 0,
         line: { color: pink, width: 1.6 },
       });
 
@@ -5025,36 +5025,51 @@ function PresentationScreen({
       ] as [string, string, string][];
 
       const centers = [2.25, 6.67, 11.08];
+      const lineY = 2.30;
+      const cardY = 2.68;
+      const cardH = 2.78;
+
       s.addShape(pptx.ShapeType.line, {
-        x: 2.25, y: 2.42, w: 8.83, h: 0,
+        x: 2.25, y: lineY, w: 8.83, h: 0,
         line: { color: "8B3E78", width: 2 },
       });
 
+      // Estima el tamaño por cantidad de texto y por espacio vertical disponible.
+      // PptxGenJS puede reducir por ancho, pero este cálculo también evita desbordes verticales.
+      const timelineFontSize = (body: string) => {
+        const estimatedCharsPerLine = 48;
+        const estimatedLines = Math.max(1, Math.ceil(body.length / estimatedCharsPerLine));
+        return Math.max(6.5, Math.min(10.5, 17.5 / estimatedLines * 1.45));
+      };
+
       items.forEach(([heading, body, markerColor], i) => {
         const cx = centers[i];
-        s.addShape(pptx.ShapeType.ellipse, {
-          x: cx - 0.19, y: 2.23, w: 0.38, h: 0.38,
-          fill: { color: bg }, line: { color: markerColor, width: 2 },
-        });
-        s.addText(String(i + 1), {
-          x: cx - 0.15, y: 2.305, w: 0.30, h: 0.14,
-          fontSize: 8, bold: true, color: markerColor, margin: 0, align: "center",
-        });
         s.addText(heading, {
-          x: cx - 1.72, y: 1.67, w: 3.44, h: 0.32,
+          x: cx - 1.72, y: 1.55, w: 3.44, h: 0.32,
           fontSize: 12, bold: true, color: white, margin: 0, align: "center",
           fit: "shrink",
         });
-        addCard(s, cx - 1.73, 2.83, 3.46, 2.42);
+
+        // Los números quedan arriba de la línea, como en el diseño solicitado.
+        s.addShape(pptx.ShapeType.ellipse, {
+          x: cx - 0.19, y: 2.00, w: 0.38, h: 0.38,
+          fill: { color: bg }, line: { color: markerColor, width: 2 },
+        });
+        s.addText(String(i + 1), {
+          x: cx - 0.15, y: 2.075, w: 0.30, h: 0.14,
+          fontSize: 8, bold: true, color: markerColor, margin: 0, align: "center",
+        });
+
+        addCard(s, cx - 1.73, cardY, 3.46, cardH);
         s.addText(body, {
-          x: cx - 1.48, y: 3.13, w: 2.96, h: 1.83,
-          fontSize: 10.5, color: text2, margin: 0.02,
-          breakLine: false, valign: "middle", fit: "shrink", align: "center",
+          x: cx - 1.47, y: cardY + 0.22, w: 2.94, h: cardH - 0.42,
+          fontSize: timelineFontSize(body), color: text2, margin: 0.02,
+          breakLine: true, valign: "middle", fit: "shrink", align: "center",
         });
       });
 
       s.addText(`Señal adicional considerada: ${additionalText}`, {
-        x: 0.95, y: 5.85, w: 11.43, h: 0.48,
+        x: 0.95, y: 5.88, w: 11.43, h: 0.42,
         fontSize: 9.5, color: muted, margin: 0, align: "center", fit: "shrink",
       });
     }
@@ -5196,7 +5211,7 @@ function PresentationScreen({
     {
       const s = addBase("Cómo se vive y qué medimos", "CÓMO SE VIVE Y QUÉ MEDIMOS", 6);
       s.addText("CÓMO SE VIVE", {
-        x: 1, y: 1.62, w: 11.33, h: 0.22,
+        x: 1, y: 1.50, w: 11.33, h: 0.22,
         fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
       });
 
@@ -5210,35 +5225,35 @@ function PresentationScreen({
 
       journey.forEach((step, i) => {
         const x = journeyStartX + i * (journeyCardW + journeyGap + journeyArrowW);
-        addCard(s, x, 2.03, journeyCardW, journeyCardH);
+        addCard(s, x, 1.88, journeyCardW, journeyCardH);
         s.addText(step, {
-          x, y: 2.25, w: journeyCardW, h: 0.18,
+          x, y: 2.10, w: journeyCardW, h: 0.18,
           fontSize: 8.8, color: white, margin: 0, align: "center",
           fit: "shrink",
         });
         if (i < journey.length - 1) {
           s.addText("›", {
-            x: x + journeyCardW + journeyGap, y: 2.22, w: journeyArrowW, h: 0.25,
+            x: x + journeyCardW + journeyGap, y: 2.07, w: journeyArrowW, h: 0.25,
             fontSize: 13, bold: true, color: muted2, margin: 0, align: "center",
           });
         }
       });
 
       s.addText("QUÉ MEDIMOS", {
-        x: 1, y: 3.42, w: 11.33, h: 0.22,
+        x: 1, y: 3.00, w: 11.33, h: 0.22,
         fontSize: 9, bold: true, color: "8FA7C8", margin: 0, align: "center",
       });
 
-      addCard(s, 1.15, 3.83, 11.03, 1.05);
+      addCard(s, 1.15, 3.32, 11.03, 1.05);
       const measurement = chosen.length
         ? `La propuesta medirá la experiencia asociada a ${chosen.map((format) => format.name).join(", ")}.`
         : "Los KPI se definirán a partir de la propuesta y los formatos seleccionados.";
       s.addText(measurement, {
-        x: 1.45, y: 4.13, w: 10.43, h: 0.35,
+        x: 1.45, y: 3.62, w: 10.43, h: 0.35,
         fontSize: 14, color: white, margin: 0, align: "center", fit: "shrink",
       });
       s.addText(`Resultado esperado: ${resultText}`, {
-        x: 1.2, y: 5.55, w: 10.93, h: 0.3,
+        x: 1.2, y: 4.98, w: 10.93, h: 0.3,
         fontSize: 10.5, color: muted, margin: 0, align: "center", fit: "shrink",
       });
     }
@@ -5320,7 +5335,7 @@ function PresentationScreen({
       let currentSize = size;
       let lines = wrappedLines(value, width, currentSize);
       if (maxHeight) {
-        while (lines.length * currentSize * 1.22 > maxHeight && currentSize > 7.5) {
+        while (lines.length * currentSize * 1.22 > maxHeight && currentSize > 6.5) {
           currentSize -= 0.5;
           lines = wrappedLines(value, width, currentSize);
         }
@@ -5375,24 +5390,24 @@ function PresentationScreen({
     pdf.setTextColor(...pink);
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(16);
-    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 132, { align: "center" });
+    pdf.text("PROPUESTA DE INNOVACIÓN DIGITAL", pageWidth / 2, 190, { align: "center" });
 
     // Marca protagonista
     pdf.setTextColor(...white);
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(86);
-    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 220, { align: "center" });
+    pdf.text(brief.brand || "Marca sin nombre", pageWidth / 2, 278, { align: "center" });
 
     // Categoría
     pdf.setTextColor(...text2);
     pdf.setFont("helvetica", "normal");
     pdf.setFontSize(28);
-    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 300, { align: "center" });
+    pdf.text(brief.category || "Categoría por definir", pageWidth / 2, 358, { align: "center" });
 
     // Divisor central
     pdf.setDrawColor(...pink);
     pdf.setLineWidth(1.7);
-    pdf.line(380, 354, 580, 354);
+    pdf.line(380, 412, 580, 412);
 
     // Pie centrado
     pdf.setTextColor(...muted2);
@@ -5429,8 +5444,10 @@ function PresentationScreen({
       pdf.setFontSize(13);
       pdf.text(heading, cx, 150, { align: "center" });
 
-      addCard(cx - 130, 220, 260, 188);
-      addWrapped(body, cx - 108, 254, 216, 11.5, text2, "center", 142);
+      addCard(cx - 130, 220, 260, 205);
+      const estimatedLines = Math.max(1, Math.ceil(body.length / 44));
+      const bodySize = Math.max(6.5, Math.min(11.5, 18 / estimatedLines * 1.45));
+      addWrapped(body, cx - 108, 252, 216, bodySize, text2, "center", 160);
     });
 
     addWrapped(
@@ -5550,7 +5567,7 @@ function PresentationScreen({
     pdf.setTextColor(143, 167, 200);
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(10);
-    pdf.text("CÓMO SE VIVE", pageWidth / 2, 125, { align: "center" });
+    pdf.text("CÓMO SE VIVE", pageWidth / 2, 105, { align: "center" });
 
     // Recorrido centrado: seis pasos + cinco conectores
     const journey = ["Descubre", "Interactúa", "Explora", "Decide", "Convierte", "Comparte"];
@@ -5563,32 +5580,32 @@ function PresentationScreen({
 
     journey.forEach((step, index) => {
       const x = journeyStartX + index * (journeyCardW + journeyGap + journeyArrowW);
-      addCard(x, 148, journeyCardW, journeyCardH);
+      addCard(x, 128, journeyCardW, journeyCardH);
       pdf.setTextColor(...white);
       pdf.setFont("helvetica", "normal");
       pdf.setFontSize(10);
-      pdf.text(step, x + journeyCardW / 2, 177, { align: "center" });
+      pdf.text(step, x + journeyCardW / 2, 157, { align: "center" });
 
       if (index < journey.length - 1) {
         pdf.setTextColor(...muted2);
         pdf.setFont("helvetica", "bold");
         pdf.setFontSize(15);
-        pdf.text("›", x + journeyCardW + journeyGap / 2 + journeyArrowW / 2, 179, { align: "center" });
+        pdf.text("›", x + journeyCardW + journeyGap / 2 + journeyArrowW / 2, 159, { align: "center" });
       }
     });
 
     pdf.setTextColor(143, 167, 200);
     pdf.setFont("helvetica", "bold");
     pdf.setFontSize(10);
-    pdf.text("QUÉ MEDIMOS", pageWidth / 2, 270, { align: "center" });
+    pdf.text("QUÉ MEDIMOS", pageWidth / 2, 215, { align: "center" });
 
-    addCard(90, 300, 780, 82);
+    addCard(90, 240, 780, 82);
     const measurement = chosen.length
       ? `La propuesta medirá la experiencia asociada a ${chosen.map((format) => format.name).join(", ")}.`
       : "Los KPI se definirán a partir de la propuesta y los formatos seleccionados.";
-    addWrapped(measurement, 125, 345, 710, 15, white, "center", 38);
+    addWrapped(measurement, 125, 285, 710, 15, white, "center", 38);
 
-    addWrapped(`Resultado esperado: ${resultText}`, 90, 425, 780, 11, muted, "center", 30);
+    addWrapped(`Resultado esperado: ${resultText}`, 90, 360, 780, 11, muted, "center", 30);
 
     pdf.save(`Presentacion_${(brief.brand || "PRISA").replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ_-]+/g, "_")}.pdf`);
   };
