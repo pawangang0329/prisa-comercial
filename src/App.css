@@ -7590,3 +7590,31 @@ img {
     max-height: 590px !important;
   }
 }
+
+
+/* =========================================================
+   PRESENTACIÓN — TIPOGRAFÍA DEFINITIVA Y CONSISTENTE
+   Este bloque final sobrescribe las reglas duplicadas
+   anteriores del archivo para evitar diferencias de tamaño.
+   ========================================================= */
+
+.app-reference .reference-presentation-shell {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Portada: tamaño estable en escritorio y tablet */
+.app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content h1 {
+  font-size: 64px !important;
+  line-height: 1.04 !important;
+  margin: 10px 0 14px !important;
+}
+
+/* Solo pantallas realmente pequeñas */
+@media screen and (max-width: 600px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-1 .slide-cover-content h1 {
+    font-size: 48px !important;
+    line-height: 1.04 !important;
+    margin: 10px 0 14px !important;
+  }
+}
