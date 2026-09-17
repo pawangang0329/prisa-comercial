@@ -5036,10 +5036,13 @@ function PresentationScreen({
         ["Cambio que debe provocar", `${resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.`, green],
       ] as [string, string, string][];
 
-      const centers = [2.25, 6.67, 11.08];
+      const centers = [2.15, 6.67, 11.18];
       const lineY = 2.30;
       const cardY = 2.62;
-      const cardH = 4.15;
+      const cardHeights = [4.42, 4.42, 4.42];
+      // La tarjeta central es deliberadamente más ancha para que
+      // "Tensión detectada" tenga menos saltos de línea.
+      const cardWidths = [3.20, 4.12, 3.20];
 
       s.addShape(pptx.ShapeType.line, {
         x: 2.25, y: lineY, w: 8.83, h: 0,
@@ -5052,12 +5055,12 @@ function PresentationScreen({
         const length = body.trim().length;
         // La lámina ahora tiene más aire vertical: priorizamos legibilidad
         // y solo reducimos un poco los textos excepcionalmente largos.
-        if (length > 900) return 11.5;
-        if (length > 750) return 12;
-        if (length > 600) return 12.5;
-        if (length > 450) return 13;
-        if (length > 300) return 13.5;
-        return 14.5;
+        if (length > 900) return 12;
+        if (length > 750) return 12.5;
+        if (length > 600) return 13;
+        if (length > 450) return 13.5;
+        if (length > 300) return 14;
+        return 15;
       };
 
       items.forEach(([heading, body, markerColor], i) => {
@@ -5078,16 +5081,23 @@ function PresentationScreen({
           fontSize: 8, bold: true, color: markerColor, margin: 0, align: "center",
         });
 
-        addCard(s, cx - 1.73, cardY, 3.46, cardH);
+        const cardW = cardWidths[i];
+        const cardH = cardHeights[i];
+        const innerPadding = i === 1 ? 0.24 : 0.22;
+
+        addCard(s, cx - cardW / 2, cardY, cardW, cardH);
         s.addText(body, {
-          x: cx - 1.47, y: cardY + 0.24, w: 2.94, h: cardH - 0.48,
+          x: cx - cardW / 2 + innerPadding,
+          y: cardY + 0.24,
+          w: cardW - innerPadding * 2,
+          h: cardH - 0.48,
           fontSize: timelineFontSize(body), color: text2, margin: 0.04,
           breakLine: true, valign: "middle", fit: "shrink", align: "center",
         });
       });
 
       s.addText(`Señal adicional considerada: ${additionalText}`, {
-        x: 0.95, y: 7.02, w: 11.43, h: 0.24,
+        x: 0.80, y: 7.18, w: 11.73, h: 0.24,
         fontSize: 9.5, color: muted, margin: 0, align: "center", fit: "shrink",
       });
     }
