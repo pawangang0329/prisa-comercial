@@ -747,7 +747,7 @@ function ReferenceStyles() {
         margin-bottom:8px!important;
       }
       .slide-2 .presentation-centered-content h2{
-        font-size:30px!important;
+        font-size:27px!important;
         line-height:1.15!important;
         margin:0!important;
       }
@@ -1266,6 +1266,7 @@ function ReferenceStyles() {
       .reference-format-row .reference-why{
         color:#ff2b9d!important;
       }
+
     `}</style>
   );
 }
@@ -4854,6 +4855,17 @@ function PresentationScreen({
 
   const additionalText = discovery.moreInformation.trim() || "Sin información adicional registrada.";
 
+  // Ajusta el cuerpo de cada punto del timeline según la cantidad de texto.
+  // Así un insight largo no rompe la tarjeta ni invade la línea del timeline.
+  const timelineWebFontSize = (value: string) => {
+    const length = value.trim().length;
+    if (length > 900) return 8.2;
+    if (length > 750) return 8.7;
+    if (length > 600) return 9.2;
+    if (length > 450) return 9.7;
+    return 10.2;
+  };
+
   const affinityTags = selectedBroadcaster?.interests
     ? selectedBroadcaster.interests.split(/[;,|]/).map((item) => item.trim()).filter(Boolean).slice(0, 4)
     : [];
@@ -5017,7 +5029,7 @@ function PresentationScreen({
 
     // 2. Por qué esta campaña — timeline horizontal
     {
-      const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA", 2, 30);
+      const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA", 2, 27);
       const items = [
         ["Lectura del negocio", businessReading, pink],
         ["Tensión detectada", analyticalInsight, "FF3E9F"],
@@ -5417,7 +5429,7 @@ function PresentationScreen({
 
     // 2. Por qué esta campaña
     pdf.addPage();
-    addPageBase("POR QUÉ ESTA CAMPAÑA", "La lectura que surge del brief", 2, 30);
+    addPageBase("POR QUÉ ESTA CAMPAÑA", "La lectura que surge del brief", 2, 27);
     const timelineItems: [string, string, [number, number, number]][] = [
       ["Lectura del negocio", businessReading, pink],
       ["Tensión detectada", analyticalInsight, [255, 62, 159]],
@@ -5664,21 +5676,21 @@ function PresentationScreen({
                 <div className="story-timeline-marker">1</div>
                 <div className="story-timeline-content">
                   <strong>Lectura del negocio</strong>
-                  <p>{businessReading}</p>
+                  <p style={{ fontSize: `${timelineWebFontSize(businessReading)}px` }}>{businessReading}</p>
                 </div>
               </div>
               <div className="story-timeline-item">
                 <div className="story-timeline-marker story-red">2</div>
                 <div className="story-timeline-content">
                   <strong>Tensión detectada</strong>
-                  <p>{analyticalInsight}</p>
+                  <p style={{ fontSize: `${timelineWebFontSize(analyticalInsight)}px` }}>{analyticalInsight}</p>
                 </div>
               </div>
               <div className="story-timeline-item">
                 <div className="story-timeline-marker story-green">3</div>
                 <div className="story-timeline-content">
                   <strong>Cambio que debe provocar</strong>
-                  <p>{resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.</p>
+                  <p style={{ fontSize: `${timelineWebFontSize(`${resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.`)}px` }}>{resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.</p>
                 </div>
               </div>
             </div>
