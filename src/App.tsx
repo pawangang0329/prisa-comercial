@@ -5038,8 +5038,8 @@ function PresentationScreen({
 
       const centers = [2.25, 6.67, 11.08];
       const lineY = 2.30;
-      const cardY = 2.68;
-      const cardH = 2.78;
+      const cardY = 2.62;
+      const cardH = 3.18;
 
       s.addShape(pptx.ShapeType.line, {
         x: 2.25, y: lineY, w: 8.83, h: 0,
@@ -5049,16 +5049,22 @@ function PresentationScreen({
       // Estima el tamaño por cantidad de texto y por espacio vertical disponible.
       // PptxGenJS puede reducir por ancho, pero este cálculo también evita desbordes verticales.
       const timelineFontSize = (body: string) => {
-        const estimatedCharsPerLine = 48;
-        const estimatedLines = Math.max(1, Math.ceil(body.length / estimatedCharsPerLine));
-        return Math.max(6.5, Math.min(10.5, 17.5 / estimatedLines * 1.45));
+        const length = body.trim().length;
+        // La lámina ahora tiene más aire vertical: priorizamos legibilidad
+        // y solo reducimos un poco los textos excepcionalmente largos.
+        if (length > 900) return 10.5;
+        if (length > 750) return 11;
+        if (length > 600) return 11.5;
+        if (length > 450) return 12;
+        if (length > 300) return 12.5;
+        return 13.5;
       };
 
       items.forEach(([heading, body, markerColor], i) => {
         const cx = centers[i];
         s.addText(heading, {
           x: cx - 1.72, y: 1.55, w: 3.44, h: 0.32,
-          fontSize: 12, bold: true, color: white, margin: 0, align: "center",
+          fontSize: 13, bold: true, color: white, margin: 0, align: "center",
           fit: "shrink",
         });
 
@@ -5074,14 +5080,14 @@ function PresentationScreen({
 
         addCard(s, cx - 1.73, cardY, 3.46, cardH);
         s.addText(body, {
-          x: cx - 1.47, y: cardY + 0.22, w: 2.94, h: cardH - 0.42,
-          fontSize: timelineFontSize(body), color: text2, margin: 0.02,
+          x: cx - 1.47, y: cardY + 0.24, w: 2.94, h: cardH - 0.48,
+          fontSize: timelineFontSize(body), color: text2, margin: 0.04,
           breakLine: true, valign: "middle", fit: "shrink", align: "center",
         });
       });
 
       s.addText(`Señal adicional considerada: ${additionalText}`, {
-        x: 0.95, y: 5.88, w: 11.43, h: 0.42,
+        x: 0.95, y: 6.02, w: 11.43, h: 0.42,
         fontSize: 9.5, color: muted, margin: 0, align: "center", fit: "shrink",
       });
     }
