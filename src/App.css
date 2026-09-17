@@ -7885,3 +7885,132 @@ img {
     line-height: 1.5 !important;
   }
 }
+
+/* ============================================================
+   TIMELINE — CORRECCIÓN VISUAL DEFINITIVA
+   Títulos arriba · números sobre la línea · tarjetas debajo.
+   La tarjeta central es más ancha.
+   ============================================================ */
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    width: min(960px, 100%) !important;
+    max-width: 960px !important;
+    margin: 24px auto 0 !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr) minmax(0, 1fr) !important;
+    grid-template-rows: 28px 46px 350px !important;
+    column-gap: 18px !important;
+    row-gap: 0 !important;
+    align-items: start !important;
+    overflow: visible !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline::before {
+    left: 7% !important;
+    right: 7% !important;
+    top: 51px !important;
+    bottom: auto !important;
+    width: auto !important;
+    height: 2px !important;
+    z-index: 0 !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 28px 46px 350px !important;
+    width: 100% !important;
+    height: 424px !important;
+    min-height: 424px !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    align-items: start !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content {
+    display: contents !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content strong {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+    width: 100% !important;
+    min-height: 22px !important;
+    padding: 0 4px !important;
+    color: #f4f6fa !important;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-marker {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    justify-self: center !important;
+    align-self: center !important;
+    position: relative !important;
+    z-index: 3 !important;
+    width: 42px !important;
+    height: 42px !important;
+    margin: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    border-width: 2px !important;
+    border-radius: 50% !important;
+    background: #101624 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 0 6px #101624 !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    width: 100% !important;
+    height: 330px !important;
+    min-height: 330px !important;
+    max-height: 330px !important;
+    margin: 12px 0 0 !important;
+    padding: 17px 17px 22px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    background: #151b29 !important;
+    border: 1px solid #2b354b !important;
+    border-radius: 9px !important;
+    color: #c2cad7 !important;
+    font-size: 11px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* El segundo bloque recibe más ancho real, no solo más padding. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item:nth-child(2) .story-timeline-content p {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .slide-centered-extra {
+    margin-top: 6px !important;
+    font-size: 11px !important;
+    line-height: 1.5 !important;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+  }
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}

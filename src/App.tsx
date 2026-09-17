@@ -5037,12 +5037,12 @@ function PresentationScreen({
       ] as [string, string, string][];
 
       const centers = [2.15, 6.67, 11.18];
-      const lineY = 2.30;
-      const cardY = 2.62;
-      const cardHeights = [4.42, 4.42, 4.42];
+      const lineY = 2.38;
+      const cardY = 2.72;
+      const cardHeights = [4.02, 4.02, 4.02];
       // La tarjeta central es deliberadamente más ancha para que
       // "Tensión detectada" tenga menos saltos de línea.
-      const cardWidths = [3.20, 4.12, 3.20];
+      const cardWidths = [3.25, 4.20, 3.25];
 
       s.addShape(pptx.ShapeType.line, {
         x: 2.25, y: lineY, w: 8.83, h: 0,
@@ -5066,24 +5066,24 @@ function PresentationScreen({
       items.forEach(([heading, body, markerColor], i) => {
         const cx = centers[i];
         s.addText(heading, {
-          x: cx - 1.72, y: 1.55, w: 3.44, h: 0.32,
-          fontSize: 13, bold: true, color: white, margin: 0, align: "center",
+          x: cx - (cardWidths[i] / 2), y: 1.57, w: cardWidths[i], h: 0.34,
+          fontSize: 14, bold: true, color: white, margin: 0, align: "center",
           fit: "shrink",
         });
 
-        // Los números quedan arriba de la línea, como en el diseño solicitado.
+        // Número centrado exactamente sobre la línea.
         s.addShape(pptx.ShapeType.ellipse, {
-          x: cx - 0.19, y: 2.00, w: 0.38, h: 0.38,
-          fill: { color: bg }, line: { color: markerColor, width: 2 },
+          x: cx - 0.23, y: lineY - 0.23, w: 0.46, h: 0.46,
+          fill: { color: bg }, line: { color: markerColor, width: 2.2 },
         });
         s.addText(String(i + 1), {
-          x: cx - 0.15, y: 2.075, w: 0.30, h: 0.14,
-          fontSize: 8, bold: true, color: markerColor, margin: 0, align: "center",
+          x: cx - 0.17, y: lineY - 0.075, w: 0.34, h: 0.15,
+          fontSize: 10.5, bold: true, color: markerColor, margin: 0, align: "center",
         });
 
         const cardW = cardWidths[i];
         const cardH = cardHeights[i];
-        const innerPadding = i === 1 ? 0.24 : 0.22;
+        const innerPadding = i === 1 ? 0.27 : 0.23;
 
         addCard(s, cx - cardW / 2, cardY, cardW, cardH);
         s.addText(body, {
