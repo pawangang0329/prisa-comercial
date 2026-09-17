@@ -8014,3 +8014,158 @@ img {
     min-height: 0 !important;
   }
 }
+
+
+/* ============================================================
+   PRISA — TIMELINE SLIDE 02 — AJUSTE FINAL SOLICITADO
+   Título más pequeño + timeline más arriba + nota inferior visible.
+   ============================================================ */
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content {
+    justify-content: flex-start !important;
+    padding-top: 14px !important;
+    padding-bottom: 8px !important;
+    overflow: hidden !important;
+  }
+
+  /* Título de la segunda lámina: más pequeño para liberar espacio. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content > h2 {
+    font-size: 26px !important;
+    line-height: 1.05 !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+  }
+
+  /* Timeline completa más arriba y compacta verticalmente. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    width: min(960px, 100%) !important;
+    max-width: 960px !important;
+    margin: 10px auto 0 !important;
+    padding: 0 !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr) minmax(0, 1fr) !important;
+    grid-template-rows: 24px 42px 300px !important;
+    column-gap: 18px !important;
+    row-gap: 0 !important;
+    max-height: 366px !important;
+    overflow: visible !important;
+  }
+
+  /* Línea: justo debajo de los títulos y detrás de los números. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline::before {
+    left: 7% !important;
+    right: 7% !important;
+    top: 45px !important;
+    bottom: auto !important;
+    width: auto !important;
+    height: 2px !important;
+    z-index: 0 !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 24px 42px 300px !important;
+    width: 100% !important;
+    height: 366px !important;
+    min-height: 366px !important;
+    margin: 0 !important;
+    gap: 0 !important;
+    align-items: start !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content {
+    display: contents !important;
+  }
+
+  /* Los tres textos/títulos quedan arriba de cada número. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content strong {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    align-self: end !important;
+    width: 100% !important;
+    min-height: 20px !important;
+    padding: 0 4px !important;
+    color: #f4f6fa !important;
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  /* Números subidos: centrados sobre la línea. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-marker {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    justify-self: center !important;
+    align-self: center !important;
+    position: relative !important;
+    z-index: 3 !important;
+    width: 40px !important;
+    height: 40px !important;
+    margin: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    border-width: 2px !important;
+    border-radius: 50% !important;
+    background: #101624 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 0 6px #101624 !important;
+  }
+
+  /* Burbujas/tarjetas: suben y dejan espacio para la nota inferior. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    width: 100% !important;
+    height: 290px !important;
+    min-height: 290px !important;
+    max-height: 290px !important;
+    margin: 10px 0 0 !important;
+    padding: 15px 16px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    background: #151b29 !important;
+    border: 1px solid #2b354b !important;
+    border-radius: 9px !important;
+    color: #c2cad7 !important;
+    font-size: 11px !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* El bloque central conserva su mayor ancho. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item:nth-child(2) .story-timeline-content p {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Mini texto inferior: separado de las tres tarjetas y visible. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .slide-centered-extra {
+    margin: 2px auto 0 !important;
+    font-size: 10.5px !important;
+    line-height: 1.4 !important;
+    max-width: 960px !important;
+    position: relative !important;
+    z-index: 4 !important;
+  }
+}
+
+/* En móvil se mantiene el comportamiento vertical existente. */
+@media screen and (max-width: 760px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content > h2 {
+    font-size: 24px !important;
+    line-height: 1.08 !important;
+    margin: 0 !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    margin-top: 10px !important;
+  }
+}

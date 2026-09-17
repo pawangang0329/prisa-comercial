@@ -5029,7 +5029,7 @@ function PresentationScreen({
 
     // 2. Por qué esta campaña — timeline horizontal
     {
-      const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA", 2, 27);
+      const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA", 2, 23);
       const items = [
         ["Lectura del negocio", businessReading, pink],
         ["Tensión detectada", analyticalInsight, "FF3E9F"],
@@ -5037,9 +5037,9 @@ function PresentationScreen({
       ] as [string, string, string][];
 
       const centers = [2.15, 6.67, 11.18];
-      const lineY = 2.38;
-      const cardY = 2.72;
-      const cardHeights = [4.02, 4.02, 4.02];
+      const lineY = 2.16;
+      const cardY = 2.42;
+      const cardHeights = [3.92, 3.92, 3.92];
       // La tarjeta central es deliberadamente más ancha para que
       // "Tensión detectada" tenga menos saltos de línea.
       const cardWidths = [3.25, 4.20, 3.25];
@@ -5066,7 +5066,7 @@ function PresentationScreen({
       items.forEach(([heading, body, markerColor], i) => {
         const cx = centers[i];
         s.addText(heading, {
-          x: cx - (cardWidths[i] / 2), y: 1.57, w: cardWidths[i], h: 0.34,
+          x: cx - (cardWidths[i] / 2), y: 1.34, w: cardWidths[i], h: 0.34,
           fontSize: 14, bold: true, color: white, margin: 0, align: "center",
           fit: "shrink",
         });
@@ -5097,7 +5097,7 @@ function PresentationScreen({
       });
 
       s.addText(`Señal adicional considerada: ${additionalText}`, {
-        x: 0.80, y: 7.18, w: 11.73, h: 0.24,
+        x: 0.80, y: 6.78, w: 11.73, h: 0.24,
         fontSize: 9.5, color: muted, margin: 0, align: "center", fit: "shrink",
       });
     }
