@@ -5038,8 +5038,9 @@ function PresentationScreen({
 
       const centers = [2.15, 6.67, 11.18];
       const lineY = 2.16;
-      const cardY = 2.42;
-      const cardHeights = [3.92, 3.92, 3.92];
+      const cardY = 2.38;
+      // Más altura vertical para que el contenido respire hacia abajo.
+      const cardHeights = [4.22, 4.22, 4.22];
       // La tarjeta central es deliberadamente más ancha para que
       // "Tensión detectada" tenga menos saltos de línea.
       const cardWidths = [3.25, 4.20, 3.25];
@@ -5092,12 +5093,12 @@ function PresentationScreen({
           w: cardW - innerPadding * 2,
           h: cardH - 0.48,
           fontSize: timelineFontSize(body), color: text2, margin: 0.04,
-          breakLine: true, valign: "middle", fit: "shrink", align: "center",
+          breakLine: true, valign: "top", fit: "shrink", align: "center",
         });
       });
 
       s.addText(`Señal adicional considerada: ${additionalText}`, {
-        x: 0.80, y: 6.78, w: 11.73, h: 0.24,
+        x: 0.80, y: 6.93, w: 11.73, h: 0.28,
         fontSize: 9.5, color: muted, margin: 0, align: "center", fit: "shrink",
       });
     }

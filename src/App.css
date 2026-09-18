@@ -8169,3 +8169,45 @@ img {
     margin-top: 10px !important;
   }
 }
+
+
+/* ============================================================
+   TIMELINE SLIDE 02 — MÁS ESPACIO VERTICAL
+   Solicitud: alargar las cajas hacia abajo y bajar el texto
+   inferior para que quede separado de las tarjetas.
+   ============================================================ */
+
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    grid-template-rows: 24px 42px 330px !important;
+    height: 396px !important;
+    max-height: 396px !important;
+    margin-top: 10px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    grid-template-rows: 24px 42px 330px !important;
+    height: 396px !important;
+    min-height: 396px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    height: 330px !important;
+    min-height: 330px !important;
+    max-height: 330px !important;
+    margin-top: 10px !important;
+    padding: 16px 17px 22px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item:nth-child(2) .story-timeline-content p {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .slide-centered-extra {
+    margin: 20px auto 0 !important;
+    max-width: 960px !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
+}
