@@ -8211,3 +8211,70 @@ img {
     z-index: 5 !important;
   }
 }
+
+
+/* ============================================================
+   SLIDE 05 — CÓMO SE ARMA LA SOLUCIÓN
+   Más altura para las cuatro tarjetas y mejor uso del espacio.
+   ============================================================ */
+
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .solution-flow {
+    width: 100% !important;
+    max-width: 1000px !important;
+    margin: 24px auto 0 !important;
+    gap: 8px !important;
+    align-items: center !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-card {
+    min-height: 195px !important;
+    height: 195px !important;
+    max-height: 195px !important;
+    padding: 18px 16px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-card .flow-icon {
+    width: 29px !important;
+    height: 29px !important;
+    flex: 0 0 29px !important;
+    margin-bottom: 7px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-card small {
+    margin-top: 4px !important;
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-card strong {
+    margin-top: 10px !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    max-width: 100% !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-card p {
+    margin: 14px 0 0 !important;
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+    max-width: 100% !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-arrow {
+    flex: 0 0 auto !important;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-5 .flow-card {
+    min-height: 165px !important;
+    max-height: 190px !important;
+    padding: 16px !important;
+  }
+}

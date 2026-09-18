@@ -5208,28 +5208,38 @@ function PresentationScreen({
 
       pieces.forEach(([kicker, name, body, accent], i) => {
         const x = cardX[i];
-        addCard(s, x, 2.00, 2.68, 3.45);
+        // Más altura para aprovechar el espacio vertical de la diapositiva.
+        const cardY = 1.92;
+        const cardW = 2.68;
+        const cardH = 4.18;
+
+        addCard(s, x, cardY, cardW, cardH);
+
         s.addShape(pptx.ShapeType.ellipse, {
-          x: x + 0.20, y: 2.24, w: 0.34, h: 0.34,
+          x: x + 0.20, y: cardY + 0.22, w: 0.36, h: 0.36,
           fill: { color: accent }, line: { color: accent },
         });
+
         s.addText(kicker, {
-          x: x + 0.66, y: 2.28, w: 1.76, h: 0.20,
-          fontSize: 8.5, bold: true, color: accent, margin: 0, align: "left",
+          x: x + 0.66, y: cardY + 0.27, w: 1.76, h: 0.20,
+          fontSize: 9, bold: true, color: accent, margin: 0, align: "left",
         });
+
         s.addText(name, {
-          x: x + 0.22, y: 2.88, w: 2.24, h: 0.68,
+          x: x + 0.20, y: cardY + 0.86, w: 2.28, h: 0.82,
           fontSize: 13, bold: true, color: white, margin: 0.02,
           fit: "shrink", align: "center", valign: "middle",
         });
+
         s.addText(body, {
-          x: x + 0.22, y: 3.82, w: 2.24, h: 1.05,
-          fontSize: 10, color: muted, margin: 0.02,
-          fit: "shrink", align: "center", valign: "middle",
+          x: x + 0.20, y: cardY + 1.82, w: 2.28, h: 1.82,
+          fontSize: 10.5, color: muted, margin: 0.02,
+          fit: "shrink", breakLine: true, align: "center", valign: "top",
         });
+
         if (i < 3) {
           s.addShape(pptx.ShapeType.chevron, {
-            x: x + 2.79, y: 3.42, w: 0.34, h: 0.42,
+            x: x + 2.79, y: cardY + 1.56, w: 0.34, h: 0.42,
             fill: { color: "263047" }, line: { color: "263047" },
           });
         }
