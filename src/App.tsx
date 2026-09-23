@@ -4749,6 +4749,70 @@ function buildAnalyticalInsight(
   return `La lectura conjunta del Brief y Discovery identifica una brecha en ${category}: ${tension} mientras la campaña necesita avanzar hacia ${desiredChange}. ${audienceClause} ${reactionClause} ${contextClause} ${formatClause}`.replace(/\s+/g, ' ').trim();
 }
 
+function compactTimelinePhrase(value: string, maxLength = 58): string {
+  const clean = value
+    .replace(/\([^)]*\)/g, "")
+    .replace(/\s+/g, " ")
+    .replace(/[.;:]+$/, "")
+    .trim();
+
+  if (!clean) return "";
+  if (clean.length <= maxLength) return clean;
+
+  const shortened = clean.slice(0, maxLength);
+  const lastSpace = shortened.lastIndexOf(" ");
+  return `${shortened.slice(0, lastSpace > 20 ? lastSpace : maxLength).trim()}…`;
+}
+
+function buildBusinessTimelineText(
+  brief: BriefData,
+  discovery: DiscoveryData
+): string {
+  const challenge = [
+    ...discovery.challenge,
+    discovery.challengeMore.trim(),
+  ].filter(Boolean);
+
+  const result = [
+    ...discovery.result,
+    discovery.resultMore.trim(),
+  ].filter(Boolean);
+
+  const challengeText = compactTimelinePhrase(
+    challenge[0] || brief.context || "el reto comercial"
+  );
+  const resultText = compactTimelinePhrase(
+    result[0] || brief.objective || "mejorar resultados"
+  );
+
+  return `Reto: ${challengeText}. Objetivo: ${resultText}.`;
+}
+
+function buildTensionTimelineText(
+  brief: BriefData,
+  discovery: DiscoveryData
+): string {
+  const audience = [
+    ...discovery.audience,
+    discovery.audienceMore.trim(),
+    brief.audience,
+  ].filter(Boolean);
+
+  const reaction = [
+    ...discovery.reaction,
+    discovery.reactionMore.trim(),
+  ].filter(Boolean);
+
+  const audienceText = compactTimelinePhrase(
+    audience[0] || "la audiencia"
+  );
+  const reactionText = compactTimelinePhrase(
+    reaction[0] || discovery.result[0] || "una respuesta"
+  );
+
+  return `Oportunidad: conectar con ${audienceText} y generar ${reactionText}.`;
+}
+
 function buildBusinessReading(brief: BriefData, discovery: DiscoveryData): string {
   const challenge = [...discovery.challenge, discovery.challengeMore.trim()].filter(Boolean);
   const result = [...discovery.result, discovery.resultMore.trim()].filter(Boolean);
@@ -4843,6 +4907,8 @@ function PresentationScreen({
   );
 
   const businessReading = buildBusinessReading(brief, discovery);
+  const businessTimelineText = buildBusinessTimelineText(brief, discovery);
+  const tensionTimelineText = buildTensionTimelineText(brief, discovery);
   const resultText = [
     ...discovery.result,
     discovery.resultMore,
@@ -5031,8 +5097,8 @@ function PresentationScreen({
     {
       const s = addBase("La lectura que surge del brief", "POR QUÉ ESTA CAMPAÑA", 2, 23);
       const items = [
-        ["Lectura del negocio", businessReading, pink],
-        ["Tensión detectada", analyticalInsight, "FF3E9F"],
+        ["Lectura del negocio", businessTimelineText, pink],
+        ["Tensión detectada", tensionTimelineText, "FF3E9F"],
         ["Cambio que debe provocar", `${resultText}. La lectura anterior se convierte en una dirección de comunicación, no en una copia del brief.`, green],
       ] as [string, string, string][];
 
@@ -5703,14 +5769,14 @@ function PresentationScreen({
                 <div className="story-timeline-marker">1</div>
                 <div className="story-timeline-content">
                   <strong>Lectura del negocio</strong>
-                  <p style={{ fontSize: `${timelineWebFontSize(businessReading)}px` }}>{businessReading}</p>
+                  <p style={{ fontSize: `${timelineWebFontSize(businessTimelineText)}px` }}>{businessTimelineText}</p>
                 </div>
               </div>
               <div className="story-timeline-item">
                 <div className="story-timeline-marker story-red">2</div>
                 <div className="story-timeline-content">
                   <strong>Tensión detectada</strong>
-                  <p style={{ fontSize: `${timelineWebFontSize(analyticalInsight)}px` }}>{analyticalInsight}</p>
+                  <p style={{ fontSize: `${timelineWebFontSize(tensionTimelineText)}px` }}>{tensionTimelineText}</p>
                 </div>
               </div>
               <div className="story-timeline-item">
