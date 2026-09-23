@@ -8278,3 +8278,60 @@ img {
     padding: 16px !important;
   }
 }
+
+/* ============================================================
+   SLIDE 02 — CAJAS MÁS PEQUEÑAS Y TEXTO CENTRADO
+   Ajuste final solicitado: reducir las tarjetas porque el texto
+   es corto y centrar el contenido vertical y horizontalmente.
+   ============================================================ */
+
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    grid-template-rows: 24px 42px 170px !important;
+    height: 236px !important;
+    max-height: 236px !important;
+    margin: 10px auto 0 !important;
+    overflow: visible !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item {
+    grid-template-rows: 24px 42px 170px !important;
+    height: 236px !important;
+    min-height: 236px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-content p {
+    width: 100% !important;
+    height: 150px !important;
+    min-height: 150px !important;
+    max-height: 150px !important;
+    margin: 10px 0 0 !important;
+    padding: 14px 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    background: #151b29 !important;
+    border: 1px solid #2b354b !important;
+    border-radius: 9px !important;
+    color: #c2cad7 !important;
+    font-size: 10.5px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline-item:nth-child(2) .story-timeline-content p {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .slide-centered-extra {
+    margin: 12px auto 0 !important;
+    max-width: 960px !important;
+    position: relative !important;
+    z-index: 5 !important;
+  }
+}
+
