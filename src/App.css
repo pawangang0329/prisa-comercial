@@ -8335,3 +8335,50 @@ img {
   }
 }
 
+
+/* ============================================================
+   SLIDE 02 — CENTRADO VERTICAL FINAL
+   Las tarjetas conservan su tamaño compacto.
+   Todo el bloque de contenido queda centrado dentro del lienzo.
+   ============================================================ */
+
+@media screen and (min-width: 761px) {
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 {
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: 100% !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin: 0 !important;
+
+    /* Este era el problema: estaba pegado arriba. */
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .reference-slide-label,
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .presentation-centered-content > h2,
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline,
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .slide-centered-extra {
+    flex-shrink: 0 !important;
+  }
+
+  /* Mantiene la composición compacta de las tres tarjetas. */
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .story-timeline {
+    width: min(960px, 100%) !important;
+    max-width: 960px !important;
+    margin: 10px auto 0 !important;
+  }
+
+  .app-reference .reference-presentation-shell .reference-slide.slide-2 .slide-centered-extra {
+    margin: 12px auto 0 !important;
+    max-width: 960px !important;
+  }
+}
